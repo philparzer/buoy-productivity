@@ -1,0 +1,184 @@
+/*Background and Variables*/
+
+:root {
+    --yellow: #DBDB93;
+    --red: #DBA993;
+    --white: #FAFAFA;
+
+    --primaryGrey: #474747;
+    --darkerGrey: #3F3F3F;
+    --lighterGrey:  #707070;
+}
+
+*{
+    font-family: Bahnschrift SemiBold;
+    letter-spacing: -.07em;
+}
+
+input:focus{
+    outline: none;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+#main-background{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url("images/bg.png");
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+ 
+}
+
+button{
+    background: none;
+    border: none;
+}
+
+/*Title Bar*/
+
+#title-bar{
+    -webkit-app-region: drag;
+    background-color: var(--darkerGrey);
+    line-height:20px;
+}
+
+#title-logo{
+    -webkit-app-region: drag;
+    font-family: Bahnschrift SemiBold;
+    color: var(--yellow);
+    letter-spacing: -5px;
+    font-size: 49px;
+    line-height: 40px;
+}
+
+#about:hover{
+    color: var(--yellow);
+}
+
+#about{
+    -webkit-app-region: no-drag;
+    margin-left: 7px;
+    color: var(--lighterGrey);
+    margin-top: 10px;
+}
+
+#settings{
+    -webkit-app-region: no-drag;
+    color: var(--lighterGrey);
+    margin-top: 3px;
+}
+
+#settings:hover{
+    color: var(--yellow);
+}
+
+#settings:hover{
+    color: var(--yellow);
+}
+
+#search{
+    -webkit-app-region: no-drag;
+    margin-left: -10px;
+    border-radius: 30px;
+    color: var(--yellow);
+    background-color: var(--primaryGrey);
+    border: none;
+    margin-top: 10px;
+    
+}
+
+
+#window-management{
+    -webkit-app-region: no-drag;
+    margin-left: 100px;
+    padding-bottom: 0px;
+    line-height: 20px;
+    margin-top: 1px;
+    
+}
+
+#minimize-main{
+    -webkit-app-region: no-drag;
+    padding-top: 10px;
+    text-align: center;
+    margin-left: 20px;
+}
+
+#minimize-main:hover{
+    background-color: var(--yellow);
+}
+
+#close-main{
+    -webkit-app-region: no-drag;
+    padding-top: 10px;
+    text-align: center;
+}
+
+#close-main:hover{
+    background-color: var(--red);
+}
+
+
+/*Buoy Main Input Fields TODO:*/
+
+
+/*DOTS (Last tasks)*/
+
+#dot-1 {
+    height: 44px;
+    width: 46px;
+    background-color: var(--yellow);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 270px;
+    margin-left: 10px;
+  }
+
+#dot-2 {
+    height: 58px;
+    width: 61px;
+    background-color: var(--yellow);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 290px;
+    margin-left: 10px;
+}
+
+#dot-3 {
+    height: 80px;
+    width: 84px;
+    background-color: var(--red);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 260px;
+    margin-left: 25px;
+}
+
+#dot-4 {
+    height: 100px;
+    width: 105px;
+    background-color: var(--yellow);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 200px;
+    margin-left: 55px;
+}
+
+#dot-5 {
+    height: 119px;
+    width: 125px;
+    background-color: var(--yellow);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 120px;
+    margin-left: 120px;
+}
