@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    
     <title>buoy productivity</title>
-
-    <!--FIXME: Bootstrap js-->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css" />
@@ -14,9 +11,10 @@
   </head>
 
   <body>
+
       <div id="main-background"> <!--Sets the png background image-->
 
-          <!--Title bar-->
+<!--################## Titlebar ##########################-->
           <div class="container-fluid" id="title-bar">
               <div class="row">
                   <div class="col-1 p-0 m-0">
@@ -52,56 +50,118 @@
               </div>
           </div>
 
-          <!--Main Fields-->
+<!--#################### Main #####################-->
           <div class="container-fluid h-75">
               
-              <!--Calendar-->
-              <div class="row h-25 pt-5">
-                  <div class="col-1 border"><!--TODO: insert svg for arrow--></div>
-                  <div class="col-11"><!--Spacer--></div>
+    <!--Calendar-->
+              <div class="row pt-5">
+                  <div class="col-1 pt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
+                    <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                    </svg>
+                  </div>
+
+    <!--Add Timer Input Buttons-->
+                  <div class="col-8"><!--Spacer--></div>
+                  <div class="col-1">
+                    <svg id="svg-hrs-up-box" type="button" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                        <path id="hrs-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                    </svg>                      
+                  </div>
+                  <div class="col-1">
+                    <svg id="svg-min-up-box" type="button" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                        <path id="min-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                    </svg>  
+                  </div>
+                  <div class="col-1"><!--Spacer--></div>
               </div>
 
-              <!--Most recent Tasks (Dots)-->
+    <!--Most recent Tasks (Dots)-->
               <div class="row h-75">
-                  <div class="col-1">
+                  <div class="col-1 pt-5">
                       <a id="dot-1"></a>
                   </div>
-                  <div class="col-1">
+                  <div class="col-1 pt-5">
                       <a id="dot-2"></a>
                   </div>
-                  <div class="col-1">
+                  <div class="col-1 pt-5">
                       <a id="dot-3"></a>
                   </div>
-                  <div class="col-1">
+                  <div class="col-1 pt-5">
                       <a id="dot-4"></a>
                   </div>
-                  <div class="col-1">
+                  <div class="col-1 pt-5">
                       <a id="dot-5"></a>
                   </div>
 
                   <div class="col-3"></div>
-                  <!--Buoy Input Fields-->
 
-                  <div class="col-3 border"><!--TODO: add input fields--></div>
-                  <div class="col"><!--Spacer--></div>
+
+    <!--Timer-->
+                <div class="col-3 my-2 mx-2">
+                    <div class="row">
+                        <div class="col-2"><!--Spacer--></div>
+                        <!--timer box-->
+                        <div class="col-8" id="timer-box">
+                            <div class="row">
+                                <div class="col" id="hours">00</div>
+                                <div class="col" id="semicolon">:</div>
+                                <div class="col" id="minutes">30</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col" id="unit-hours">h</div>
+                                <div class="col" id="unit-minutes">m</div>
+                                <div class="col"></div>
+                            </div>
+                        </div> 
+                        <div class="col-2"><!--Spacer--></div>
+                    </div>
+
+    <!--Subtract Timer Input Buttons-->
+                    <div class="row border">
+                        <div class="col-6">
+                            <svg id="svg-hrs-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                <path id="hrs-btn-down" type="button" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                            </svg>
+                        </div>
+                        <div class="col-6">
+                            <svg id="svg-min-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                <path id="min-btn-down" type="button" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+
+    <!--Tag-->
+                    <div class="row border">
+                        <div class="col-12 py-2">tag</div><!--TODO: add svg background-->
+                    </div>
+
+    <!--Focus-->
+                    <div class="row border py-3">
+                        <div class="col-12">focus</div> <!--TODO: add svg background-->
+                    </div>
+
+    <!--Start-->
+                    <div class="row border py-2">
+                        <div class="col-12">start</div> <!--TODO: add svg background-->
+                    </div>
+                </div>
+
+                <div class="col"><!-- Right Spacer--></div>
 
               </div>
           </div>
-
-
-
-          <!--Buoy main input fields-->
-              <!--TODO: Align content boxes-->
-              <!--TODO: Search for appropriate timer input fields on codepen-->
-              <!--TODO: Look up info on scrollable dropdowns for tags and focus-->
-              <!--TODO: Create start button-->
-
-          <!--Calendar-->
-        
       </div>
       
+<!--#################### JS #############################-->
 
-    <!-- You can also require other files to run in this process -->
+    <!-- Electron Render Script -->
     <script src="./renderer.js"> </script>
+    
+    <!--TODO: Jquery, Popper.js, Bootstrap-->
+
+
   </body>
 </html>

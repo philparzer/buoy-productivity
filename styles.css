@@ -13,6 +13,7 @@
 *{
     font-family: Bahnschrift SemiBold;
     letter-spacing: -.07em;
+    color: white; /*TODO: delete this line when ready -> placeholder coloration for placeholder text*/
 }
 
 input:focus{
@@ -130,8 +131,92 @@ button{
 
 /*Buoy Main Input Fields TODO:*/
 
+#timer-box{
+    margin-top:-8px;
+    background-color: var(--primaryGrey);
+    border-radius: 35px;
+}
+
+#svg-hrs-up-box{
+    margin-top: 65px;
+    margin-left: -28px;
+}
+
+#svg-min-up-box{
+    margin-top: 65px;
+    margin-left: -30px;
+}
+
+#svg-hrs-down-box{
+    margin-top: -5px;
+    margin-left: 55px;
+}
+
+#svg-min-down-box{
+    margin-top: -5px;
+    margin-left: 10px;
+    
+}
+
+#hrs-btn-up:hover{
+    stroke: var(--yellow);
+}
+
+#min-btn-up:hover{
+    stroke: var(--yellow);
+}
+
+#hrs-btn-down:hover{
+    stroke: var(--yellow);
+}
+
+#min-btn-down:hover{
+    stroke: var(--yellow);
+}
+
+
+
+#hours{
+    margin-top: 12px;
+    font-size: 73px;
+    padding: 0;
+    margin-left:10px;
+    text-align: justify; 
+    line-height: 73px;
+}
+
+#semicolon{
+    color: var(--yellow);
+    margin-top: 12px;
+    font-size: 73px;
+    padding: 0;
+    text-align: center;
+    line-height: 60px;
+}
+
+#minutes{
+    margin-top: 12px;
+    font-size: 73px;
+    padding: 0;
+    margin-right:15px;
+    text-align: justify; 
+    line-height: 73px;
+}
+
+#unit-hours{
+    margin-top: -20px;
+    margin-right: 50px;
+    
+}
+
+#unit-minutes{
+    margin-top: -20px;
+    margin-left: 5px;
+    
+}
 
 /*DOTS (Last tasks)*/
+
 
 #dot-1 {
     height: 44px;
