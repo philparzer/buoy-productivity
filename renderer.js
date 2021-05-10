@@ -20,8 +20,12 @@ const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 const startBtn = document.getElementById('start-btn');
 
 //time
+
 let mins = 30;
 let hours = 0;
+
+let minsInput;
+let hrsInput;
 
 const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
@@ -90,7 +94,8 @@ document.getElementById('minimize-main').onclick = function() {
 //TIMER - MAIN  ------------------------------------------------------------ TODO: consider js worker ?
 
 startBtn.onclick = function(){
-    
+
+    setInputTimes(); //sets the fixed input values for the count variable
     switchButtonStatus();
     styleBuoy();
 
@@ -102,19 +107,39 @@ startBtn.onclick = function(){
     
     //let timerLogic = main timer functionality
     let timerLogic =  setInterval(function() {
-        //delta is time difference from start
+        //delta is time difference from start in ms
         var delta = Date.now() - startingTime;
-        //update HTML elements 
-        //TODO: add some function that checks every 30seconds (if delta divisible by 30? or 60? maybe) or so if 'minutes' and 'hours' vars have changed and update fields inside of this function instead of main intervall?
-        //check if timer has finished
+        
+        //counter
+        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user Input values and calculates time passed in seconds
+        console.log("count: " + count);
+
+        if(count < (hours*60 + mins) -1 )
+            if(minutesElement.textContent != "00"){
+                mins--;
+                minutesElement.textContent = numberFormatter(mins);
+            }
+                
+            
+            else{
+                hours--;
+                hoursElement.textContent = numberFormatter(hours);
+                minutesElement.textContent = numberFormatter(59);
+            }
+
+
         if(delta >= timerInput) {
             switchButtonStatus();
             document.getElementById('Rectangle_13').style.fill ="";
             unstyleBuoy();
             alert("Time Over");
             clearInterval(timerLogic);
+            minutesElement.textContent = numberFormatter(0);
+            hoursElement.textContent = numberFormatter(0);
         }
-        }, 1000); //<- interval
+        }, 1000); //<- interval of 1
+
+    
 }
 
 //TIMER - Input  ------------------------------------------------------------
@@ -146,7 +171,13 @@ function TimerInput(btn) {
     hoursElement.textContent = numberFormatter(hours);
 };
 
-//Buoy Styling
+
+function setInputTimes(){
+    hrsInput = hours;
+    minsInput = mins;
+}
+
+//Buoy Styling  ------------------------------------------------------------
 
 function styleBuoy(){
     document.getElementById('semicolon').style.color = red;
