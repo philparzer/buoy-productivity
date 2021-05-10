@@ -215,6 +215,34 @@ button{
     
 }
 
+
+#tag-box{
+    margin-top: -10px; 
+    margin-left: 73px;
+}
+
+#tag-box:hover > #Rectangle_15{fill: var(--lighterGrey)}
+#tag-box:hover > #tag {fill: var(--white)} 
+
+
+#focus-box{
+    margin-top: -20px;
+    margin-left: 30px;
+}
+
+#start-box:hover > #Rectangle_13{fill: var(--white);}
+#start-box:hover > #start {fill: var(--darkerGrey)} 
+    
+
+#start-box{
+    margin-top: -35px;
+    margin-left: 75px;
+}
+
+#focus-box:hover > #focus{fill: var(--yellow)}
+#focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}
+
+
 /*DOTS (Last tasks)*/
 
 
