@@ -21,7 +21,7 @@
                       <span id="title-logo">buoy</span>
                   </div>
                   <div class="col-2">
-                      <input id="search" class="form" placeholder="&nbsp search"></form>
+                      <input id="search" class="form" placeholder="search"></form>
                   </div>
                   <div class="col-2">
                       <button id="about">about</button>
@@ -64,14 +64,18 @@
     <!--Add Timer Input Buttons-->
                   <div class="col-8"><!--Spacer--></div>
                   <div class="col-1">
-                    <svg id="svg-hrs-up-box" type="button" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
-                        <path id="hrs-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-                    </svg>                      
+                    <button id="time-hours-add-btn">
+                        <svg id="svg-hrs-up-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                            <path id="hrs-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                    </button>                      
                   </div>
                   <div class="col-1">
-                    <svg id="svg-min-up-box" type="button" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
-                        <path id="min-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-                    </svg>  
+                    <button id="time-minutes-add-btn">
+                        <svg id="svg-min-up-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                            <path id="min-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                    </button>
                   </div>
                   <div class="col-1"><!--Spacer--></div>
               </div>
@@ -121,14 +125,18 @@
     <!--Subtract Timer Input Buttons-->
                     <div class="row">
                         <div class="col-6">
-                            <svg id="svg-hrs-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
-                                <path id="hrs-btn-down" type="button" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-                            </svg>
+                            <button id="time-hours-subtract-btn">
+                                <svg id="svg-hrs-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                    <path id="hrs-btn-down" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                                </svg>
+                            </button>
                         </div>
                         <div class="col-6">
-                            <svg id="svg-min-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
-                                <path id="min-btn-down" type="button" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-                            </svg>
+                            <button id="time-minutes-subtract-btn">
+                                <svg id="svg-min-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                    <path id="min-btn-down" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
@@ -136,7 +144,7 @@
     <!--Tag-->
                     <div class="row">
                         <div class="col-12 py-2">
-                            <svg id="tag-box" type="button" xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
+                            <svg id="tag-box" xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
                                 <rect id="Rectangle_15" data-name="Rectangle 13" width="106.498" height="27" rx="13.5" fill="#dbdb93"/>
                                 <text id="tag" transform="translate(40.749 20)" fill="#474747" font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan x="0" y="0">tag</tspan></text>
                                 <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(6.381 5)" fill="#474747" stroke="#707070" stroke-width="1">
@@ -150,7 +158,7 @@
     <!--Focus-->
                     <div class="row py-3">
                         <div class="col-12">
-                            <svg id="focus-box" type="button" xmlns="http://www.w3.org/2000/svg" width="193" height="69" viewBox="0 0 193 69">
+                            <svg id="focus-box" xmlns="http://www.w3.org/2000/svg" width="193" height="69" viewBox="0 0 193 69">
                                 <rect id="Rectangle_12" data-name="Rectangle 12" width="193" height="36" rx="18" transform="translate(0 17)" fill="#474747"/>
                                 <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(59)" fill="#474747" stroke="#474747" stroke-width="1">
                                   <ellipse cx="39" cy="34.5" rx="39" ry="34.5" stroke="none"/>
@@ -164,11 +172,13 @@
 
     <!--Start-->
                     <div class="row py-2">
-                        <div class="col-12">
-                            <svg id="start-box" type="button" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
-                                <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
-                                <text id="start" transform="translate(32 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="start-text" x="0" y="0">start</tspan></text>
-                            </svg>                                
+                        <div class="col-12" type="button">
+                            <button id="start-btn">
+                                <svg id="start-box" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
+                                    <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
+                                    <text id="start" transform="translate(32 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="start-text" x="0" y="0">start</tspan></text>
+                                </svg>
+                            </button>                             
                         </div>
                     </div>
                 </div>

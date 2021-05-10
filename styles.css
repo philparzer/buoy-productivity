@@ -144,7 +144,7 @@ button{
 
 #svg-min-up-box{
     margin-top: 65px;
-    margin-left: -30px;
+    margin-left: -35px;
 }
 
 #svg-hrs-down-box{
@@ -154,7 +154,7 @@ button{
 
 #svg-min-down-box{
     margin-top: -5px;
-    margin-left: 10px;
+    margin-left: 5px;
     
 }
 
@@ -177,6 +177,7 @@ button{
 
 
 #hours{
+    width:10px;
     margin-top: 12px;
     font-size: 73px;
     padding: 0;
@@ -186,21 +187,25 @@ button{
 }
 
 #semicolon{
+    width:10px;
     color: var(--yellow);
     margin-top: 12px;
     font-size: 73px;
     padding: 0;
     text-align: center;
     line-height: 60px;
+    margin-right: -15px;
 }
 
 #minutes{
+    width:10px;
     margin-top: 12px;
     font-size: 73px;
-    padding: 0;
-    margin-right:15px;
+    padding: 0px;
+    margin-right:-10px;
     text-align: justify; 
     line-height: 73px;
+    padding-right: 40px;
 }
 
 #unit-hours{
@@ -211,7 +216,7 @@ button{
 
 #unit-minutes{
     margin-top: -20px;
-    margin-left: 5px;
+    margin-left: 13px;
     
 }
 
