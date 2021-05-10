@@ -1,3 +1,5 @@
+//VARS ------------------------------------------------------------
+
 //colors
 const red = '#DBA993';
 const yellow =  "#DBDB93";
@@ -6,7 +8,7 @@ const primaryGrey = "#474747";
 const darkerGrey =  "#3F3F3F";
 const lighterGrey =   "#707070";
 
-//buttons  ------------------------------------------------------------
+//buttons
 const aboutBtn = document.getElementById('about');
 const settingsBtn = document.getElementById('settings');
 
@@ -17,12 +19,16 @@ const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 
 const startBtn = document.getElementById('start-btn');
 
-//time  ------------------------------------------------------------
+//time
 let mins = 30;
 let hours = 0;
 
+const hoursElement = document.getElementById('hours');
+const minutesElement = document.getElementById('minutes');
 
-//reusable functions   ------------------------------------------------------------
+
+//REUSABLE FUNCTIONS   ------------------------------------------------------------
+
 function switchButtonStatus(){
     startBtn.disabled = !startBtn.disabled;
     addHoursBtn.disabled = !addHoursBtn.disabled;
@@ -47,7 +53,6 @@ function hoursSanityCheck(){
 
 }
 
-
 function minuteSanityCheck(){
     if (mins == -1){
         mins = 59;
@@ -69,7 +74,7 @@ function numberFormatter(number){
 
 } 
 
-//title bar  ------------------------------------------------------------
+//TITLEBAR  ------------------------------------------------------------
 
 const { ipcRenderer } = require( 'electron' );
 
@@ -82,29 +87,37 @@ document.getElementById('minimize-main').onclick = function() {
 }
 
 
-//timer-start  ------------------------------------------------------------
+//TIMER - MAIN  ------------------------------------------------------------ TODO: consider js worker ?
 
 startBtn.onclick = function(){
     
     switchButtonStatus();
-    document.getElementById('Rectangle_13').style.fill = red;
+    styleBuoy();
+
+    //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
+    let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60);
+    //set starting time
+    let startingTime = Date.now();
 
     
-    let timer = parseInt(document.getElementById('minutes').textContent) * 1000 /* Seconds to Mins -->  x60 */;
-    let start = Date.now();
-
-    let interval =  setInterval(function() {
-        var delta = Date.now() - start;
-        if(delta >= timer) {
+    //let timerLogic = main timer functionality
+    let timerLogic =  setInterval(function() {
+        //delta is time difference from start
+        var delta = Date.now() - startingTime;
+        //update HTML elements 
+        //TODO: add some function that checks every 30seconds (if delta divisible by 30? or 60? maybe) or so if 'minutes' and 'hours' vars have changed and update fields inside of this function instead of main intervall?
+        //check if timer has finished
+        if(delta >= timerInput) {
             switchButtonStatus();
             document.getElementById('Rectangle_13').style.fill ="";
-            alert("Time over");
-            clearInterval(interval);
+            unstyleBuoy();
+            alert("Time Over");
+            clearInterval(timerLogic);
         }
-        }, 1000);
+        }, 1000); //<- interval
 }
 
-//timer-input  ------------------------------------------------------------
+//TIMER - Input  ------------------------------------------------------------
 
 addMinutesBtn.onclick = function(){TimerInput(addMinutesBtn);}
 addHoursBtn.onclick = function(){TimerInput(addHoursBtn);}
@@ -121,7 +134,6 @@ function TimerInput(btn) {
         hoursSanityCheck();
     }
     if (btn == subtractMinutesBtn){
-        console.log("subtractingminutes")
         mins--;
         minuteSanityCheck();
     }   
@@ -130,8 +142,44 @@ function TimerInput(btn) {
         hoursSanityCheck();
     }
 
-
-    
-    document.getElementById("minutes").textContent = numberFormatter(mins);
-    document.getElementById("hours").textContent = numberFormatter(hours);
+    minutesElement.textContent = numberFormatter(mins);
+    hoursElement.textContent = numberFormatter(hours);
 };
+
+//Buoy Styling
+
+function styleBuoy(){
+    document.getElementById('semicolon').style.color = red;
+    document.getElementById('hrs-btn-up').style.display = 'none';
+    document.getElementById('min-btn-up').style.display = 'none';
+    document.getElementById('hrs-btn-down').style.display = 'none';
+    document.getElementById('min-btn-down').style.display = 'none';
+
+    //tag button
+    document.getElementById('Rectangle_15').style.fill = red;
+
+    //start button
+    document.getElementById('Rectangle_13').style.fill = red;
+    document.getElementById('start').textContent = "running";
+    document.getElementById('start').style.fill = darkerGrey;
+    document.getElementById('start').style.transform = "translate(21px, 21px)";
+
+
+}
+
+function unstyleBuoy(){
+    document.getElementById('semicolon').style.color = yellow;
+    document.getElementById('hrs-btn-up').style.display = 'unset';
+    document.getElementById('min-btn-up').style.display = 'unset';
+    document.getElementById('hrs-btn-down').style.display = 'unset';
+    document.getElementById('min-btn-down').style.display = 'unset';
+
+    //tag button
+    document.getElementById('Rectangle_15').style.fill = yellow;
+
+    //start button
+    document.getElementById('Rectangle_13').style.fill = primaryGrey;
+    document.getElementById('start').textContent = "start";
+    document.getElementById('start').style.fill = white;
+    document.getElementById('start').style.transform = "translate(32px, 21px)";
+}

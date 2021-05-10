@@ -1,19 +1,26 @@
-/*Background and Variables*/
+/* ############  Background, General and Variables  ############*/
 
 :root {
     --yellow: #DBDB93;
     --red: #DBA993;
     --white: #FAFAFA;
-
     --primaryGrey: #474747;
     --darkerGrey: #3F3F3F;
     --lighterGrey:  #707070;
 }
 
 *{
+    /*standard styling for unstyled text elemts*/
     font-family: Bahnschrift SemiBold;
     letter-spacing: -.07em;
-    color: white; /*TODO: delete this line when ready -> placeholder coloration for placeholder text*/
+    color: white;
+    /*stops user from interacting with text (copy, etc)*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 input:focus{
@@ -44,7 +51,7 @@ button{
     border: none;
 }
 
-/*Title Bar*/
+/*############  Title Bar  ############*/
 
 #title-bar{
     -webkit-app-region: drag;
@@ -129,7 +136,7 @@ button{
 }
 
 
-/*Buoy Main Input Fields TODO:*/
+/* ############  Buoy Main Input Fields  ############*/
 
 #timer-box{
     margin-top:-8px;
@@ -177,6 +184,7 @@ button{
 
 
 #hours{
+    
     width:10px;
     margin-top: 12px;
     font-size: 73px;
@@ -210,14 +218,13 @@ button{
 
 #unit-hours{
     margin-top: -20px;
-    margin-right: 50px;
+    margin-left: 5px;
     
 }
 
 #unit-minutes{
     margin-top: -20px;
-    margin-left: 13px;
-    
+    margin-left: 55px;
 }
 
 
@@ -244,11 +251,15 @@ button{
     margin-left: 75px;
 }
 
+#start{
+    transform: translate(32px, 21px);
+}
+
 #focus-box:hover > #focus{fill: var(--yellow)}
 #focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}
 
 
-/*DOTS (Last tasks)*/
+/* ############ DOTS (5 most recent tasks)  ############*/
 
 
 #dot-1 {
