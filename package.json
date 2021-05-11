@@ -23,5 +23,7 @@
     "url": ""
   },
   "homepage": "",
-  "dependencies": {}
+  "dependencies": {
+    "sqlite3": "^5.0.2"
+  }
 }

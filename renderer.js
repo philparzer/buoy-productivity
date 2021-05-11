@@ -64,6 +64,17 @@ document.getElementById('minimize-main').onclick = function() {
     ipcRenderer.send( 'app:minimize' );
 }
 
+//DATABASE  ------------------------------------------------------------
+var sqlite3 = require('sqlite3').verbose();
+
+
+function databaseWrite(valueArray){
+    var db = new sqlite3.Database('./buoy-db.db');
+    db.run('INSERT INTO buoy (programs, tag, time, state, date) VALUES ("' + valueArray[0] + '","' + valueArray[1] + '","' + valueArray[2] + '","' + valueArray[3] + '","' + valueArray[4] +'");"')
+    db.close()
+}
+
+databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
 //TIMER - MAIN  ------------------------------------------------------------
 
