@@ -6,7 +6,7 @@ const yellow =  "#DBDB93";
 const white =  "#FAFAFA";
 const primaryGrey = "#474747";
 const darkerGrey =  "#3F3F3F";
-const lighterGrey =   "#707070";
+const lighterGrey =  "#707070";
 
 //buttons
 const aboutBtn = document.getElementById('about');
@@ -20,10 +20,10 @@ const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 const startBtn = document.getElementById('start-btn');
 
 //time
-
-let mins = 30;
+    //main time calculation variables
+let mins = 30; 
 let hours = 0;
-
+    //initial input values -> set when user clicks start button
 let minsInput;
 let hrsInput;
 
@@ -41,32 +41,6 @@ function switchButtonStatus(){
     subtractMinutesBtn.disabled = !subtractMinutesBtn.disabled;
 }
 
-//FIXME: sanity checks
-
-function hoursSanityCheck(){
-    
-    if (hours == -1)
-    {
-        hours = 99;
-    }
-
-    else if (hours >= 99)
-    {
-        hours = 1;
-    }
-
-}
-
-function minuteSanityCheck(){
-    if (mins == -1){
-        mins = 59;
-    }
-    
-    if (mins == 60){
-        hours++;
-        mins = 0;
-    }
-}
 
 function numberFormatter(number){
 
@@ -130,7 +104,7 @@ startBtn.onclick = function(){
 
         if(delta >= timerInput) {
             switchButtonStatus();
-            document.getElementById('Rectangle_13').style.fill ="";
+            //document.getElementById('Rectangle_13').style.fill ="";
             unstyleBuoy();
             alert("Time Over");
             clearInterval(timerLogic);
@@ -175,6 +149,32 @@ function TimerInput(btn) {
 function setInputTimes(){
     hrsInput = hours;
     minsInput = mins;
+}
+
+//Input Sanity Checks
+
+function hoursSanityCheck(){
+    
+    if (hours == -1)
+    {
+        hours = 99;
+    }
+
+    else if (hours >= 99)
+    {
+        hours = 0; //changed from 1 to 0
+    }
+
+}
+
+function minuteSanityCheck(){
+    if (mins == -1){
+        mins = 59;
+    }
+    
+    if (mins == 60){
+        mins = 0;
+    }
 }
 
 //Buoy Styling  ------------------------------------------------------------
