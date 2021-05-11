@@ -26,7 +26,7 @@ let hours = 0;
     //initial input values -> set when user clicks start button
 let minsInput;
 let hrsInput;
-
+    //HTML elements timer
 const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
 
@@ -41,7 +41,7 @@ function switchButtonStatus(){
     subtractMinutesBtn.disabled = !subtractMinutesBtn.disabled;
 }
 
-
+    //formats numbers in timer to contain 0 at beginning
 function numberFormatter(number){
 
     if(number.toString().length < 2){
@@ -65,64 +65,60 @@ document.getElementById('minimize-main').onclick = function() {
 }
 
 
-//TIMER - MAIN  ------------------------------------------------------------ TODO: consider js worker ?
+//TIMER - MAIN  ------------------------------------------------------------
 
-startBtn.onclick = function(){
+startBtn.onclick = function(){ //starts the timer
 
     setInputTimes(); //sets the fixed input values for the count variable
-    switchButtonStatus();
-    styleBuoy();
-
-    //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
-    let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60);
-    //set starting time
-    let startingTime = Date.now();
+    switchButtonStatus(); //switches buttons to unclickable
+    styleBuoy(); //styles buoy to indicate that timer is running
 
     
-    //let timerLogic = main timer functionality
+    let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60); //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
+    let startingTime = Date.now(); //let starting time = current system clock local time
+
+    //main timer functionality
     let timerLogic =  setInterval(function() {
-        //delta is time difference from start in ms
-        var delta = Date.now() - startingTime;
+        var delta = Date.now() - startingTime; //delta is time difference from start in ms
         
         //counter
-        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user Input values and calculates time passed in seconds
-        console.log("count: " + count);
+        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in seconds
 
-        if(count < (hours*60 + mins) -1 )
+        //minutes html update
+        if(count < (hours*60 + mins) -1 ) 
             if(minutesElement.textContent != "00"){
                 mins--;
                 minutesElement.textContent = numberFormatter(mins);
             }
                 
-            
-            else{
-                hours--;
-                hoursElement.textContent = numberFormatter(hours);
-                minutesElement.textContent = numberFormatter(59);
-            }
+        //hours html update 
+        else{
+            hours--;
+            hoursElement.textContent = numberFormatter(hours);
+            minutesElement.textContent = numberFormatter(59);
+        }
 
-
-        if(delta >= timerInput) {
+        //timer finished
+        if(delta >= timerInput) { 
             switchButtonStatus();
-            //document.getElementById('Rectangle_13').style.fill ="";
             unstyleBuoy();
-            alert("Time Over");
+            alert("Time Over"); //TODO: PLACEHOLDER ALERT
             clearInterval(timerLogic);
             minutesElement.textContent = numberFormatter(0);
-            hoursElement.textContent = numberFormatter(0);
+            hoursElement.textContent = numberFormatter(0); 
         }
-        }, 1000); //<- interval of 1
-
-    
+        }, 1000); //<- interval of 1second 
 }
 
 //TIMER - Input  ------------------------------------------------------------
 
+    //onclick Events
 addMinutesBtn.onclick = function(){TimerInput(addMinutesBtn);}
 addHoursBtn.onclick = function(){TimerInput(addHoursBtn);}
 subtractMinutesBtn.onclick = function(){TimerInput(subtractMinutesBtn);}
 subtractHoursBtn.onclick = function(){TimerInput(subtractHoursBtn);}
-
+    
+    //button functionality and calls to sanitycheck input
 function TimerInput(btn) {
     if (btn == addMinutesBtn){
         mins++;
@@ -141,17 +137,18 @@ function TimerInput(btn) {
         hoursSanityCheck();
     }
 
+    //update HTML afterwards
     minutesElement.textContent = numberFormatter(mins);
     hoursElement.textContent = numberFormatter(hours);
 };
 
-
+    //sets input times once on start click
 function setInputTimes(){
     hrsInput = hours;
     minsInput = mins;
 }
 
-//Input Sanity Checks
+    //Input Sanity Checks
 
 function hoursSanityCheck(){
     
@@ -209,8 +206,8 @@ function unstyleBuoy(){
     document.getElementById('Rectangle_15').style.fill = yellow;
 
     //start button
-    document.getElementById('Rectangle_13').style.fill = primaryGrey;
+    document.getElementById('Rectangle_13').style.fill ="";
     document.getElementById('start').textContent = "start";
-    document.getElementById('start').style.fill = white;
+    document.getElementById('start').style.fill = "";
     document.getElementById('start').style.transform = "translate(32px, 21px)";
 }
