@@ -1,5 +1,11 @@
 //VARS ------------------------------------------------------------
 
+//requires
+const { ipcRenderer } = require('electron');
+var sqlite3 = require('sqlite3').verbose(); //also const?
+const { desktopCapturer } = require('electron')
+const activeWindows = require('electron-active-window');
+
 //colors
 const red = '#DBA993';
 const yellow =  "#DBDB93";
@@ -17,7 +23,10 @@ const addMinutesBtn = document.getElementById('time-minutes-add-btn');
 const subtractHoursBtn = document.getElementById('time-hours-subtract-btn');
 const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 
+//const tagBtn;
+const focusBtn = document.getElementById('focus-btn')
 const startBtn = document.getElementById('start-btn');
+
 
 //time
     //main time calculation variables
@@ -54,7 +63,7 @@ function numberFormatter(number){
 
 //TITLEBAR  ------------------------------------------------------------
 
-const { ipcRenderer } = require( 'electron' );
+
 
 document.getElementById('close-main').onclick = function() {
     ipcRenderer.send( 'app:quit' );
@@ -65,8 +74,6 @@ document.getElementById('minimize-main').onclick = function() {
 }
 
 //DATABASE  ------------------------------------------------------------
-var sqlite3 = require('sqlite3').verbose();
-
 
 function databaseWrite(valueArray){
     var db = new sqlite3.Database('./buoy-db.db');
@@ -87,28 +94,32 @@ startBtn.onclick = function(){ //starts the timer
     
     let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60); //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
     let startingTime = Date.now(); //let starting time = current system clock local time
-
+    
+    
     //main timer functionality
     let timerLogic =  setInterval(function() {
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
         
         //counter
-        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in seconds
+        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in float minutes
 
-        //minutes html update
-        if(count < (hours*60 + mins) -1 ) 
+        
+        if(count < (hours*60 + mins) -1 )
+
+            //minutes html update
             if(minutesElement.textContent != "00"){
                 mins--;
                 minutesElement.textContent = numberFormatter(mins);
             }
                 
-        //hours html update 
-        else{
-            hours--;
-            hoursElement.textContent = numberFormatter(hours);
-            minutesElement.textContent = numberFormatter(59);
-        }
-
+            //hours html update 
+            else{
+                hours--;
+                hoursElement.textContent = numberFormatter(hours);
+                minutesElement.textContent = numberFormatter(59);
+            }
+        
+        
         //timer finished
         if(delta >= timerInput) { 
             switchButtonStatus();
@@ -184,6 +195,26 @@ function minuteSanityCheck(){
         mins = 0;
     }
 }
+
+
+//FOCUS  ------------------------------------------------------------
+
+
+
+focusBtn.onclick = function(){
+    //set focus app and exceptions
+}
+
+    //TODO: check set focus app and exceptions
+    /*activeWindows().getActiveWindow().then((result)=>{
+        console.log(result)
+    });*/
+
+//TODO: get list of windows
+/*desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+    for (const source of sources) {console.log(source)}});*/
+
+
 
 //Buoy Styling  ------------------------------------------------------------
 

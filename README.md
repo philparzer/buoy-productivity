@@ -7,3 +7,8 @@ electron productivity app
 3. > npm init
 4. > npm install
 5. > npm run buoy
+
+## Important
+
+- VISUAL STUDIO COMMUNITY 2019 + C++ packages
+- > npm i electron-active-window
