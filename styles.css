@@ -1,5 +1,9 @@
 /* ############  Background, General and Variables  ############*/
 
+/*placeholder*/
+label{color:var(--darkerGrey);}
+option{color: var(--darkerGrey);}
+
 :root {
     --yellow: #DBDB93;
     --red: #DBA993;
@@ -393,7 +397,7 @@ button{
     font-family: helvetica;
     text-align: center;
     opacity: 0;
-    animation: fadeout 1s;
+    animation: fadeout .5s;
   }
 
   @keyframes fadeout {
@@ -407,7 +411,7 @@ button{
     font-family: helvetica;
     text-align: center;
     opacity: 1;
-    animation: fadein 1s;
+    animation: fadein .5s;
   }
 
   @keyframes fadein {
@@ -427,7 +431,7 @@ button{
     background-repeat: no-repeat;
      
     background-image: url('images/focus.png');
-    -webkit-transition: background 1s linear;
+    -webkit-transition: background .5s linear;
     
   }
 
@@ -442,6 +446,6 @@ button{
     background-repeat: no-repeat;
      
     background-image: url('images/bg.png');
-    -webkit-transition: background 1s linear;
+    -webkit-transition: background .5s linear;
     
   }

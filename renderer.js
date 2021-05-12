@@ -121,6 +121,7 @@ startBtn.onclick = function(){ //starts the timer
 
 
 
+
 //TIMER - Input  ########################################################################################################################
 
     //onclick Events  --------------------------------------------------------------------------------------------
@@ -164,6 +165,8 @@ focusBtn.onclick = function(){
     focusSet = true;
     enableStartBtn();
 }
+
+//TODO: function that adds open windows and toogle for each one by one to dropdown
 
 //TODO: check set focus app and exceptions
     /*activeWindows().getActiveWindow().then((result)=>{
