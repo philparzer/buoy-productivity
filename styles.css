@@ -165,19 +165,20 @@ button{
     
 }
 
-#hrs-btn-up:hover{
+
+#time-hours-add-btn:hover > #svg-hrs-up-box > #hrs-btn-up{
     stroke: var(--yellow);
 }
 
-#min-btn-up:hover{
+#time-minutes-add-btn:hover > #svg-min-up-box > #min-btn-up{
     stroke: var(--yellow);
 }
 
-#hrs-btn-down:hover{
+#time-hours-subtract-btn:hover > #svg-hrs-down-box > #hrs-btn-down{
     stroke: var(--yellow);
 }
 
-#min-btn-down:hover{
+#time-minutes-subtract-btn:hover > #svg-min-down-box > #min-btn-down{
     stroke: var(--yellow);
 }
 
@@ -230,7 +231,7 @@ button{
 
 #tag-box{
     margin-top: -10px; 
-    margin-left: 73px;
+    margin-left: 75px;
 }
 
 #tag-box:hover > #Rectangle_15{fill: var(--lighterGrey)}
@@ -239,7 +240,7 @@ button{
 
 #focus-box{
     margin-top: -20px;
-    margin-left: 30px;
+    margin-left: 28px;
 }
 
 #start-box:hover > #Rectangle_13{fill: var(--white);}
@@ -247,7 +248,7 @@ button{
     
 
 #start-box{
-    margin-top: -35px;
+    margin-top: -40px;
     margin-left: 75px;
 }
 
@@ -311,3 +312,136 @@ button{
     margin-top: 120px;
     margin-left: 120px;
 }
+
+
+
+
+
+
+/*Anims*/
+
+#loadingButton{
+    display: none;
+    margin: 0;
+    padding:0;
+    /*dots: margin-left: 100px;*/
+    margin-left: 85px;
+}
+
+  .loadingDot {
+    display: inline-block;
+    width: 10px;
+    height: 12px;
+    border-radius: 10px;
+    background-color: var(--red);
+    margin-bottom:20px;
+  }
+
+
+  .loadingDots .loadingDot:nth-last-child(1) {
+    animation: animLoad 3s 2.5s infinite;
+  }
+  .loadingDots .loadingDot:nth-last-child(2) {
+    animation: animLoad 3s 2s infinite;
+  }
+  .loadingDots .loadingDot:nth-last-child(3) {
+    animation: animLoad 3s 1.5s infinite;
+  }
+
+  @keyframes animLoad {
+    0% {
+      width: 10px;
+    }
+    50% {
+      width: 30px;
+    }
+    100% {
+      width: 10px;
+    }
+  }
+
+    /* DOTANIM 
+  
+   .loadingDots .loadingDot:nth-last-child(1) {
+    animation: animLoad 2s 0.4s linear infinite;
+  }
+  .loadingDots .loadingDot:nth-last-child(2) {
+    animation: animLoad 2s 0.8s linear infinite;
+  }
+  .loadingDots .loadingDot:nth-last-child(3) {
+    animation: animLoad 2s 1.4s linear infinite;
+  }
+  @keyframes animLoad {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, 15px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }*/
+
+
+  /*Fade Out / in */
+
+  
+.fade-out {
+    color: #ffffff;
+    font-size: large;
+    font-family: helvetica;
+    text-align: center;
+    opacity: 0;
+    animation: fadeout 1s;
+  }
+
+  @keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+.fade-in {
+    color: #ffffff;
+    font-size: large;
+    font-family: helvetica;
+    text-align: center;
+    opacity: 1;
+    animation: fadein 1s;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+
+#fade-in-bg{
+    
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+     
+    background-image: url('images/focus.png');
+    -webkit-transition: background 1s linear;
+    
+  }
+
+  #fade-out-bg{
+    
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+     
+    background-image: url('images/bg.png');
+    -webkit-transition: background 1s linear;
+    
+  }
