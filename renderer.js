@@ -59,6 +59,11 @@ function databaseWrite(valueArray){
     db.close()
 }
 
+//thought: insert at 'startonClick' only programs, tag, time, date -> not state
+//state=preset to false, gets overwritten in another function e.g databaseWriteState
+//function is called at end of timer intervall, if focus has been completed
+//https://stackoverflow.com/questions/10843332/how-to-get-last-inserted-row-id-in-sqlite
+
 databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
 //MAIN  ########################################################################################################################
@@ -118,10 +123,6 @@ startBtn.onclick = function(){ //starts the timer
 }
 
 
-
-
-
-
 //TIMER - Input  ########################################################################################################################
 
     //onclick Events  --------------------------------------------------------------------------------------------
@@ -158,26 +159,50 @@ function TimerInput(btn) {
 
 //FOCUS  ########################################################################################################################
 
-
-
 focusBtn.onclick = function(){
     //set focus app and exceptions
     focusSet = true;
     enableStartBtn();
+    //addOptionToDropdown();
 }
+//TODO: function that adds open windows one by one to dropdown + add toggle to each one
+ 
+// semi deprecated code snippets below:
 
-//TODO: function that adds open windows and toogle for each one by one to dropdown
+// function addOptionToDropdown() {
+//     var focusDropdown = document.getElementById("focus-dropdown");
+//     var option = document.createElement("OPTION");
+//     option.innerHTML = "test" /*  get one open window*/;
+//     option.value = "false" /* TOGGLE -> if "true" -> focus update when clicked to true*/;
+//     option.
+//     focusDropdown.options.add(option);
+    
+// }
 
-//TODO: check set focus app and exceptions
-    /*activeWindows().getActiveWindow().then((result)=>{
+// function toggleFocusValue(){ //adds onclick to option to enable toggle functionality
+//     if (this.value == "true"){option.value = "false"};
+//     if (this.value == "false"){option.value = "true"};
+// };
+
+
+
+//DEBUG WINDOW CHECKER 10secs
+setInterval(function() {
+
+
+    //TODO: check set focus app and exceptions
+    activeWindows().getActiveWindow().then((result)=>{
+        console.log("Active window:")
         console.log(result)
-    });*/
+    });
 
-//TODO: get list of windows
-/*desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
-    for (const source of sources) {console.log(source)}});*/
-
-
+    //TODO: get list of windows
+    desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+    /*for (const source of sources)*/ 
+    console.log("All open windows:")
+    console.log(sources)
+    });
+}, 10000)
 
 //UTIL FUNCTIONS   ########################################################################################################################
 

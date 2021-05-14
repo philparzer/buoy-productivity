@@ -17,16 +17,17 @@
   "author": "Philipp Parzer, Johannes Parzer",
   "license": "TODO:",
   "devDependencies": {
-    "electron": "^12.0.6"
+    "electron": "^12.0.7"
   },
   "bugs": {
     "url": "TODO:"
   },
-  "homepage": "",
+  "homepage": "buoy-productivity.com",
   "dependencies": {
     "electron-active-window": "0.0.5",
     "fs": "0.0.1-security",
     "node-addon-api": "^3.1.0",
+    "popper.js": "^1.16.1",
     "sqlite3": "^5.0.2"
   }
 }

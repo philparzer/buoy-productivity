@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain, remote} = require('electron')
 const path = require('path')
-
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 function createWindow () {
   // Create the browser window.

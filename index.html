@@ -6,13 +6,21 @@
     <title>buoy productivity</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./styles.css">
+
+    <!-- First popper.js then bootstrap (jquery no longer needed since bootstrap 5.0)-->
+
+    <script>require('popper.js');</script>
+    <script src="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/js/bootstrap.bundle.js"></script>
+
+
   </head>
 
   <body>
 
       <div id="main-background"> <!--Sets the png background image-->
+
 
 <!--################## Titlebar ##########################-->
           <div class="container-fluid" id="title-bar">
@@ -198,23 +206,27 @@
           </div>
       </div>
 
-    <!--TODO: PLACEHOLDER DROPDOWN-->
-      <label> Set your focus</label>
-      <select id = "open windows">
-        <option>option1</option>
-        <option>option2</option>
-        <option>option3</option>
-          <!--options are instantiated here + button-->
-      </select>
-
-      
+<!--PLACEHOLDER FOR FOCUS TEST-->
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropdown
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2"> <!--TODO: ADD BUTTONS DYNAMICALLY VIA JS-->
+          <li><button class="dropdown-item" type="button">Action</button></li> 
+          <li><button class="dropdown-item" type="button">Another action</button></li>
+          <li><button class="dropdown-item" type="button">Something else here</button></li>
+        </ul>
+    </div>
+    
 <!--#################### JS #############################-->
+
+    
 
     <!-- Electron Render Script -->
     <script src="./renderer.js"> </script>
-    
-    <!--TODO: Jquery, Popper.js, Bootstrap-->
 
+
+    
 
   </body>
 </html>
