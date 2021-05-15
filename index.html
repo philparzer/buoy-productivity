@@ -32,8 +32,8 @@
                       <input id="search" class="form" placeholder="search"></form>
                   </div>
                   <div class="col-2">
-                      <button id="about">about</button>
-                      <button id="settings">settings</button>
+                    <button id="about">about</button>
+                    <button id="settings">settings</button>
                   </div>
                   <div class="col-5">
                       
@@ -63,7 +63,7 @@
               
     <!--Calendar   ----------------------------------------------------------------------->
               <div class="row pt-5">
-                  <div class="col-1 pt-3">
+                  <div id="calendar-box" class="col-1 pt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
                     <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
                     </svg>
@@ -165,9 +165,21 @@
                     </div>
 
     <!--Focus   ----------------------------------------------------------------------->
+                  
                     <div class="row py-3">
                         <div class="col-12">
-                            <button id="focus-btn">
+
+                            <div id="focus-dropdown-box" class="dropdown">
+                                <button id="focus-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  focus
+                                </button>
+                                <ul id="focus-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2"> <!--TODO: ADD BUTTONS DYNAMICALLY VIA JS-->
+                                  <!--<li><button id="reload-dropdown" class="dropdown-item" type="button">reload list</button></li>-->
+                                </ul>
+                            </div>
+
+                            <!--DEPRECATED-->
+                            <!-- <button id="focus-btn">
                                 <svg id="focus-box" xmlns="http://www.w3.org/2000/svg" width="193" height="69" viewBox="0 0 193 69">
                                     <rect id="Rectangle_12" data-name="Rectangle 12" width="193" height="36" rx="18" transform="translate(0 17)" fill="#474747"/>
                                     <g id="Ellipse_8" data-name="Ellipse 8" transform="translate(59)" fill="#474747" stroke="#474747" stroke-width="1">
@@ -176,7 +188,7 @@
                                     </g>
                                     <text id="focus" transform="translate(65 44)" fill="#fafafa" font-size="32" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan  x="0" y="0">focus</tspan></text>
                                 </svg>
-                            </button>
+                            </button> -->
                         </div>
                     </div>
 
@@ -207,16 +219,7 @@
       </div>
 
 <!--PLACEHOLDER FOR FOCUS TEST-->
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2"> <!--TODO: ADD BUTTONS DYNAMICALLY VIA JS-->
-          <li><button class="dropdown-item" type="button">Action</button></li> 
-          <li><button class="dropdown-item" type="button">Another action</button></li>
-          <li><button class="dropdown-item" type="button">Something else here</button></li>
-        </ul>
-    </div>
+    
     
 <!--#################### JS #############################-->
 

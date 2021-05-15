@@ -44,7 +44,8 @@ html, body {
     max-height: 100%;
     margin: 0;
     padding: 0;
-    background-image: url("images/bg.png");
+    /*background-image: url("images/bg.png");*/
+    background-image: url("images/bg2.png");
     background-size:100% 100%;
     background-repeat: no-repeat;
  
@@ -242,10 +243,10 @@ button{
 #tag-box:hover > #tag {fill: var(--white)} 
 
 
-#focus-box{
+/*#focus-box{
     margin-top: -20px;
     margin-left: 28px;
-}
+}*/
 
 #start-box:hover > #Rectangle_13{fill: var(--white);}
 #start-box:hover > #start {fill: var(--darkerGrey)} 
@@ -260,8 +261,56 @@ button{
     transform: translate(32px, 21px);
 }
 
+/*FOCUS DROPDOWN*/
+
+#focus-dropdown{
+  margin-right: 300px;
+}
+
+#focus-btn {
+  background-color: var(--primaryGrey);
+  border-radius: 100%;
+  padding-top: 10px;
+  padding-left: 3px;
+  padding-right: 6px;
+  padding-bottom: 10px;
+  border: none;
+  font-size: 40px;
+}
+
+#focus-btn:focus{
+  color: var(--darkerGrey);
+  background-color: var(--yellow)
+}
+
+#focus-btn:hover{
+  color: var(--darkerGrey);
+  background-color: var(--yellow)
+}
+
+.dropdown-menu{
+  background-color: var(--primaryGrey);
+}
+
+.dropdown-item{
+  color: var(--white);
+}
+
+/*DEPRECATED
 #focus-box:hover > #focus{fill: var(--yellow)}
-#focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}
+#focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}*/
+
+
+#focus-dropdown-box{
+  margin-left: 85px;
+  margin-top: -20px;
+}
+
+#focus-dropdown{
+  width: 90px;
+  height: 200px;
+  
+}
 
 
 /* ############ DOTS (5 most recent tasks)  ############*/
@@ -445,7 +494,9 @@ button{
     background-size:100% 100%;
     background-repeat: no-repeat;
      
-    background-image: url('images/bg.png');
+    background-image: url('images/bg2.png');
     -webkit-transition: background .5s linear;
     
   }
+
+

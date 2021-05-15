@@ -1,5 +1,30 @@
 //VARS  ########################################################################################################################
 
+//program identifiers for parsing captured windows
+    //Browsers
+    const edge = "Microsoft​ Edge";
+    const chrome = "Google Chrome";
+
+    //Popular Apps
+    const blender = "Blender";
+    const vsCode = "Visual Studio Code"
+        //TODO: TEXT EDITING
+        //TODO: 3D EDITING
+        //TODO: AUDIO
+        //TODO: PDF Readers
+        //TODO: CODE EDITORS
+        //TODO: VISUAL EFFECTS
+        //TODO: MAIL
+        //TODO: Engines
+        //TODO: Drawing
+        //TODO: ADOBE Suite
+        //TODO: Microsoft Suite
+        //TODO: Version Control
+        //TODO: Remote Working Tools
+        //TODO: Socials
+        
+    
+
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
@@ -40,6 +65,7 @@ const minutesElement = document.getElementById('minutes');
 
 //focus  --------------------------------------------------------------------------------------------
 let focusSet = false;
+let programArray = [];
 
 //TITLEBAR  ########################################################################################################################
 
@@ -159,31 +185,78 @@ function TimerInput(btn) {
 
 //FOCUS  ########################################################################################################################
 
+
 focusBtn.onclick = function(){
-    //set focus app and exceptions
     focusSet = true;
-    enableStartBtn();
-    //addOptionToDropdown();
+    getOpenPrograms();
+
+    enableStartBtn(); //temporary TODO: move to correct position (after focus has been set)
 }
-//TODO: function that adds open windows one by one to dropdown + add toggle to each one
- 
-// semi deprecated code snippets below:
 
-// function addOptionToDropdown() {
-//     var focusDropdown = document.getElementById("focus-dropdown");
-//     var option = document.createElement("OPTION");
-//     option.innerHTML = "test" /*  get one open window*/;
-//     option.value = "false" /* TOGGLE -> if "true" -> focus update when clicked to true*/;
-//     option.
-//     focusDropdown.options.add(option);
+
+
+//uses electron-desktopcapturer to find open windows / programs 
+function getOpenPrograms() {
+
+    desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
+        for (const source of sources){
+            var parsedSource = parseSource(source.name);
+
+            if (parsedSource == 0)
+            {
+                continue;
+            }
+            
+
+            if (!programArray.includes(parsedSource)) {
+                programArray.push(parsedSource);
+                console.log("Program Array is now: " + programArray);
+                addProgramToDropdown("- " + parsedSource);
+            }
+            
+
+        }});
+        
+}
+
+//parses results from desktop capturer
+function parseSource(unparsedSource) {
+
+    //remove screens
+    if (unparsedSource == "Screen 1" || unparsedSource == "Screen 2" || unparsedSource == "Screen 3" || unparsedSource == "Screen 4" || unparsedSource == "Screen 5"){return 0;};
+
+    //remove screens
+    if (unparsedSource == "buoy-productivity"){return 0;};
+
+    //remove overlays
+    if (unparsedSource == "NVIDIA GeForce Overlay"){return 0;}
     
-// }
+    //parse Browsers
+    if(unparsedSource.includes(edge)) {return edge};
+    if(unparsedSource.includes(chrome)) {return chrome};
 
-// function toggleFocusValue(){ //adds onclick to option to enable toggle functionality
-//     if (this.value == "true"){option.value = "false"};
-//     if (this.value == "false"){option.value = "true"};
-// };
+    //parse Applications
+    if(unparsedSource.includes(blender)) {return blender};
+    if (unparsedSource.includes(vsCode)) {return vsCode};
 
+
+    return unparsedSource;
+}
+
+
+//adds parsed results from desktop capturer
+function addProgramToDropdown(program) {
+    var focusDropdown = document.getElementById("focus-dropdown");
+    var listItem = document.createElement("li");
+    var listItemButton = document.createElement("button");
+    focusDropdown.appendChild(listItem);
+    listItem.appendChild(listItemButton);
+    listItemButton.className += "dropdown-item";
+    listItemButton.type = "button";
+    listItemButton.textContent = program; //add parsed string here
+    //TODO: set id of button or list item to name of program added or index?
+    //TODO: set up button to toggle focus
+}
 
 
 //DEBUG WINDOW CHECKER 10secs
@@ -196,12 +269,6 @@ setInterval(function() {
         console.log(result)
     });
 
-    //TODO: get list of windows
-    desktopCapturer.getSources({ types: ['window', 'screen'] }).then(async sources => {
-    /*for (const source of sources)*/ 
-    console.log("All open windows:")
-    console.log(sources)
-    });
 }, 10000)
 
 //UTIL FUNCTIONS   ########################################################################################################################
@@ -276,6 +343,10 @@ function setInputTimes(){
 //Styling  ########################################################################################################################
 
 function styleBackground(){
+    
+    //calendar
+    document.getElementById('calendar-box').style.display = 'none';
+    
     //  dots fade out
 
     try{document.getElementById("fade-out-bg").id = "main-background"} //ensures that bg fade works second time around
@@ -299,17 +370,22 @@ function styleBuoy(){
     document.getElementById('hrs-btn-down').style.display = 'none';
     document.getElementById('min-btn-down').style.display = 'none';
 
-    //focus buttons
-    document.getElementById('Ellipse_8').style.fill = red;
-    document.getElementById('focus').style.fill = darkerGrey;
+    //focus button DEPRECATED
+    //document.getElementById('Ellipse_8').style.fill = red;
+    //document.getElementById('focus').style.fill = darkerGrey;
 
     //tag button
     document.getElementById('Rectangle_15').style.fill = red;
 
+
+    //focus Dropdown
+    document.getElementById('focus-dropdown-box').style.display ="none";
+
+
     //start button
     document.getElementById('start-box').style.display = 'none';
     document.getElementById('loadingButton').style.display = 'unset';
-    document.getElementById('focus-btn').style.marginBottom ='-70px';
+    //DEPRECATED document.getElementById('focus-btn').style.marginBottom ='-70px';
 
     
 }
@@ -322,19 +398,29 @@ function unstyleBuoy(){
     document.getElementById('min-btn-down').style.display = 'unset';
 
     //focus buttons
-    document.getElementById('Ellipse_8').style.fill = primaryGrey;
-    document.getElementById('focus').style.fill = white;
+    //DEPRECATED document.getElementById('Ellipse_8').style.fill = primaryGrey;
+    //document.getElementById('focus').style.fill = white;
+    
 
     //tag button
     document.getElementById('Rectangle_15').style.fill = yellow;
+    //Loading button
+    document.getElementById('loadingButton').style.display ='none';
+    //focus button FIXME:
+    document.getElementById('focus-dropdown-box').style.display ="unset";
+    document.getElementById('focus-btn').style.marginTop ='-5px';
+    
 
     //start button
-    document.getElementById('loadingButton').style.display ='none';
+    
     document.getElementById('start-box').style.display = 'unset';
-    document.getElementById('focus-btn').style.marginBottom ='unset';
+    
 }
 
 function unstyleBackground(){
+
+    //calendar
+    document.getElementById('calendar-box').style.display = 'unset';
 
     //  dots fade in
     document.getElementById("dot-1").className = "fade-in";
@@ -345,5 +431,6 @@ function unstyleBackground(){
     
     //background image fade in
     document.getElementById("fade-in-bg").id = "fade-out-bg";
+
     
 }
