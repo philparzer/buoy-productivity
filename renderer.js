@@ -351,6 +351,12 @@ function setInputTimes(){
 
 function styleBackground(){
     
+    //title bar
+    document.getElementById('search').style.display = 'none';
+    document.getElementById('manage-tags-dropdown-box').style.display ='none';
+    document.getElementById('about').style.display ='none';
+    document.getElementById('settings').style.display ='none';
+
     //calendar
     document.getElementById('calendar-box').style.display = 'none';
     
@@ -368,6 +374,10 @@ function styleBackground(){
 
     //background image
     document.getElementById("main-background").id = "fade-in-bg";
+
+
+
+    
 }
 
 function styleBuoy(){
@@ -425,6 +435,12 @@ function unstyleBuoy(){
 }
 
 function unstyleBackground(){
+
+    //title bar
+    document.getElementById('search').style.display = 'unset';
+    document.getElementById('manage-tags-dropdown-box').style.display ='unset';
+    document.getElementById('about').style.display ='unset';
+    document.getElementById('settings').style.display ='unset';
 
     //calendar
     document.getElementById('calendar-box').style.display = 'unset';

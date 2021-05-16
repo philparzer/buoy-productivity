@@ -104,9 +104,16 @@ button{
     border-radius: 30px;
     color: var(--yellow);
     background-color: var(--primaryGrey);
-    border: none;
-    margin-top: 10px;
+    border-width: 2px;
+    border: solid;
+    border-color: var(--primaryGrey);
+    margin-top: 7px;
     
+}
+
+#search:hover{
+  border: solid;
+  
 }
 
 
@@ -127,7 +134,7 @@ button{
 }
 
 #additional-fields{
-  margin-left: -35px;
+  margin-left: -38px;
 }
 
 #minimize-main:hover{
@@ -152,7 +159,7 @@ button{
   border-radius: 30px;
   border: none;
   color: var(--yellow);
-  margin-left: 8px;
+  margin-left: 10px;
 }
 
 
@@ -167,15 +174,22 @@ button{
 
 #add-tag-input{
   color: var(--yellow);
-  background-color: var(--primaryGrey)
+  background-color: var(--primaryGrey);
+  border: solid;
+  border-width: 2px;
+  border-radius: 30px;
+  border-color: var(--primaryGrey);
   
 }
 
 #add-tag-input-button{
-  background-color: var(--white);
+
+  margin-top: 2px;
   text-align: center;
-  color: var(--darkerGrey);
-  border-radius: 30px;;
+  color: var(--white);
+  border-radius: 30px;
+  border: solid;
+  border-color: var(--yellow);
 }
 
 #add-tag-input-button:hover{
@@ -185,12 +199,11 @@ button{
   border-radius: 30px;;
 }
 
-#add-tag-input-box:hover{
-  background-color: var(--primaryGrey);
-}
 
 #add-tag-input:hover{
   background-color: var(--primaryGrey);
+
+  border-color: var(--yellow);
 }
 
 #tag-resolve-headline{
@@ -208,6 +221,19 @@ button{
   border-radius:2px;
 }
 
+#add-tag-input-button-box:hover{
+  background-color: var(--primaryGrey);
+}
+
+/* ############  Calendar  ############*/
+
+#calendar-btn{
+  margin-left: -10px;
+}
+
+#calendar-btn:hover > #dropdown-arrow > #Path_10{
+  stroke: var(--yellow);
+}
 
 /* ############  Buoy Main Input Fields  ############*/
 

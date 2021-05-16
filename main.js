@@ -3,6 +3,10 @@ const {app, BrowserWindow, ipcMain, remote} = require('electron')
 const path = require('path')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
+
+//TODO: use electron-store to store user language settings in preferences and open correct html
+
+
 function createWindow () {
   // Create the browser window.
   

@@ -39,7 +39,7 @@
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li><input id="add-tag-input" class="dropdown-item" type="input" placeholder="add a tag" ></input></li>
-                            <li><div id="add-tag-input-box" class="dropdown-item"><button id="add-tag-input-button">add&nbsp</button></div></li> <!--TODO: HIDE UNTIL INPUT FIELD CONTAINS TEXT-->
+                            <li><div id="add-tag-input-button-box" class="dropdown-item"><button id="add-tag-input-button">add&nbsp</button></div></li> <!--TODO: HIDE UNTIL INPUT FIELD CONTAINS TEXT-->
                             <div class="dropdown-divider"></div>
                             <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li> <!--TODO: POPPERJS POPUP TOOLTIP-->
                             
@@ -82,9 +82,11 @@
     <!--Calendar   ----------------------------------------------------------------------->
               <div class="row pt-5">
                   <div id="calendar-box" class="col-1 pt-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
-                    <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-                    </svg>
+                      <button id="calendar-btn">
+                        <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
+                            <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                      </button>
                   </div>
 
     <!--Add Timer Input Buttons-->
