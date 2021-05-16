@@ -218,7 +218,7 @@ function getOpenPrograms() {
             if (!programArray.includes(parsedSource)) {
                 programArray.push(parsedSource);
                 console.log("Program Array is now: " + programArray);
-                addProgramToDropdown("- " + parsedSource);
+                addProgramToDropdown(parsedSource);
             }
             
 

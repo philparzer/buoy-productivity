@@ -348,7 +348,7 @@ button{
 
 #focus-btn:focus{
   color: var(--darkerGrey);
-  background-color: var(--yellow)
+  background-color: var(--yellow);
 }
 
 #focus-btn:hover{
@@ -372,13 +372,30 @@ button{
 
 .dropdown-item:focus{
   background-color: var(--primaryGrey);
+
 }
 
+.dropdown-menu-center {
+  border: none;
+  border-radius: 30px;
+  left: -50px !important;
+  top: 2px !important;
+
+
+}
 
 /*DEPRECATED
 #focus-box:hover > #focus{fill: var(--yellow)}
 #focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}*/
 
+#focus-dropdown-heading{
+  text-align: center;
+  color: var(--lighterGrey);
+}
+
+#focus-dropdown-heading:hover{
+  background-color: var(--primaryGrey);
+}
 
 #focus-dropdown-box{
   margin-left: 82px;
@@ -386,8 +403,8 @@ button{
 }
 
 #focus-dropdown{
-  width: 90px;
-  height: 200px;
+  width: 195px!important;
+  height: 380px!important;
   
 }
 
