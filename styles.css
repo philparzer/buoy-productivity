@@ -126,6 +126,10 @@ button{
     margin-left: 20px;
 }
 
+#additional-fields{
+  margin-left: -35px;
+}
+
 #minimize-main:hover{
     background-color: var(--yellow);
 }
@@ -138,6 +142,70 @@ button{
 
 #close-main:hover{
     background-color: var(--red);
+}
+
+/*MANAGE TAGS*/
+#manage-tags-btn{
+  background-color: var(--darkerGrey);
+  line-height: 10px;
+  margin-top: 10px;
+  border-radius: 30px;
+  border: none;
+  color: var(--yellow);
+  margin-left: 8px;
+}
+
+
+#manage-tags-dropdown-box{
+  -webkit-app-region: no-drag;
+  
+}
+
+#manage-tags-dropdown{
+  height: 380px;
+}
+
+#add-tag-input{
+  color: var(--yellow);
+  background-color: var(--primaryGrey)
+  
+}
+
+#add-tag-input-button{
+  background-color: var(--white);
+  text-align: center;
+  color: var(--darkerGrey);
+  border-radius: 30px;;
+}
+
+#add-tag-input-button:hover{
+  background-color: var(--yellow);
+  text-align: center;
+  color: var(--darkerGrey);
+  border-radius: 30px;;
+}
+
+#add-tag-input-box:hover{
+  background-color: var(--primaryGrey);
+}
+
+#add-tag-input:hover{
+  background-color: var(--primaryGrey);
+}
+
+#tag-resolve-headline{
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+#tag-resolve-headline:hover{
+  background-color: var(--primaryGrey);
+}
+
+.tag-resolve:hover{
+  background-color: var(--red)!important;
+  color: var(--primaryGrey)!important;
+  border-radius:2px;
 }
 
 
@@ -254,7 +322,7 @@ button{
 
 #start-box{
     margin-top: -40px;
-    margin-left: 75px;
+    margin-left: 72px;
 }
 
 #start{
@@ -292,9 +360,20 @@ button{
   background-color: var(--primaryGrey);
 }
 
+
 .dropdown-item{
   color: var(--white);
 }
+
+.dropdown-item:hover{
+  background-color: var(--lighterGrey);
+  color: var(--white);
+}
+
+.dropdown-item:focus{
+  background-color: var(--primaryGrey);
+}
+
 
 /*DEPRECATED
 #focus-box:hover > #focus{fill: var(--yellow)}
@@ -302,7 +381,7 @@ button{
 
 
 #focus-dropdown-box{
-  margin-left: 85px;
+  margin-left: 82px;
   margin-top: -20px;
 }
 

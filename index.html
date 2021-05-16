@@ -31,13 +31,31 @@
                   <div class="col-2">
                       <input id="search" class="form" placeholder="search"></form>
                   </div>
-                  <div class="col-2">
-                    <button id="about">about</button>
-                    <button id="settings">settings</button>
+                  <div class="col-1">
+    <!--Tag Manager TODO: IMPLEMENT FUNCTIONALITY IN JS  ----------------------------------------------------------------------->
+                    <div id="manage-tags-dropdown-box" class="dropdown"> 
+                        <button id="manage-tags-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                          tags
+                        </button>
+                            <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
+                            <li><input id="add-tag-input" class="dropdown-item" type="input" placeholder="add a tag" ></input></li>
+                            <li><div id="add-tag-input-box" class="dropdown-item"><button id="add-tag-input-button">add&nbsp</button></div></li> <!--TODO: HIDE UNTIL INPUT FIELD CONTAINS TEXT-->
+                            <div class="dropdown-divider"></div>
+                            <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li> <!--TODO: POPPERJS POPUP TOOLTIP-->
+                            
+                            <li><button class="dropdown-item tag-resolve" type="button">testtag</button></li>
+                            </ul>
+                    </div>
+
+    <!--Additional Title Bar Fields   ----------------------------------------------------------------------->                
                   </div>
-                  <div class="col-5">
-                      
+                  <div class="col-2" id="additional-fields">
+                    <button id="about">settings</button>
+                    <button id="settings">about</button>
                   </div>
+                  <div class="col-4"></div>
+    
+    <!--Min and Close Buttons   ----------------------------------------------------------------------->
                   <div class="col" type="button" id="minimize-main">
                       <button id="min-btn">
                           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="2" viewBox="0 0 12 1">
@@ -150,7 +168,7 @@
                     </div>
 
 
-    <!--Tag   ----------------------------------------------------------------------->
+    <!--Tag  TODO: RECREATE SAME UI W BOOTSTRAP DROPDOWN ----------------------------------------------------------------------->
                     <div class="row">
                         <div class="col-12 py-2">
                             <svg id="tag-box" xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
@@ -167,7 +185,7 @@
     <!--Focus   ----------------------------------------------------------------------->
                   
                     <div class="row py-3">
-                        <div class="col-12">
+                        <div class="col-12" id="focus-col">
 
                             <div id="focus-dropdown-box" class="dropdown">
                                 <button id="focus-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -194,7 +212,7 @@
 
     <!--Start   ----------------------------------------------------------------------->
                     <div class="row py-2">
-                        <div class="col-12" type="button">
+                        <div class="col-12">
                             <button id="start-btn">
                                 <svg id="start-box" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
                                     <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
@@ -212,14 +230,12 @@
                     </div>
                 </div>
 
-                <div class="col"><!-- Right Spacer--></div>
+                <div class="col"></div>
 
               </div>
           </div>
       </div>
 
-<!--PLACEHOLDER FOR FOCUS TEST-->
-    
     
 <!--#################### JS #############################-->
 

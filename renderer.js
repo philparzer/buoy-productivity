@@ -181,7 +181,14 @@ function TimerInput(btn) {
     hoursElement.textContent = numberFormatter(hours);
 };
 
+//TAGS  ########################################################################################################################
 
+TODO:
+//1. add event that triggers on interaction with tag manager input field
+//2. event hides/unhides add button depending on status of input field (checks if empty or not) 
+//2. hook up add button to add to list below and list of possible tags in buoy input
+//3. implement resolve tag functionality, that removes tags from buoy tag list
+ 
 
 //FOCUS  ########################################################################################################################
 
@@ -226,7 +233,7 @@ function parseSource(unparsedSource) {
     if (unparsedSource == "Screen 1" || unparsedSource == "Screen 2" || unparsedSource == "Screen 3" || unparsedSource == "Screen 4" || unparsedSource == "Screen 5"){return 0;};
 
     //remove screens
-    if (unparsedSource == "buoy-productivity"){return 0;};
+    if (unparsedSource == "buoy productivity" ||unparsedSource == "buoy-productivity"){return 0;};
 
     //remove overlays
     if (unparsedSource == "NVIDIA GeForce Overlay"){return 0;}
@@ -379,7 +386,7 @@ function styleBuoy(){
 
 
     //focus Dropdown
-    document.getElementById('focus-dropdown-box').style.display ="none";
+    document.getElementById('focus-col').style.display ="none";
 
 
     //start button
@@ -407,8 +414,8 @@ function unstyleBuoy(){
     //Loading button
     document.getElementById('loadingButton').style.display ='none';
     //focus button FIXME:
-    document.getElementById('focus-dropdown-box').style.display ="unset";
-    document.getElementById('focus-btn').style.marginTop ='-5px';
+    document.getElementById('focus-col').style.display ="unset";
+    document.getElementById('focus-btn').style.marginTop ='';
     
 
     //start button
