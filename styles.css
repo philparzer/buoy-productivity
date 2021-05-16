@@ -56,7 +56,7 @@ button{
     border: none;
 }
 
-/*############  Title Bar  ############*/
+/*############  Title Bar   #######################################################################*/
 
 #title-bar{
     -webkit-app-region: drag;
@@ -104,7 +104,6 @@ button{
     border-radius: 30px;
     color: var(--yellow);
     background-color: var(--primaryGrey);
-    border-width: 2px;
     border: solid;
     border-color: var(--primaryGrey);
     margin-top: 7px;
@@ -113,7 +112,6 @@ button{
 
 #search:hover{
   border: solid;
-  
 }
 
 
@@ -170,16 +168,17 @@ button{
 
 #manage-tags-dropdown{
   height: 380px;
+  left: -5px !important;
+  top: 5px !important;
 }
 
 #add-tag-input{
   color: var(--yellow);
   background-color: var(--primaryGrey);
   border: solid;
-  border-width: 2px;
+  border-width: 3px;
   border-radius: 30px;
   border-color: var(--primaryGrey);
-  
 }
 
 #add-tag-input-button{
@@ -225,7 +224,7 @@ button{
   background-color: var(--primaryGrey);
 }
 
-/* ############  Calendar  ############*/
+/* ############  Calendar  #######################################################################*/
 
 #calendar-btn{
   margin-left: -10px;
@@ -235,7 +234,7 @@ button{
   stroke: var(--yellow);
 }
 
-/* ############  Buoy Main Input Fields  ############*/
+/* ############  Buoy Main Input Fields #######################################################################*/
 
 #timer-box{
     margin-top:-8px;
@@ -333,27 +332,62 @@ button{
     margin-left: 75px;
 }
 
+/*TAG BUOY*/
+
+#tag-buoy-dropdown-box{
+  margin-left: 70px;
+  margin-top: -9px;
+}
+
+#tag-buoy-btn{
+  border-radius: 30px;
+  padding: 0;
+  border: solid;
+  border-color: var(--darkerGrey);
+}
+
+
+#tag-buoy-btn:hover{
+  border-color: var(--lighterGrey);
+}
+
+
+#tag-buoy-dropdown{
+  background-color: var(--yellow);
+  border-radius: 30px;
+  border: none;
+  left: -39px !important;
+  top: 2px !important;
+  width: 195px!important;
+  height: 300px!important;
+}
+
 #tag-box:hover > #Rectangle_15{fill: var(--lighterGrey)}
 #tag-box:hover > #tag {fill: var(--white)} 
 
-
-/*#focus-box{
-    margin-top: -20px;
-    margin-left: 28px;
-}*/
-
-#start-box:hover > #Rectangle_13{fill: var(--white);}
-#start-box:hover > #start {fill: var(--darkerGrey)} 
-    
-
-#start-box{
-    margin-top: -40px;
-    margin-left: 72px;
+#tag-buoy-dropdown-heading{
+  text-align: center;
+  color: var(--lighterGrey);
+  line-height: 5px;
 }
 
-#start{
-    transform: translate(32px, 21px);
+#tag-buoy-dropdown-heading:hover{
+  background-color: var(--yellow);
 }
+
+
+
+
+.dropdown-item-tag{
+  color: var(--primaryGrey)!important;
+  text-align: center;
+}
+
+.dropdown-item-tag:hover{
+  color: var(--yellow)!important;
+  background-color: var(--darkerGrey)!important;
+}
+
 
 /*FOCUS DROPDOWN*/
 
@@ -362,6 +396,7 @@ button{
 }
 
 #focus-btn {
+  margin-top: -2px;
   background-color: var(--primaryGrey);
   border-radius: 100%;
   padding-top: 10px;
@@ -406,13 +441,7 @@ button{
   border-radius: 30px;
   left: -50px !important;
   top: 2px !important;
-
-
 }
-
-/*DEPRECATED
-#focus-box:hover > #focus{fill: var(--yellow)}
-#focus-box:hover > #Rectangle_12{fill: var(--lighterGrey)}*/
 
 #focus-dropdown-heading{
   text-align: center;
@@ -434,8 +463,23 @@ button{
   
 }
 
+/*START BUTTON*/
 
-/* ############ DOTS (5 most recent tasks)  ############*/
+#start-box:hover > #Rectangle_13{fill: var(--white);}
+#start-box:hover > #start {fill: var(--darkerGrey)} 
+    
+
+#start-box{
+    margin-top: -40px;
+    margin-left: 72px;
+}
+
+#start{
+    transform: translate(32px, 21px);
+}
+
+
+/* ############ DOTS (5 most recent tasks)  #######################################################*/
 
 
 #dot-1 {
