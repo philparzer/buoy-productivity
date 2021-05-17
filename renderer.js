@@ -7,7 +7,7 @@
 
     //Popular Apps
     const blender = "Blender";
-    const vsCode = "Visual Studio Code"
+    const vsCode = "Visual Studio Code";
         //TODO: TEXT EDITING
         //TODO: 3D EDITING
         //TODO: AUDIO
@@ -22,9 +22,9 @@
         //TODO: Version Control
         //TODO: Remote Working Tools
         //TODO: Socials
+        //...
         
     
-
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
@@ -51,6 +51,10 @@ const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 const focusBtn = document.getElementById('focus-btn');
 const startBtn = document.getElementById('start-btn');
 
+//timerInput -----------------------------------------------------------------------------------------
+    //used to set and clear intervals for mouse hold functionality
+let mouseHoldTimer; 
+let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
     //main time calculation variables
@@ -151,35 +155,57 @@ startBtn.onclick = function(){ //starts the timer
 
 //TIMER - Input  ########################################################################################################################
 
-    //onclick Events  --------------------------------------------------------------------------------------------
-addMinutesBtn.onclick = function(){TimerInput(addMinutesBtn);}
-addHoursBtn.onclick = function(){TimerInput(addHoursBtn);}
-subtractMinutesBtn.onclick = function(){TimerInput(subtractMinutesBtn);}
-subtractHoursBtn.onclick = function(){TimerInput(subtractHoursBtn);}
-    
-    //button functionality and calls to sanitycheck input  --------------------------------------------------------------------------------------------
-function TimerInput(btn) {
-    if (btn == addMinutesBtn){
-        mins++;
-        minuteSanityCheck();
-    }
-    if (btn == addHoursBtn){
-        hours++;
-        hoursSanityCheck();
-    }
-    if (btn == subtractMinutesBtn){
-        mins--;
-        minuteSanityCheck();
-    }   
-    if (btn == subtractHoursBtn){
-        hours--;
-        hoursSanityCheck();
-    }
+//1. add listeners to all relevant buttons
+//2. call sanity checks
+//3. increment/decrement code variables
+//4. update html elements accordingly
 
-    //update HTML  --------------------------------------------------------------------------------------------
+addMinutesBtn.addEventListener('mousedown', incrementMinutesHold);
+addHoursBtn.addEventListener('mousedown', incrementHoursHold);
+subtractMinutesBtn.addEventListener('mousedown', decrementMinutesHold);
+subtractHoursBtn.addEventListener('mousedown', decrementHoursHold);
+
+addMinutesBtn.addEventListener('mouseup', timeoutClear);
+addHoursBtn.addEventListener('mouseup', timeoutClear);
+subtractMinutesBtn.addEventListener('mouseup', timeoutClear);
+subtractHoursBtn.addEventListener('mouseup', timeoutClear);
+
+addMinutesBtn.addEventListener('mouseleave', timeoutClear);
+addHoursBtn.addEventListener('mouseleave', timeoutClear);
+subtractMinutesBtn.addEventListener('mouseleave', timeoutClear);
+subtractHoursBtn.addEventListener('mouseleave', timeoutClear);
+
+function incrementMinutesHold() {
+    mins++;
+    minuteSanityCheck();
     minutesElement.textContent = numberFormatter(mins);
+    mouseHoldTimer = setTimeout(incrementMinutesHold, mouseHoldValueChangeSpeed);
+}
+
+function incrementHoursHold() {
+    hours++;
+    hoursSanityCheck();
     hoursElement.textContent = numberFormatter(hours);
-};
+    mouseHoldTimer = setTimeout(incrementHoursHold, mouseHoldValueChangeSpeed);
+}
+
+function decrementMinutesHold() {
+    mins--;
+    minuteSanityCheck();
+    minutesElement.textContent = numberFormatter(mins);
+    mouseHoldTimer = setTimeout(decrementMinutesHold, mouseHoldValueChangeSpeed);
+}
+
+function decrementHoursHold() {
+    hours--;
+    hoursSanityCheck();
+    hoursElement.textContent = numberFormatter(hours);
+    mouseHoldTimer = setTimeout(decrementHoursHold, mouseHoldValueChangeSpeed);
+}
+
+function timeoutClear() {
+    clearTimeout(mouseHoldTimer);
+  }
 
 //TAGS  ########################################################################################################################
 
@@ -259,7 +285,7 @@ function addProgramToDropdown(program) {
     focusDropdown.appendChild(listItem);
     listItem.appendChild(listItemButton);
     listItemButton.className += "dropdown-item";
-    listItemButton.type = "button";
+    listItemButton.type = "button"; 
     listItemButton.textContent = program; //add parsed string here
     //TODO: set id of button or list item to name of program added or index?
     //TODO: set up button to toggle focus
@@ -423,7 +449,7 @@ function unstyleBuoy(){
     document.getElementById('Rectangle_15').style.fill = yellow;
     //Loading button
     document.getElementById('loadingButton').style.display ='none';
-    //focus button FIXME:
+    //focus button
     document.getElementById('focus-col').style.display ="unset";
     document.getElementById('focus-btn').style.marginTop ='';
     

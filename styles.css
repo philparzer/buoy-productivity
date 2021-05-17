@@ -45,7 +45,7 @@ html, body {
     margin: 0;
     padding: 0;
     /*background-image: url("images/bg.png");*/
-    background-image: url("images/bg2.png");
+    background-image: url("images/standard-bg.png");
     background-size:100% 100%;
     background-repeat: no-repeat;
  
@@ -645,7 +645,7 @@ button{
     background-size:100% 100%;
     background-repeat: no-repeat;
      
-    background-image: url('images/focus.png');
+    background-image: url('images/focus-bg.png');
     -webkit-transition: background .5s linear;
     
   }
@@ -660,7 +660,7 @@ button{
     background-size:100% 100%;
     background-repeat: no-repeat;
      
-    background-image: url('images/bg2.png');
+    background-image: url('images/standard-bg.png');
     -webkit-transition: background .5s linear;
     
   }
