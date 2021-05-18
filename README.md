@@ -16,12 +16,8 @@ electron productivity app
 - > npm i electron-active-window
 
 ## Next Steps
-<<<<<<< Updated upstream
 - [ ] check window class not window name -> active window supplies window class -> window class possible in electron capturer? use this instead https://www.npmjs.com/package/@josephuspaye/list-open-windows
-=======
-
 - [ ] check window class not window name -> active window supplies window class -> window class possible in electron capturer?
->>>>>>> Stashed changes
 - [ ] tag manager functionality -> add button hidden till tag input, when input unhide add button, onclick add input as tag to list of tags
 - [ ] buoy tag functionality -> display list of created tags in buoy tag dropdown, implement possibility to add tag to buoy, display added tag on svg or as poppover
 - [ ] database: write and read tags 
