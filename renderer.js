@@ -1,6 +1,6 @@
 //VARS  ########################################################################################################################
 
-//TODO: program identifiers for parsing captured windows
+//TODO: program identifiers for parsing captured windows TODO: maybe use window class instead
     //Browsers
     const edge = "Microsoft​ Edge";
     const chrome = "Google Chrome";
@@ -321,8 +321,16 @@ function addProgramToDropdown(program) {
 //DEBUG WINDOW CHECKER 10secs
 setInterval(function() {
 
+    desktopCapturer.getSources({ types: ['window'] }).then(async sources => {
+        for (const source of sources){
+        console.log("desktop capturer:")
+        console.log(source.name);
+        console.log(source.id);
+        //FIXME: can't access windowclass could match ID here to active window strip screen of end of id
+        //use windows specific lib instead of chrome desktop capturer? https://www.npmjs.com/package/@josephuspaye/list-open-windows
+        }
+    });
 
-    //TODO: check set focus app and exceptions
     activeWindows().getActiveWindow().then((result)=>{
         console.log("Active window:")
         console.log(result)
