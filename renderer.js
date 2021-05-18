@@ -97,11 +97,19 @@ function databaseWrite(valueArray){
 
 databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
+
+
+
 //MAIN  ########################################################################################################################
 
 if (focusSet == false){ //make sure that focus is set before enabling start button
     disableStartBtn();
 }
+
+//TODO: focus set
+    //get selected programs by reading the checkboxes' property values
+    //implement interval to check for checkbox selection that terminates when user clicks start
+    //when user clicks start append value of checkbox to list/array/other data structure
 
 startBtn.onclick = function(){ //starts the timer
     setInputTimes(); //sets the fixed input values for the count variable
@@ -111,7 +119,7 @@ startBtn.onclick = function(){ //starts the timer
     let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60); //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
     let startingTime = Date.now(); //let starting time = current system clock local time
     
-    //TODO: focus set
+    
 
     
     //timer functionality  --------------------------------------------------------------------------------------------
@@ -305,7 +313,7 @@ function addProgramToDropdown(program) {
     listItemLabel.className ="form-check-label";
     listItemLabel.textContent = program;
     listItem.appendChild(listItemLabel);
-    listItemBox.htmlFor(program);
+    listItemBox.htmlFor = program;
     
 }
 
