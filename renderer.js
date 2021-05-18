@@ -1,6 +1,6 @@
 //VARS  ########################################################################################################################
 
-//program identifiers for parsing captured windows
+//TODO: program identifiers for parsing captured windows
     //Browsers
     const edge = "Microsoft​ Edge";
     const chrome = "Google Chrome";
@@ -8,20 +8,20 @@
     //Popular Apps
     const blender = "Blender";
     const vsCode = "Visual Studio Code";
-        //TODO: TEXT EDITING
-        //TODO: 3D EDITING
-        //TODO: AUDIO
-        //TODO: PDF Readers
-        //TODO: CODE EDITORS
-        //TODO: VISUAL EFFECTS
-        //TODO: MAIL
-        //TODO: Engines
-        //TODO: Drawing
-        //TODO: ADOBE Suite
-        //TODO: Microsoft Suite
-        //TODO: Version Control
-        //TODO: Remote Working Tools
-        //TODO: Socials
+        // TEXT EDITING
+        // 3D EDITING
+        // AUDIO
+        // PDF Readers
+        // CODE EDITORS
+        // VISUAL EFFECTS
+        // MAIL
+        // Engines
+        // Drawing
+        // ADOBE Suite
+        // Microsoft Suite
+        // Version Control
+        // Remote Working Tools
+        // Socials
         //...
         
     
@@ -49,6 +49,7 @@ const subtractHoursBtn = document.getElementById('time-hours-subtract-btn');
 const subtractMinutesBtn = document.getElementById('time-minutes-subtract-btn');
 
 const focusBtn = document.getElementById('focus-btn');
+const tagBtn = document.getElementById('tag-buoy-btn');
 const startBtn = document.getElementById('start-btn');
 
 //timerInput -----------------------------------------------------------------------------------------
@@ -218,12 +219,12 @@ TODO:
 
 //FOCUS  ########################################################################################################################
 
-
+//TODO: FIXME: Update focus button on fixed interval
 focusBtn.onclick = function(){
     focusSet = true;
     getOpenPrograms();
 
-    enableStartBtn(); //temporary TODO: move to correct position (after focus has been set)
+    enableStartBtn(); //TODO: move to correct position (after focus has been set)
 }
 
 
@@ -279,16 +280,33 @@ function parseSource(unparsedSource) {
 
 //adds parsed results from desktop capturer
 function addProgramToDropdown(program) {
+
+    //instantiate list items
     var focusDropdown = document.getElementById("focus-dropdown");
     var listItem = document.createElement("li");
-    var listItemButton = document.createElement("button");
+    listItem.className  = "dropdown-item";
     focusDropdown.appendChild(listItem);
-    listItem.appendChild(listItemButton);
-    listItemButton.className += "dropdown-item";
-    listItemButton.type = "button"; 
-    listItemButton.textContent = program; //add parsed string here
-    //TODO: set id of button or list item to name of program added or index?
-    //TODO: set up button to toggle focus
+
+    //create box inside list items to instantiate checkbox and label there
+    var listItemBox = document.createElement("div");
+    listItemBox.className ="form-check-inline";
+    listItem.appendChild(listItemBox);
+
+    //instantiate checkboxes iniside list items
+    var listItemInput = document.createElement("input");
+    listItemInput.className += "form-check-input";
+    listItemInput.type = "checkbox";
+    listItemInput.value ="";
+    listItemInput.id = program;
+    listItemBox.appendChild(listItemInput);
+
+    //instantiate labels for checkboxes
+    var listItemLabel = document.createElement("label");
+    listItemLabel.className ="form-check-label";
+    listItemLabel.textContent = program;
+    listItem.appendChild(listItemLabel);
+    listItemBox.htmlFor(program);
+    
 }
 
 
@@ -418,7 +436,10 @@ function styleBuoy(){
     //document.getElementById('focus').style.fill = darkerGrey;
 
     //tag button
+    tagBtn.disabled = true;
+    //FIXME:document.getElementById("tagText").textContent = "mytag"; or use POPPER.JS to display chosen tag on hover
     document.getElementById('Rectangle_15').style.fill = red;
+    
 
 
     //focus Dropdown
@@ -446,7 +467,9 @@ function unstyleBuoy(){
     
 
     //tag button
+    tagBtn.disabled = false;
     document.getElementById('Rectangle_15').style.fill = yellow;
+    
     //Loading button
     document.getElementById('loadingButton').style.display ='none';
     //focus button

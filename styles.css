@@ -1,9 +1,10 @@
 /* ############  Background, General and Variables  ############*/
 
 /*placeholder*/
-label{color:var(--darkerGrey);}
-option{color: var(--darkerGrey);}
-
+label{
+  color:var(--white);
+  text-align: center;
+}
 :root {
     --yellow: #DBDB93;
     --red: #DBA993;
@@ -346,6 +347,9 @@ button{
   border-color: var(--darkerGrey);
 }
 
+#tag-buoy-btn[disabled]{
+  opacity: 1;
+}
 
 #tag-buoy-btn:hover{
   border-color: var(--lighterGrey);
@@ -422,20 +426,6 @@ button{
 }
 
 
-.dropdown-item{
-  color: var(--white);
-}
-
-.dropdown-item:hover{
-  background-color: var(--lighterGrey);
-  color: var(--white);
-}
-
-.dropdown-item:focus{
-  background-color: var(--primaryGrey);
-
-}
-
 .dropdown-menu-center {
   border: none;
   border-radius: 30px;
@@ -462,6 +452,61 @@ button{
   height: 380px!important;
   
 }
+    /*FOCUS DROPDOWN ITEMS*/
+
+    .dropdown-item{
+      margin-bottom: -5px;
+    }
+
+    .dropdown-item:hover{
+      background-color: var(--primaryGrey)!important;
+    }
+
+    .form-check-input:checked, .form-check-input:active, .form-check-input:hover{
+      background-color: var(--yellow)!important;
+      border-color: var(--darkerGrey);
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+
+    .form-check-input:not(:checked){
+      background-color: white;
+      border-color: white;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+
+
+    label{
+
+      margin-bottom: 10px;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*START BUTTON*/
 
