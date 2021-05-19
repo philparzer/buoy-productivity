@@ -1,30 +1,14 @@
-//VARS  ########################################################################################################################
+//DEBUG 
 
-//TODO: program identifiers for parsing captured windows TODO: maybe use window class instead
-    //Browsers
-    const edge = "Microsoft​ Edge";
-    const chrome = "Google Chrome";
+setInterval(function() {
+    activeWindows().getActiveWindow().then((result)=>{
+        console.log("Active window:")
+        console.log(result)
+    });
 
-    //Popular Apps
-    const blender = "Blender";
-    const vsCode = "Visual Studio Code";
-        // TEXT EDITING
-        // 3D EDITING
-        // AUDIO
-        // PDF Readers
-        // CODE EDITORS
-        // VISUAL EFFECTS
-        // MAIL
-        // Engines
-        // Drawing
-        // ADOBE Suite
-        // Microsoft Suite
-        // Version Control
-        // Remote Working Tools
-        // Socials
-        //...
-        
-    
+}, 10000)
+
+
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
@@ -113,6 +97,11 @@ if (focusSet == false){ //make sure that focus is set before enabling start butt
     //when user clicks start append value of checkbox to list/array/other data structure
 
 startBtn.onclick = function(){ //starts the timer
+    clearInterval(setFocusInterval);
+
+    //TODO: retrieve checked checkboxes
+
+
     setInputTimes(); //sets the fixed input values for the count variable
     switchButtonStatus(); //switches buttons to unclickable
     styleBuoy(); //styles buoy to indicate that timer is running
@@ -121,7 +110,6 @@ startBtn.onclick = function(){ //starts the timer
     let startingTime = Date.now(); //let starting time = current system clock local time
     
     
-
     
     //timer functionality  --------------------------------------------------------------------------------------------
     let timerLogic =  setInterval(function() {
@@ -228,45 +216,58 @@ TODO:
 
 //SET FOCUS  ########################################################################################################################
 
-//TODO: FIXME: Update focus button on fixed interval
 focusBtn.onclick = function(){
+    //check every second if new program has been opened
+    let setFocusInterval = setInterval(function(){
+        getOpenWindows();
+    }, 1000);
+    
+
+    //TODO: move these to correct position after focus has been set via checkmark
     focusSet = true;
-    desktopCapturerGetOpenWindows();
-    enableStartBtn(); //TODO: move to correct position (after focus has been set)
+    enableStartBtn();
 }
 
-function desktopCapturerGetOpenWindows(){
+
+
+function getOpenWindows(){
     //chrome desktop capturer gets all open windows
     asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
-    asyncOpenWindows.then(async sources => getOpenPrograms(sources))
+    asyncOpenWindows.then(async sources => getOpenExes(sources))
 }
 
-function getOpenPrograms(sources) {
-    var programmArray = new Array;
+function getOpenExes(sources) {
         for (const source of sources) {
             //compares title retrieved from desktop capturer and window manager path
             windowManager.getWindows().forEach(element => {
                 if(element.getTitle() == source.name){
                     console.log(element.getTitle() + " Path: " + element.path)
                     var programExe = parseFilePath(element.path);
-                    programmArray.push(programExe);
+                    
+                    if (programArray.includes(programExe))
+                    {
+                        return;
+                    }
+
+                    programArray.push(programExe);
                     addProgramToDropdown(programExe);
                 }
             });
         }
 
 
-        console.log(programmArray)
+        console.log(programArray)
 }
 
 function parseFilePath(path){
-    //TODO: Cross Platform "\" (windows) - "/" (Mac) - Linux (WIP) not implemented in windowManager yet
+    //TODO: Cross Platform "\" (windows) - "/" (Mac) - Linux (WIP) not implemented in windowManager yet -> Mac OS admin access (request accessibility)
     directoryArray = path.split("\\") // "\\" to terminate string literal escape backslash
     return directoryArray[directoryArray.length - 1] // return last item in array
 }
 
-
 function addProgramToDropdown(program) {
+
+    program = parseExeForUI(program);
 
     //instantiate list items
     var focusDropdown = document.getElementById("focus-dropdown");
@@ -283,7 +284,6 @@ function addProgramToDropdown(program) {
     var listItemInput = document.createElement("input");
     listItemInput.className += "form-check-input";
     listItemInput.type = "checkbox";
-    listItemInput.value ="";
     listItemInput.id = program;
     listItemBox.appendChild(listItemInput);
 
@@ -293,6 +293,13 @@ function addProgramToDropdown(program) {
     listItemLabel.textContent = program;
     listItem.appendChild(listItemLabel);
     listItemBox.htmlFor = program;
+}
+
+function parseExeForUI(program){
+
+    var parsedProgram = program.slice(0, -4); //remove .exe
+    parsedProgram = parsedProgram.charAt(0).toUpperCase() + parsedProgram.slice(1); //uppercase
+    return parsedProgram;
 }
 
 
