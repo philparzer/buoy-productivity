@@ -8,7 +8,6 @@ setInterval(function() {
 
 }, 10000)
 
-
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
@@ -56,6 +55,7 @@ const minutesElement = document.getElementById('minutes');
 //focus  --------------------------------------------------------------------------------------------
 let focusSet = false;
 let programArray = [];
+let setFocusInterval;
 
 //TITLEBAR  ########################################################################################################################
 
@@ -218,7 +218,7 @@ TODO:
 
 focusBtn.onclick = function(){
     //check every second if new program has been opened
-    let setFocusInterval = setInterval(function(){
+    setFocusInterval = setInterval(function(){
         getOpenWindows();
     }, 1000);
     
