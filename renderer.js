@@ -1,3 +1,9 @@
+//TODO: stop interval checks when focus dropdown is collapsed to increase performance?
+//TODO: think about APPLICATIONFRAMEHOST windows apps
+//TODO: electron / buoy itself should probably always be an exception for
+
+//FIXME: bug when starting timer second time around ID nullerror
+
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
