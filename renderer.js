@@ -1,13 +1,3 @@
-//DEBUG 
-
-setInterval(function() {
-    activeWindows().getActiveWindow().then((result)=>{
-        console.log("Active window:")
-        console.log(result)
-    });
-
-}, 10000)
-
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose(); //also const?
@@ -42,6 +32,9 @@ let mouseHoldTimer;
 let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
+
+let timerLogic;
+
     //main time calculation variables
 let mins = 30; 
 let hours = 0;
@@ -51,10 +44,15 @@ let hrsInput;
     //HTML elements timer
 const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
+    //focus time Variables
+let maxTimeUnfocused = 10; //in seconds
+let unfocusedTime = 0;
+
 
 //focus  --------------------------------------------------------------------------------------------
 let focusSet = false;
-let programArray = [];
+let programArray = []; //array of all open programs (placeholder.exe, placeholder2.exe, ...)
+let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 let setFocusInterval;
 
 //TITLEBAR  ########################################################################################################################
@@ -91,16 +89,18 @@ if (focusSet == false){ //make sure that focus is set before enabling start butt
     disableStartBtn();
 }
 
-//TODO: focus set
-    //get selected programs by reading the checkboxes' property values
-    //implement interval to check for checkbox selection that terminates when user clicks start
-    //when user clicks start append value of checkbox to list/array/other data structure
 
-startBtn.onclick = function(){ //starts the timer
+startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
+
     clearInterval(setFocusInterval);
 
-    //TODO: retrieve checked checkboxes
-
+    retrieveFocusAndExceptions();
+    
+    if (allowedProgramArray.length == 0){
+        //TODO: add styling of button here, popover display that user has to choose a focus program
+        
+        return;
+    }
 
     setInputTimes(); //sets the fixed input values for the count variable
     switchButtonStatus(); //switches buttons to unclickable
@@ -112,9 +112,9 @@ startBtn.onclick = function(){ //starts the timer
     
     
     //timer functionality  --------------------------------------------------------------------------------------------
-    let timerLogic =  setInterval(function() {
+    timerLogic =  setInterval(function() {
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
-        
+
         //counter
         var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in float minutes
         if(count < (hours*60 + mins) -1 )
@@ -132,24 +132,47 @@ startBtn.onclick = function(){ //starts the timer
                 minutesElement.textContent = numberFormatter(59);
             }
         
-        //TODO: focus check 
+        //Focus Check
         
+        activeWindows().getActiveWindow().then((result)=>{
+            if (allowedProgramArray.includes(result.windowClass)) //TODO: allowedArray
+            {
+                console.log("program is included");
+                unfocusedTime = 0;
+            }
+    
+            else { //TODO: ADD UI style / pop-up / alert / etc. to reflect timer ending in 10sec if user doesnt switch back to Focus program
+                console.log("not included");
+                unfocusedTime++;
+                console.log("unfocused time: " + unfocusedTime);
+                
+                if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
+                    endTimer();
+                }
+            }
+        });
 
-        //timer finished
+        //timer finished succesfully
         if(delta >= timerInput) { 
-            switchButtonStatus();
-            unstyleBuoy();
-            unstyleBackground();
-            alert("Time Over");
-            clearInterval(timerLogic);
-            minutesElement.textContent = numberFormatter(0);
-            hoursElement.textContent = numberFormatter(0);
-            focusSet = false;
-            disableStartBtn();
+            endTimer();
         }
         }, 1000);
 }
 
+
+function endTimer (){
+    switchButtonStatus();
+    unstyleBuoy();
+    unstyleBackground();
+    alert("Time Over");
+    clearInterval(timerLogic);
+    minutesElement.textContent = numberFormatter(0);
+    hoursElement.textContent = numberFormatter(0);
+    focusSet = false;
+    allowedProgramArray = [];
+    //TODO: clear checked checkboxes
+    disableStartBtn();
+}
 
 //TIMER - Input  ########################################################################################################################
 
@@ -267,7 +290,7 @@ function parseFilePath(path){
 
 function addProgramToDropdown(program) {
 
-    program = parseExeForUI(program);
+    parsedProgram = parseExeForUI(program);
 
     //instantiate list items
     var focusDropdown = document.getElementById("focus-dropdown");
@@ -290,9 +313,9 @@ function addProgramToDropdown(program) {
     //instantiate labels for checkboxes
     var listItemLabel = document.createElement("label");
     listItemLabel.className ="form-check-label";
-    listItemLabel.textContent = program;
+    listItemLabel.textContent = parsedProgram;
     listItem.appendChild(listItemLabel);
-    listItemBox.htmlFor = program;
+    listItemBox.htmlFor = parsedProgram;
 }
 
 function parseExeForUI(program){
@@ -300,6 +323,21 @@ function parseExeForUI(program){
     var parsedProgram = program.slice(0, -4); //remove .exe
     parsedProgram = parsedProgram.charAt(0).toUpperCase() + parsedProgram.slice(1); //uppercase
     return parsedProgram;
+}
+
+
+//loops over html elements, checks checked checkboxes, pushes checked checkboxes to allowedProgramArray //TODO: later: don't start if no checked checkboxes
+function retrieveFocusAndExceptions(){
+
+    var allCheckboxes = document.querySelectorAll(".form-check-input");
+    
+    allCheckboxes.forEach(function(element){
+        if(element.checked){
+            var elementName = element.id;
+            allowedProgramArray.push(elementName);
+        }
+    });
+
 }
 
 

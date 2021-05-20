@@ -5,7 +5,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 
 //TODO: use electron-store to store user language settings in preferences and open correct html
-
+//TODO: disable tab
 
 function createWindow () {
   // Create the browser window.
