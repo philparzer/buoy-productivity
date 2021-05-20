@@ -55,6 +55,8 @@ let programArray = []; //array of all open programs (placeholder.exe, placeholde
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 let setFocusInterval;
 
+let startBtnStyledFocusNotSet = false; //bool that states if start button has been styled red when focus has not been set
+
 //TITLEBAR  ########################################################################################################################
 
 document.getElementById('close-main').onclick = function() {
@@ -98,7 +100,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     
     if (allowedProgramArray.length == 0){
         //TODO: add styling of button here, popover display that user has to choose a focus program
-        
+        startBtnStyledFocusNotSet = true;
         return;
     }
 
@@ -114,7 +116,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     //timer functionality  --------------------------------------------------------------------------------------------
     timerLogic =  setInterval(function() {
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
-
+        
         //counter
         var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in float minutes
         if(count < (hours*60 + mins) -1 )
@@ -170,7 +172,7 @@ function endTimer (){
     hoursElement.textContent = numberFormatter(0);
     focusSet = false;
     allowedProgramArray = [];
-    //TODO: clear checked checkboxes
+    uncheckCheckmarks();
     disableStartBtn();
 }
 
@@ -245,10 +247,8 @@ focusBtn.onclick = function(){
         getOpenWindows();
     }, 1000);
     
-
-    //TODO: move these to correct position after focus has been set via checkmark
     focusSet = true;
-    enableStartBtn();
+    enableStartBtn()
 }
 
 
@@ -264,7 +264,7 @@ function getOpenExes(sources) {
             //compares title retrieved from desktop capturer and window manager path
             windowManager.getWindows().forEach(element => {
                 if(element.getTitle() == source.name){
-                    console.log(element.getTitle() + " Path: " + element.path)
+                    //console.log(element.getTitle() + " Path: " + element.path)
                     var programExe = parseFilePath(element.path);
                     
                     if (programArray.includes(programExe))
@@ -279,7 +279,7 @@ function getOpenExes(sources) {
         }
 
 
-        console.log(programArray)
+        //console.log(programArray)
 }
 
 function parseFilePath(path){
@@ -342,6 +342,14 @@ function retrieveFocusAndExceptions(){
 
 
 //UTIL FUNCTIONS   ########################################################################################################################
+
+function uncheckCheckmarks(){
+    var checks = document.querySelectorAll(".form-check-input");
+    checks.forEach(function(element){
+        element.checked = false;
+    });
+}
+
 
 function switchButtonStatus(){
     startBtn.disabled = !startBtn.disabled;
@@ -525,3 +533,4 @@ function unstyleBackground(){
 
     
 }
+
