@@ -401,6 +401,7 @@ button{
 
 #focus-btn {
   margin-top: -2px;
+  margin-bottom: -20px;
   background-color: var(--primaryGrey);
   border-radius: 100%;
   padding-top: 10px;
@@ -455,7 +456,7 @@ button{
     /*FOCUS DROPDOWN ITEMS*/
 
     .dropdown-item{
-      margin-bottom: -5px;
+      margin-bottom: -10px;
     }
 
     .dropdown-item:hover{
@@ -469,6 +470,10 @@ button{
       -webkit-box-shadow: none;
     }
 
+    .form-check-input:checked:hover{
+      background-color: var(--red)!important;
+    }
+
     .form-check-input:not(:checked){
       background-color: white;
       border-color: white;
@@ -476,6 +481,11 @@ button{
       -webkit-box-shadow: none;
     }
 
+    .form-check-input{
+      width: 17px;
+      height: 17px;
+      margin-right: -5px;
+    }
 
     label{
 
@@ -510,13 +520,17 @@ button{
 
 /*START BUTTON*/
 
+#start-btn{
+  margin-left: 72px;
+  
+}
+
 #start-box:hover > #Rectangle_13{fill: var(--white);}
 #start-box:hover > #start {fill: var(--darkerGrey)} 
     
 
 #start-box{
-    margin-top: -40px;
-    margin-left: 72px;
+  
 }
 
 #start{

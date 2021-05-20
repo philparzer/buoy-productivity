@@ -242,15 +242,11 @@ TODO:
 //SET FOCUS  ########################################################################################################################
 
 focusBtn.onclick = function(){
-    //check every second if new program has been opened
+    //check every second if new program has been opened, enable disable start button on focus picked status
     setFocusInterval = setInterval(function(){
         getOpenWindows();
-    }, 1000);
-    
-    focusSet = true;
-    enableStartBtn()
-}
-
+        enableDisableStartBtn();
+    }, 1000);}
 
 
 function getOpenWindows(){
@@ -342,6 +338,28 @@ function retrieveFocusAndExceptions(){
 
 
 //UTIL FUNCTIONS   ########################################################################################################################
+
+
+function enableDisableStartBtn(){
+    var focusChecked = [];
+    var focusCheckboxes = document.querySelectorAll(".form-check-input");
+    
+    focusCheckboxes.forEach(function(focusCheckbox){
+        if(focusCheckbox.checked){
+            focusChecked.push(focusCheckbox);
+    }});
+    
+    if(focusChecked.length != 0){
+        focusSet = true;
+        enableStartBtn();
+    }
+
+    else{
+        focuset = false;
+        disableStartBtn();
+    }
+}
+
 
 function uncheckCheckmarks(){
     var checks = document.querySelectorAll(".form-check-input");
