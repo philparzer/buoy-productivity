@@ -4,8 +4,44 @@
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 
-//FIXME: bug when rapidly focusing and going out of focus GUESTID 4
-//FIXME: bug when starting timer second time around ID nullerror / when starting timer while timer at zero
+
+//DEBUG TAG MANAGER --------------------------------------------------------------------------------
+
+
+let inputElementCheck;
+const createTagElement = document.getElementById("add-tag-input");
+const searchElement = document.getElementById('search');
+
+inputElementCheck = setInterval(function()
+    {  
+
+        if (searchElement.value != "")
+        {
+            //TODO: search database
+        }
+        
+        if (createTagElement.value != "")
+        {
+            document.getElementById("add-tag-input-button").style.visibility = "unset";
+        }
+
+        else
+        {
+            document.getElementById("add-tag-input-button").style.visibility = "hidden";
+        }
+
+    }, 1000)
+
+
+
+//-----------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
@@ -23,9 +59,17 @@ const darkerGrey =  "#3F3F3F";
 const lighterGrey =  "#707070";
 
 //buttons  --------------------------------------------------------------------------------------------
+  //title bar fields
 const aboutBtn = document.getElementById('about');
 const settingsBtn = document.getElementById('settings');
 
+// TODO: uncomment when debug is done
+// let inputElementCheck;
+// const createTagElement = document.getElementById("add-tag-input");
+// const searchElement = document.getElementById('search');
+
+
+    //buoy input fields
 const addHoursBtn = document.getElementById('time-hours-add-btn');
 const addMinutesBtn = document.getElementById('time-minutes-add-btn');
 const subtractHoursBtn = document.getElementById('time-hours-subtract-btn');
@@ -35,24 +79,27 @@ const focusBtn = document.getElementById('focus-btn');
 const tagBtn = document.getElementById('tag-buoy-btn');
 const startBtn = document.getElementById('start-btn');
 
+
 //timerInput -----------------------------------------------------------------------------------------
     //used to set and clear intervals for mouse hold functionality
 let mouseHoldTimer; 
 let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
-
 let timerLogic;
 
     //main time calculation variables
 let mins = 30; 
 let hours = 0;
+
     //initial input values -> set when user clicks start button
 let minsInput;
 let hrsInput;
+
     //HTML elements timer
 const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
+
     //focus time Variables
 let maxTimeUnfocused = 15; //in seconds
 let unfocusedTime = 0;

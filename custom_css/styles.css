@@ -184,7 +184,8 @@ button{
 
 #add-tag-input-button{
 
-  margin-top: 2px;
+  margin-top: 10px;
+  margin-bottom: 2px;
   text-align: center;
   color: var(--white);
   border-radius: 30px;
@@ -405,7 +406,7 @@ button{
   background-color: var(--primaryGrey);
   border-radius: 100%;
   padding-top: 10px;
-  padding-left: 3px;
+  padding-left: 4px;
   padding-right: 6px;
   padding-bottom: 10px;
   border: none;

@@ -1,7 +1,7 @@
 /*TODO: Fade Background Out Animation*/
 
 body{
-    background-color: hsla(51, 88%, 71%, 0.794);
+    background-color: hsla(51, 88%, 71%, 0.623);
     font-family: Bahnschrift;
     font-weight: bold;
 }
@@ -24,3 +24,5 @@ body{
     background: url(images/Buoy.svg);
     background-position: right bottom;
 }
+
+/*TODO: Fade out background*/
