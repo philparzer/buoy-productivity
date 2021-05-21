@@ -2,6 +2,7 @@
 //TODO: think about APPLICATIONFRAMEHOST windows apps
 //TODO: electron / buoy itself should probably always be an exception for check
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
+//TODO: half-time overlay?
 
 //FIXME: bug when rapidly focusing and going out of focus GUESTID 4
 //FIXME: bug when starting timer second time around ID nullerror / when starting timer while timer at zero
