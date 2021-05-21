@@ -1,0 +1,24 @@
+body{
+    background-color: hsla(51, 88%, 71%, 0.794);
+    font-family: Bahnschrift;
+    font-weight: bold;
+}
+
+
+#focus{
+    background-color: #3F3F3F;
+    margin-top: 50px;
+    font-size: 200px;
+    line-height: 180px;
+    color: #DBDB93;
+}
+
+#info{
+    font-size: 100px;
+    color:#474747;
+}
+
+.badckground-buoy{
+    background: url(images/Buoy.svg);
+    background-position: right bottom;
+}

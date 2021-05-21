@@ -1,8 +1,9 @@
 //TODO: stop interval checks when focus dropdown is collapsed to increase performance?
 //TODO: think about APPLICATIONFRAMEHOST windows apps
 //TODO: electron / buoy itself should probably always be an exception for check
-//TODO: disable start button when timer is at zero
+//TODO: snipping tool, search bar, etc should probably always be exceptions for check
 
+//FIXME: bug when rapidly focusing and going out of focus GUESTID 4
 //FIXME: bug when starting timer second time around ID nullerror / when starting timer while timer at zero
 
 //imports --------------------------------------------------------------------------------------------
@@ -63,8 +64,8 @@ let programArray = []; //array of all open programs (placeholder.exe, placeholde
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 let setFocusInterval;
 
-let warningWindow; //reference to window that is opened when user exits focus
-//TODO: maybe implement focusing again window as well?
+let warningOverlay; //reference to window that is opened when user exits focus
+let focusingOverlay;
 
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
 
@@ -157,6 +158,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 {
                     //FIXME: unstyleWarningBackground();
                     //TODO: play focusing... sound
+                    focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false');
+                    setTimeout(() => {focusingOverlay.close()}, 2000)
                     recentlyOutOfFocus = false;
                 }
                 
@@ -172,12 +175,12 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 {   
                     //TODO:, play sound
                     //FIXME: styleWarningBackground();
-                    warningWindow = window.open('warning.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false');
+                    warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                 }
 
                 if(unfocusedTime == warningGoneAfter)
                 {
-                    warningWindow.close();
+                    warningOverlay.close();
                 }
 
                 console.log("not included");
