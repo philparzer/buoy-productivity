@@ -159,7 +159,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 {
                     //FIXME: unstyleWarningBackground();
                     //TODO: play focusing... sound
-                    focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false');
+                    focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                     setTimeout(() => {focusingOverlay.close()}, 2000)
                     recentlyOutOfFocus = false;
                 }
