@@ -207,10 +207,12 @@ function endTimer (){
     unstyleBuoy();
     unstyleBackground();
     alert("Time Over");
+    //cleanup
     clearInterval(timerLogic);
-    minutesElement.textContent = numberFormatter(0);
+    minutesElement.textContent = numberFormatter(30);
     hoursElement.textContent = numberFormatter(0);
     focusSet = false;
+    recentlyOutOfFocus = false;
     allowedProgramArray = [];
     uncheckCheckmarks();
     disableStartBtn();
