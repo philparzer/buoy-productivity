@@ -1,13 +1,14 @@
 //TODO: stop interval checks when focus dropdown is collapsed to increase performance?
 //TODO: think about APPLICATIONFRAMEHOST windows apps
-//TODO: electron / buoy itself should probably always be an exception for
+//TODO: electron / buoy itself should probably always be an exception for check
+//TODO: disable start button when timer is at zero
 
-//FIXME: bug when starting timer second time around ID nullerror
+//FIXME: bug when starting timer second time around ID nullerror / when starting timer while timer at zero
 
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
-var sqlite3 = require('sqlite3').verbose(); //also const?
-const { desktopCapturer } = require('electron')
+var sqlite3 = require('sqlite3').verbose();
+const { desktopCapturer } = require('electron');
 const activeWindows = require('electron-active-window');
 const { windowManager } = require("node-window-manager");
 
@@ -51,8 +52,9 @@ let hrsInput;
 const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
     //focus time Variables
-let maxTimeUnfocused = 10; //in seconds
+let maxTimeUnfocused = 15; //in seconds
 let unfocusedTime = 0;
+let warningGoneAfter = 4; //in seconds (time it takes for warning to disappear)
 
 
 //focus  --------------------------------------------------------------------------------------------
@@ -61,7 +63,11 @@ let programArray = []; //array of all open programs (placeholder.exe, placeholde
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 let setFocusInterval;
 
-let startBtnStyledFocusNotSet = false; //bool that states if start button has been styled red when focus has not been set
+let warningWindow; //reference to window that is opened when user exits focus
+//TODO: maybe implement focusing again window as well?
+
+let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
+
 
 //TITLEBAR  ########################################################################################################################
 
@@ -89,8 +95,6 @@ function databaseWrite(valueArray){
 databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
 
-
-
 //MAIN  ########################################################################################################################
 
 if (focusSet == false){ //make sure that focus is set before enabling start button
@@ -99,13 +103,14 @@ if (focusSet == false){ //make sure that focus is set before enabling start butt
 
 
 startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
+    
+    
 
     clearInterval(setFocusInterval);
 
     retrieveFocusAndExceptions();
     
     if (allowedProgramArray.length == 0){
-        //TODO: add styling of button here, popover display that user has to choose a focus program
         startBtnStyledFocusNotSet = true;
         return;
     }
@@ -140,16 +145,41 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 minutesElement.textContent = numberFormatter(59);
             }
         
-        //Focus Check
         
+        //Focus Check
         activeWindows().getActiveWindow().then((result)=>{
-            if (allowedProgramArray.includes(result.windowClass)) //TODO: allowedArray
+
+            //main check if active window is in allowed program
+            if (allowedProgramArray.includes(result.windowClass)) 
             {
+                //checks if user has recently exited focus
+                if (recentlyOutOfFocus)
+                {
+                    //FIXME: unstyleWarningBackground();
+                    //TODO: play focusing... sound
+                    recentlyOutOfFocus = false;
+                }
+                
                 console.log("program is included");
                 unfocusedTime = 0;
             }
     
-            else { //TODO: ADD UI style / pop-up / alert / etc. to reflect timer ending in 10sec if user doesnt switch back to Focus program
+            else {
+
+                recentlyOutOfFocus = true;
+
+                if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
+                {   
+                    //TODO:, play sound
+                    //FIXME: styleWarningBackground();
+                    warningWindow = window.open('warning.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false');
+                }
+
+                if(unfocusedTime == warningGoneAfter)
+                {
+                    warningWindow.close();
+                }
+
                 console.log("not included");
                 unfocusedTime++;
                 console.log("unfocused time: " + unfocusedTime);
@@ -345,8 +375,9 @@ function retrieveFocusAndExceptions(){
 
 //UTIL FUNCTIONS   ########################################################################################################################
 
-
+//enables or disables the start button depending on correct time input (not zero) and on correct checkbox input (at least one checkbox has been checked)
 function enableDisableStartBtn(){
+
     var focusChecked = [];
     var focusCheckboxes = document.querySelectorAll(".form-check-input");
     
@@ -357,6 +388,14 @@ function enableDisableStartBtn(){
     
     if(focusChecked.length != 0){
         focusSet = true;
+
+       
+        if(hoursElement.textContent == "00" && minutesElement.textContent == "00")
+        {
+          disableStartBtn();
+          return;
+        }
+
         enableStartBtn();
     }
 
@@ -364,6 +403,10 @@ function enableDisableStartBtn(){
         focuset = false;
         disableStartBtn();
     }
+
+
+    
+
 }
 
 
@@ -554,7 +597,17 @@ function unstyleBackground(){
     
     //background image fade in
     document.getElementById("fade-in-bg").id = "fade-out-bg";
-
-    
 }
+
+// FIXME: function styleWarningBackground(){
+//     document.getElementById("fade-in-bg").id = "fade-in-lost-focus-bg";
+// }
+
+
+//FIXME: function unstyleWarningBackground(){
+//     document.getElementById("fade-in-lost-focus-bg").id = "fade-in-bg";
+// }
+    
+
+
 
