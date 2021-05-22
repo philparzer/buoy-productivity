@@ -4,8 +4,6 @@
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 
-//FIXME: TODO: DEBUG TIMER
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,6 +24,11 @@ const white =  "#FAFAFA";
 const primaryGrey = "#474747";
 const darkerGrey =  "#3F3F3F";
 const lighterGrey =  "#707070";
+
+//audio  --------------------------------------------------------------------------------------------
+
+const warningAudio = new Audio("./audio/warningSound.mp3");
+
 
 //buttons and input fields --------------------------------------------------------------------------------------------
 
@@ -222,6 +225,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
                     //TODO:, play sound
+                    warningAudio.play();
                     warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                 }
 
@@ -323,10 +327,7 @@ function timeoutClear() {
 
 //TAGS  ########################################################################################################################
 
-TODO:
-//Tag manager TODO: 1) make resolve buttons work, 2) make buoy tag buttons work
-
-inputElementCheckInterval = setInterval(function()
+inputElementCheckInterval = setInterval(function() //checks input in input elements each second
     {  
 
         if (searchElement.value != "")
@@ -336,6 +337,7 @@ inputElementCheckInterval = setInterval(function()
         
         if (createTagElement.value != "")
         {
+            //TODO: listen to enter input
             createTagButton.style.visibility = "unset";
         }
 
@@ -347,8 +349,8 @@ inputElementCheckInterval = setInterval(function()
     }, 1000)
 
 
-
-createTagButton.onclick = function() 
+    
+createTagButton.onclick = function() //instantiates TAGS in both dropdowns 
 {
     createdTagName = createTagElement.value;
     createTagElement.value = "";
@@ -364,8 +366,22 @@ createTagButton.onclick = function()
     buoyTagItemBox.className ="dropdown-item dropdown-item-tag";
     buoyTagItemBox.type = "button";
     buoyTagItemBox.id = createdTagName;
+    buoyTagItemBox.value = "false"
     buoyTagItemBox.textContent = createdTagName;
+        // add toggle to button
+    buoyTagItemBox.onclick = function()
+    {
+        var allDropDownItemTags = document.getElementsByClassName("dropdown-item dropdown-item-tag");
+        for(var i = 0; i < allDropDownItemTags.length; i++)
+        {
+            allDropDownItemTags[i].value = "false";
+            allDropDownItemTags[i].style.backgroundColor = "unset";
+        }
+        buoyTagItemBox.value = "true";
+        buoyTagItemBox.style.backgroundColor = red;
+    }
     buoyTagItem.appendChild(buoyTagItemBox);
+
 
     //ADD TAG TO RESOLVE LIST
 
@@ -387,6 +403,7 @@ createTagButton.onclick = function()
     resolveTagItemBox.textContent = createdTagName;
     resolveTagItem.appendChild(resolveTagItemBox);
 
+    //TODO: ADD CHOSEN TAG TO BUOY WHEN TIMER IS RUNNING
 
 }
 //SET FOCUS  ########################################################################################################################
@@ -714,12 +731,3 @@ function unstyleBackground(){
     //background image fade in
     document.getElementById("fade-in-bg").id = "fade-out-bg";
 }
-
-// FIXME: function styleWarningBackground(){
-//     document.getElementById("fade-in-bg").id = "fade-in-lost-focus-bg";
-// }
-
-
-//FIXME: function unstyleWarningBackground(){
-//     document.getElementById("fade-in-lost-focus-bg").id = "fade-in-bg";
-// }
