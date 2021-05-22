@@ -4,6 +4,7 @@
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -224,7 +225,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
-                    //TODO:, play sound
                     warningAudio.play();
                     warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                 }
@@ -239,6 +239,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 console.log("unfocused time: " + unfocusedTime);
                 
                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
+                    
                     endTimer();
                 }
             }
@@ -247,7 +248,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         //timer finished succesfully
         if(delta >= timerInput) 
         {
-            timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS
+            timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS - maybe debug once more?
             endTimer();
         }
 
@@ -260,12 +261,14 @@ function endTimer (){
     unstyleBuoy();
     unstyleBackground();
     alert("Time Over");
+    
     //cleanup
     recentlyOutOfFocus = false;
     clearInterval(timerLogic);
     minutesElement.textContent = numberFormatter(30);
     hoursElement.textContent = numberFormatter(0);
     focusSet = false;
+    unfocusedTime = 0;
     allowedProgramArray = [];
     uncheckCheckmarks();
     disableStartBtn();
@@ -664,12 +667,12 @@ function styleBuoy(){
 
     //tag button
     tagBtn.disabled = true;
-    //FIXME:document.getElementById("tagText").textContent = "mytag"; or use POPPER.JS to display chosen tag on hover
+    //TODO: document.getElementById("tagText").textContent = "mytag"; or use POPPER.JS to display chosen tag on hover
     document.getElementById('Rectangle_15').style.fill = red;
     
 
 
-    //focus Dropdown
+    //focus Dropdown 
     document.getElementById('focus-col').style.display ="none";
 
 
