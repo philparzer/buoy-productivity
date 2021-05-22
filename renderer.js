@@ -4,6 +4,8 @@
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 
+//FIXME: TODO: DEBUG TIMER
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -97,83 +99,11 @@ let recentlyOutOfFocus = false; //state that checks whether user has recently ex
 
 
 //DEBUG --------------------------------------------------------------------------------
-//TODO: make resolve work
-//TODO: make buoy tags toggleable
-//FIXME: style items
-
-inputElementCheckInterval = setInterval(function()
-    {  
-
-        if (searchElement.value != "")
-        {
-            //TODO: search database
-        }
-        
-        if (createTagElement.value != "")
-        {
-            createTagButton.style.visibility = "unset";
-        }
-
-        else
-        {
-            createTagButton.style.visibility = "hidden";
-        }
-
-    }, 1000)
 
 
 
-createTagButton.onclick = function() 
-{
-    createdTagName = createTagElement.value;
-    createTagElement.value = "";
+//--------------------------------------------------------------------------------------
 
-
-    //ADD TAG TO BUOY INPUT LIST
-
-    var buoyTagDropdown = document.getElementById("tag-buoy-dropdown");
-    var buoyTagItem = document.createElement("li");
-    buoyTagDropdown.appendChild(buoyTagItem);
-
-    var buoyTagItemBox = document.createElement("button");
-    buoyTagItemBox.className ="dropdown-item dropdown-item-tag";
-    buoyTagItemBox.type = "button";
-    buoyTagItemBox.textContent = createdTagName;
-    buoyTagItem.appendChild(buoyTagItemBox);
-
-    //ADD TAG TO RESOLVE LIST
-
-    var resolveDropdown = document.getElementById("manage-tags-dropdown");
-    var resolveTagItem = document.createElement("li");
-    resolveDropdown.appendChild(resolveTagItem);
-
-    var resolveTagItemBox = document.createElement("button");
-    resolveTagItemBox.className ="dropdown-item tag-resolve";
-    resolveTagItemBox.type = "button";
-    resolveTagItemBox.textContent = createdTagName;
-    resolveTagItem.appendChild(resolveTagItemBox);
-
-}
-
-//-----------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-//TITLEBAR  ########################################################################################################################
-
-document.getElementById('close-main').onclick = function() {
-    ipcRenderer.send( 'app:quit' );
-}
-
-document.getElementById('minimize-main').onclick = function() {
-    ipcRenderer.send( 'app:minimize' );
-}
 
 //DATABASE  ########################################################################################################################
 
@@ -191,6 +121,22 @@ function databaseWrite(valueArray){
 databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
 
+
+//TITLEBAR  ########################################################################################################################
+
+//Search
+
+
+//Minimize and Quit
+document.getElementById('close-main').onclick = function() {
+    ipcRenderer.send( 'app:quit' );
+}
+
+document.getElementById('minimize-main').onclick = function() {
+    ipcRenderer.send( 'app:minimize' );
+}
+
+
 //MAIN  ########################################################################################################################
 
 if (focusSet == false){ //make sure that focus is set before enabling start button
@@ -200,10 +146,8 @@ if (focusSet == false){ //make sure that focus is set before enabling start butt
 
 startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
     
-    
-
+    //preparations
     clearInterval(setFocusInterval);
-
     retrieveFocusAndExceptions();
     
     if (allowedProgramArray.length == 0){
@@ -215,9 +159,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     switchButtonStatus(); //switches buttons to unclickable
     styleBuoy(); //styles buoy to indicate that timer is running
     styleBackground();
+
     let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60); //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
     let startingTime = Date.now(); //let starting time = current system clock local time
-    
+    let timerRecentlyEnded = false; //used as a bugfix -> warning is displayed when timer ended succesfully
     
     
     //timer functionality  --------------------------------------------------------------------------------------------
@@ -225,22 +170,28 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
         
         //counter
-        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in float minutes
-        if(count < (hours*60 + mins) -1 )
-
-            //minutes html update
-            if(minutesElement.textContent != "00"){
+        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in minutes
+        console.log("count" + count);
+        console.log("hours*60" + hours*60);
+        console.log("mins" + mins);
+        if(count < (hours*60 + mins) -1)
+        {
+            //minutes html update 
+            if(minutesElement.textContent != "00")
+            {
                 mins--;
                 minutesElement.textContent = numberFormatter(mins);
             }
-                
+            
             //hours html update 
-            else{
+            else
+            {
                 hours--;
                 hoursElement.textContent = numberFormatter(hours);
+                mins = 59;
                 minutesElement.textContent = numberFormatter(59);
             }
-        
+        }
         
         //Focus Check
         activeWindows().getActiveWindow().then((result)=>{
@@ -251,7 +202,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 //checks if user has recently exited focus
                 if (recentlyOutOfFocus)
                 {
-                    //FIXME: unstyleWarningBackground();
                     //TODO: play focusing... sound
                     focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                     setTimeout(() => {focusingOverlay.close()}, 2000)
@@ -262,14 +212,16 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 unfocusedTime = 0;
             }
     
-            else {
+            else 
+            {
+
+                if (timerRecentlyEnded){ console.log("entering else block"); return;}
 
                 recentlyOutOfFocus = true;
 
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
                     //TODO:, play sound
-                    //FIXME: styleWarningBackground();
                     warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                 }
 
@@ -289,24 +241,27 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         });
 
         //timer finished succesfully
-        if(delta >= timerInput) { 
+        if(delta >= timerInput) 
+        {
+            timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS
             endTimer();
         }
-        }, 1000);
+
+    }, 1000);
 }
 
 
-function endTimer (){
+function endTimer (){ 
     switchButtonStatus();
     unstyleBuoy();
     unstyleBackground();
     alert("Time Over");
     //cleanup
+    recentlyOutOfFocus = false;
     clearInterval(timerLogic);
     minutesElement.textContent = numberFormatter(30);
     hoursElement.textContent = numberFormatter(0);
     focusSet = false;
-    recentlyOutOfFocus = false;
     allowedProgramArray = [];
     uncheckCheckmarks();
     disableStartBtn();
@@ -369,59 +324,120 @@ function timeoutClear() {
 //TAGS  ########################################################################################################################
 
 TODO:
-//1. add event that triggers on interaction with tag manager input field
-//2. event hides/unhides add button depending on status of input field (checks if empty or not) 
-//2. hook up add button to add to list below and list of possible tags in buoy input
-//3. implement resolve tag functionality, that removes tags from buoy tag list
- 
+//Tag manager TODO: 1) make resolve buttons work, 2) make buoy tag buttons work
 
+inputElementCheckInterval = setInterval(function()
+    {  
+
+        if (searchElement.value != "")
+        {
+            //TODO: search database
+        }
+        
+        if (createTagElement.value != "")
+        {
+            createTagButton.style.visibility = "unset";
+        }
+
+        else
+        {
+            createTagButton.style.visibility = "hidden";
+        }
+
+    }, 1000)
+
+
+
+createTagButton.onclick = function() 
+{
+    createdTagName = createTagElement.value;
+    createTagElement.value = "";
+
+
+    //ADD TAG TO BUOY INPUT LIST
+
+    var buoyTagDropdown = document.getElementById("tag-buoy-dropdown");
+    var buoyTagItem = document.createElement("li");
+    buoyTagDropdown.appendChild(buoyTagItem);
+
+    var buoyTagItemBox = document.createElement("button");
+    buoyTagItemBox.className ="dropdown-item dropdown-item-tag";
+    buoyTagItemBox.type = "button";
+    buoyTagItemBox.id = createdTagName;
+    buoyTagItemBox.textContent = createdTagName;
+    buoyTagItem.appendChild(buoyTagItemBox);
+
+    //ADD TAG TO RESOLVE LIST
+
+    var resolveDropdown = document.getElementById("manage-tags-dropdown");
+    var resolveTagItem = document.createElement("li");
+    resolveDropdown.appendChild(resolveTagItem);
+
+    var resolveTagItemBox = document.createElement("button");
+    resolveTagItemBox.className ="dropdown-item tag-resolve";
+    resolveTagItemBox.type = "button";
+    resolveTagItemBox.id = createdTagName;
+
+    resolveTagItemBox.onclick = function ()
+    {
+        document.getElementById(createdTagName).remove(); //removes from resolve dropdown
+        document.getElementById(createdTagName).remove(); //removes from tag buoy dropdown
+    }
+
+    resolveTagItemBox.textContent = createdTagName;
+    resolveTagItem.appendChild(resolveTagItemBox);
+
+
+}
 //SET FOCUS  ########################################################################################################################
 
-focusBtn.onclick = function(){
+focusBtn.onclick = function()
+{
     //check every second if new program has been opened, enable disable start button on focus picked status
     setFocusInterval = setInterval(function(){
         getOpenWindows();
         enableDisableStartBtn();
-    }, 1000);}
+    }, 1000)
+}
 
 
-function getOpenWindows(){
+function getOpenWindows()
+{
     //chrome desktop capturer gets all open windows
     asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
     asyncOpenWindows.then(async sources => getOpenExes(sources))
 }
 
-function getOpenExes(sources) {
-        for (const source of sources) {
-            //compares title retrieved from desktop capturer and window manager path
-            windowManager.getWindows().forEach(element => {
-                if(element.getTitle() == source.name){
-                    //console.log(element.getTitle() + " Path: " + element.path)
-                    var programExe = parseFilePath(element.path);
-                    
-                    if (programArray.includes(programExe))
-                    {
-                        return;
-                    }
-
-                    programArray.push(programExe);
-                    addProgramToDropdown(programExe);
+function getOpenExes(sources) 
+{
+    for (const source of sources) {
+        //compares title retrieved from desktop capturer and window manager path
+        windowManager.getWindows().forEach(element => {
+            if(element.getTitle() == source.name){
+                //console.log(element.getTitle() + " Path: " + element.path)
+                var programExe = parseFilePath(element.path);
+                
+                if (programArray.includes(programExe))
+                {
+                    return;
                 }
-            });
-        }
 
-
-        //console.log(programArray)
+                programArray.push(programExe);
+                addProgramToDropdown(programExe);
+            }
+        });
+    }
 }
 
-function parseFilePath(path){
+function parseFilePath(path)
+{
     //TODO: Cross Platform "\" (windows) - "/" (Mac) - Linux (WIP) not implemented in windowManager yet -> Mac OS admin access (request accessibility)
     directoryArray = path.split("\\") // "\\" to terminate string literal escape backslash
     return directoryArray[directoryArray.length - 1] // return last item in array
 }
 
-function addProgramToDropdown(program) {
-
+function addProgramToDropdown(program) 
+{
     parsedProgram = parseExeForUI(program);
 
     //instantiate list items
@@ -450,8 +466,8 @@ function addProgramToDropdown(program) {
     listItemBox.htmlFor = parsedProgram;
 }
 
-function parseExeForUI(program){
-
+function parseExeForUI(program)
+{
     var parsedProgram = program.slice(0, -4); //remove .exe
     parsedProgram = parsedProgram.charAt(0).toUpperCase() + parsedProgram.slice(1); //uppercase
     return parsedProgram;
@@ -459,8 +475,8 @@ function parseExeForUI(program){
 
 
 //loops over html elements, checks checked checkboxes, pushes checked checkboxes to allowedProgramArray //TODO: later: don't start if no checked checkboxes
-function retrieveFocusAndExceptions(){
-
+function retrieveFocusAndExceptions()
+{
     var allCheckboxes = document.querySelectorAll(".form-check-input");
     
     allCheckboxes.forEach(function(element){
@@ -469,15 +485,14 @@ function retrieveFocusAndExceptions(){
             allowedProgramArray.push(elementName);
         }
     });
-
 }
 
 
 //UTIL FUNCTIONS   ########################################################################################################################
 
 //enables or disables the start button depending on correct time input (not zero) and on correct checkbox input (at least one checkbox has been checked)
-function enableDisableStartBtn(){
-
+function enableDisableStartBtn()
+{
     var focusChecked = [];
     var focusCheckboxes = document.querySelectorAll(".form-check-input");
     
@@ -503,14 +518,11 @@ function enableDisableStartBtn(){
         focuset = false;
         disableStartBtn();
     }
-
-
-    
-
 }
 
 
-function uncheckCheckmarks(){
+function uncheckCheckmarks()
+{
     var checks = document.querySelectorAll(".form-check-input");
     checks.forEach(function(element){
         element.checked = false;
@@ -518,7 +530,8 @@ function uncheckCheckmarks(){
 }
 
 
-function switchButtonStatus(){
+function switchButtonStatus()
+{
     startBtn.disabled = !startBtn.disabled;
     addHoursBtn.disabled = !addHoursBtn.disabled;
     addMinutesBtn.disabled = !addMinutesBtn.disabled;
@@ -528,60 +541,63 @@ function switchButtonStatus(){
 }
 
 
-function disableStartBtn(){
+function disableStartBtn()
+{
     startBtn.disabled = true;
     document.getElementById('Rectangle_13').style.display = "none";
     document.getElementById('start').textContent ="";
 }
 
-function enableStartBtn(){
+function enableStartBtn()
+{
     document.getElementById('Rectangle_13').style.display = "unset";
     document.getElementById('start').textContent = "start";
     startBtn.disabled = false;
 }
 
     //formats numbers in timer to contain 0 at beginning
-function numberFormatter(number){
+function numberFormatter(number)
+{
 
     if(number.toString().length < 2){
         number = '0' + number;
     }
 
     return number;
-
 }
 
     //sets input times once on start click
-function setInputTimes(){
+function setInputTimes()
+{
     hrsInput = hours;
     minsInput = mins;
 }
 
     //Input Sanity Checks
 
-    function hoursSanityCheck(){
-    
-        if (hours == -1)
-        {
-            hours = 99;
-        }
-    
-        else if (hours >= 99)
-        {
-            hours = 0; //changed from 1 to 0
-        }
-    
+function hoursSanityCheck()
+{
+    if (hours == -1)
+    {
+        hours = 99;
+    }
+
+    else if (hours >= 99)
+    {
+        hours = 0; //changed from 1 to 0
+    }
+}
+
+function minuteSanityCheck()
+{
+    if (mins == -1){
+        mins = 59;
     }
     
-    function minuteSanityCheck(){
-        if (mins == -1){
-            mins = 59;
-        }
-        
-        if (mins == 60){
-            mins = 0;
-        }
+    if (mins == 60){
+        mins = 0;
     }
+}
     
 
 

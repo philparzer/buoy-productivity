@@ -133,7 +133,7 @@ button{
 }
 
 #additional-fields{
-  margin-left: -38px;
+  margin-left: -30px;
 }
 
 #minimize-main:hover{
@@ -168,8 +168,9 @@ button{
 }
 
 #manage-tags-dropdown{
+  width: 180px;
   height: 380px;
-  left: -5px !important;
+  left: -1px !important;
   top: 5px !important;
 }
 
@@ -179,7 +180,7 @@ button{
   border: solid;
   border-width: 3px;
   border-radius: 30px;
-  border-color: var(--primaryGrey);
+  border-color: var(--yellow);
 }
 
 #add-tag-input-button{
@@ -203,27 +204,36 @@ button{
 
 #add-tag-input:hover{
   background-color: var(--primaryGrey);
-
-  border-color: var(--yellow);
+  border-color: var(--white);
 }
 
 #tag-resolve-headline{
   color: var(--red);
-  margin-bottom: 10px;
+  margin-bottom: -5px;
 }
 
 #tag-resolve-headline:hover{
   background-color: var(--primaryGrey);
 }
 
+.tag-resolve{
+  margin-top: 10px;
+  color: var(--white);
+}
+
 .tag-resolve:hover{
   background-color: var(--red)!important;
-  color: var(--primaryGrey)!important;
+  color: var(--darkerGrey)!important;
   border-radius:2px;
 }
 
+#add-tag-input-button-box{
+  margin-left: -12px;
+}
+
 #add-tag-input-button-box:hover{
-  background-color: var(--primaryGrey);
+  background-color: none!important;
+  background: none!important;
 }
 
 /* ############  Calendar  #######################################################################*/
@@ -463,7 +473,7 @@ button{
     }
 
     .dropdown-item:hover{
-      background-color: var(--primaryGrey)!important;
+      background-color: var(--primaryGrey);
     }
 
     .form-check-input:checked, .form-check-input:active, .form-check-input:hover{
@@ -509,9 +519,6 @@ button{
 #start-box:hover > #start {fill: var(--darkerGrey)} 
     
 
-#start-box{
-  
-}
 
 #start{
     transform: translate(32px, 21px);
@@ -685,7 +692,7 @@ button{
     background-repeat: no-repeat;
      
     background-image: url('../images/focus-bg.png');
-    -webkit-transition: background .5s linear;
+    transition: background .5s linear;
     
   }
 
@@ -700,7 +707,7 @@ button{
     background-repeat: no-repeat;
      
     background-image: url('../images/standard-bg.png');
-    -webkit-transition: background .5s linear;
+    transition: background .5s linear;
     
   }
 

@@ -1,7 +1,7 @@
 /*TODO: Fade Background Out Animation*/
 
 body{
-    background-color: hsla(51, 88%, 71%, 0.623);
+    background-color: hsla(51, 78%, 75%, 0.294);
     font-family: Bahnschrift;
     font-weight: bold;
 }
@@ -17,7 +17,7 @@ body{
 
 #info{
     font-size: 100px;
-    color:#474747;
+    color:#FAFAFA;
 }
 
 .badckground-buoy{
