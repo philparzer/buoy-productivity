@@ -4,44 +4,11 @@
 //TODO: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//DEBUG TAG MANAGER --------------------------------------------------------------------------------
-
-
-let inputElementCheck;
-const createTagElement = document.getElementById("add-tag-input");
-const searchElement = document.getElementById('search');
-
-inputElementCheck = setInterval(function()
-    {  
-
-        if (searchElement.value != "")
-        {
-            //TODO: search database
-        }
-        
-        if (createTagElement.value != "")
-        {
-            document.getElementById("add-tag-input-button").style.visibility = "unset";
-        }
-
-        else
-        {
-            document.getElementById("add-tag-input-button").style.visibility = "hidden";
-        }
-
-    }, 1000)
-
-
-
-//-----------------------------------------------------------------------------
-
-
-
-
-
-
-
+//GLOBAL VARIABLES
 
 //imports --------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
@@ -58,16 +25,17 @@ const primaryGrey = "#474747";
 const darkerGrey =  "#3F3F3F";
 const lighterGrey =  "#707070";
 
-//buttons  --------------------------------------------------------------------------------------------
+//buttons and input fields --------------------------------------------------------------------------------------------
+
   //title bar fields
 const aboutBtn = document.getElementById('about');
 const settingsBtn = document.getElementById('settings');
+const addTagBtn = document.getElementById('add-tag-input-button')
 
-// TODO: uncomment when debug is done
-// let inputElementCheck;
-// const createTagElement = document.getElementById("add-tag-input");
-// const searchElement = document.getElementById('search');
-
+const createTagElement = document.getElementById("add-tag-input");
+const searchElement = document.getElementById('search');
+const createTagButton = document.getElementById("add-tag-input-button");
+let inputElementCheckInterval;
 
     //buoy input fields
 const addHoursBtn = document.getElementById('time-hours-add-btn');
@@ -81,11 +49,13 @@ const startBtn = document.getElementById('start-btn');
 
 
 //timerInput -----------------------------------------------------------------------------------------
+
     //used to set and clear intervals for mouse hold functionality
 let mouseHoldTimer; 
 let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
+
 let timerLogic;
 
     //main time calculation variables
@@ -107,6 +77,7 @@ let warningGoneAfter = 4; //in seconds (time it takes for warning to disappear)
 
 
 //focus  --------------------------------------------------------------------------------------------
+
 let focusSet = false;
 let programArray = []; //array of all open programs (placeholder.exe, placeholder2.exe, ...)
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
@@ -116,6 +87,82 @@ let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
 
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//DEBUG --------------------------------------------------------------------------------
+//TODO: make resolve work
+//TODO: make buoy tags toggleable
+//FIXME: style items
+
+inputElementCheckInterval = setInterval(function()
+    {  
+
+        if (searchElement.value != "")
+        {
+            //TODO: search database
+        }
+        
+        if (createTagElement.value != "")
+        {
+            createTagButton.style.visibility = "unset";
+        }
+
+        else
+        {
+            createTagButton.style.visibility = "hidden";
+        }
+
+    }, 1000)
+
+
+
+createTagButton.onclick = function() 
+{
+    createdTagName = createTagElement.value;
+    createTagElement.value = "";
+
+
+    //ADD TAG TO BUOY INPUT LIST
+
+    var buoyTagDropdown = document.getElementById("tag-buoy-dropdown");
+    var buoyTagItem = document.createElement("li");
+    buoyTagDropdown.appendChild(buoyTagItem);
+
+    var buoyTagItemBox = document.createElement("button");
+    buoyTagItemBox.className ="dropdown-item dropdown-item-tag";
+    buoyTagItemBox.type = "button";
+    buoyTagItemBox.textContent = createdTagName;
+    buoyTagItem.appendChild(buoyTagItemBox);
+
+    //ADD TAG TO RESOLVE LIST
+
+    var resolveDropdown = document.getElementById("manage-tags-dropdown");
+    var resolveTagItem = document.createElement("li");
+    resolveDropdown.appendChild(resolveTagItem);
+
+    var resolveTagItemBox = document.createElement("button");
+    resolveTagItemBox.className ="dropdown-item tag-resolve";
+    resolveTagItemBox.type = "button";
+    resolveTagItemBox.textContent = createdTagName;
+    resolveTagItem.appendChild(resolveTagItemBox);
+
+}
+
+//-----------------------------------------------------------------------------
+
+
+
+
+
+
+
 
 
 //TITLEBAR  ########################################################################################################################
@@ -660,7 +707,3 @@ function unstyleBackground(){
 //FIXME: function unstyleWarningBackground(){
 //     document.getElementById("fade-in-lost-focus-bg").id = "fade-in-bg";
 // }
-    
-
-
-

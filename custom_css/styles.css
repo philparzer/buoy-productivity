@@ -374,16 +374,18 @@ button{
   text-align: center;
   color: var(--lighterGrey);
   line-height: 5px;
+  margin-bottom: 2px;
 }
 
 #tag-buoy-dropdown-heading:hover{
-  background-color: var(--yellow);
+  background-color: var(--yellow)!important;
 }
 
 
 
 
 .dropdown-item-tag{
+  margin-top: 5px;
   color: var(--primaryGrey)!important;
   text-align: center;
 }
