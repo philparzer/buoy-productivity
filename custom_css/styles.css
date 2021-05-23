@@ -239,12 +239,44 @@ button{
 /* ############  Calendar  #######################################################################*/
 
 #calendar-btn{
-  margin-left: -10px;
+  margin-left: -12px;
+  background: none !important;
+  border: none !important;
+}
+
+#calendar-btn:focus{
+  box-shadow: none!important;
+}
+
+#dropdown-arrow{
+  pointer-events: none!important;
 }
 
 #calendar-btn:hover > #dropdown-arrow > #Path_10{
   stroke: var(--yellow);
 }
+
+  /*OFFCANVAS*/
+
+.offcanvas-body{
+  background-color:var(--primaryGrey)!important;
+  width: 480px !important;
+  border-top-right-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+}
+
+.offcanvas-header{
+  background-color: #1F1F1F;
+  margin-bottom: -22px;
+  width: 480px !important;
+}
+
+.offcanvas-title{
+  color: var(--yellow);
+  margin-top: -11px;
+  padding-bottom: 11px;
+}
+
 
 /* ############  Buoy Main Input Fields #######################################################################*/
 

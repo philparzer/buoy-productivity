@@ -78,15 +78,17 @@
 <!--#################### Main #####################-->
           <div class="container-fluid h-75">
               
-    <!--Calendar   ----------------------------------------------------------------------->
+    <!--Calendar Button:  ----------------------------------------------------------------------->
               <div class="row pt-5">
                   <div id="calendar-box" class="col-1 pt-3">
-                      <button id="calendar-btn">
+                      <button id="calendar-btn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
                         <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
                             <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
                         </svg>
                       </button>
                   </div>
+
+                  
 
     <!--Add Timer Input Buttons-->
                   <div class="col-8"></div>
@@ -237,6 +239,18 @@
           </div>
       </div>
 
+
+    <!--CALENDAR SIDEBAR  ----------------------------------------------------------------------->
+
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">stats</h5>
+        </div>
+        <div class="offcanvas-body">
+          <p>insert months here</p>
+          <!--TODO: implement calendar with past focus status elements here-->
+        </div>
+      </div>
     
 <!--#################### JS #############################-->
 

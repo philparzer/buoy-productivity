@@ -33,7 +33,7 @@ const warningAudio = new Audio("./audio/warningSound.mp3");
 
 //buttons and input fields --------------------------------------------------------------------------------------------
 
-  //title bar fields
+    //title bar fields
 const aboutBtn = document.getElementById('about');
 const settingsBtn = document.getElementById('settings');
 const addTagBtn = document.getElementById('add-tag-input-button')
@@ -42,6 +42,10 @@ const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
 const createTagButton = document.getElementById("add-tag-input-button");
 let inputElementCheckInterval;
+
+    //calendar
+const calendarBtn = document.getElementById("calendar-btn");
+let calendar;
 
     //buoy input fields
 const addHoursBtn = document.getElementById('time-hours-add-btn');
@@ -138,6 +142,13 @@ document.getElementById('close-main').onclick = function() {
 
 document.getElementById('minimize-main').onclick = function() {
     ipcRenderer.send( 'app:minimize' );
+}
+
+//CALENDAR  ########################################################################################################################
+
+
+calendarBtn.onclick = function() {
+    //TODO:
 }
 
 
