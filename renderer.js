@@ -44,8 +44,7 @@ const createTagButton = document.getElementById("add-tag-input-button");
 let inputElementCheckInterval;
 
     //calendar
-const calendarBtn = document.getElementById("calendar-btn");
-let calendar;
+const showStatsWindowButton = document.getElementById("calendar-btn");
 
     //buoy input fields
 const addHoursBtn = document.getElementById('time-hours-add-btn');
@@ -144,13 +143,6 @@ document.getElementById('minimize-main').onclick = function() {
     ipcRenderer.send( 'app:minimize' );
 }
 
-//CALENDAR  ########################################################################################################################
-
-
-calendarBtn.onclick = function() {
-    //TODO:
-}
-
 
 //MAIN  ########################################################################################################################
 
@@ -186,9 +178,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         
         //counter
         var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in minutes
-        console.log("count" + count);
-        console.log("hours*60" + hours*60);
-        console.log("mins" + mins);
         if(count < (hours*60 + mins) -1)
         {
             //minutes html update 
@@ -223,14 +212,13 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                     recentlyOutOfFocus = false;
                 }
                 
-                console.log("program is included");
                 unfocusedTime = 0;
             }
     
             else 
             {
 
-                if (timerRecentlyEnded){ console.log("entering else block"); return;}
+                if (timerRecentlyEnded){return;}
 
                 recentlyOutOfFocus = true;
 
@@ -245,9 +233,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                     warningOverlay.close();
                 }
 
-                console.log("not included");
                 unfocusedTime++;
-                console.log("unfocused time: " + unfocusedTime);
                 
                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
                     
@@ -350,7 +336,9 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         }
         
         if (createTagElement.value != "")
-        {
+        {   
+            if (createTagElement.value.length != 12) {createTagElement.style.borderColor = yellow;}
+            if (createTagElement.value.length == 12) {createTagElement.style.borderColor = red;}
             //TODO: listen to enter input
             createTagButton.style.visibility = "unset";
         }
@@ -445,7 +433,6 @@ function getOpenExes(sources)
         //compares title retrieved from desktop capturer and window manager path
         windowManager.getWindows().forEach(element => {
             if(element.getTitle() == source.name){
-                //console.log(element.getTitle() + " Path: " + element.path)
                 var programExe = parseFilePath(element.path);
                 
                 if (programArray.includes(programExe))
@@ -660,9 +647,6 @@ function styleBackground(){
     //background image
     document.getElementById("main-background").id = "fade-in-bg";
 
-
-
-    
 }
 
 function styleBuoy(){
@@ -744,4 +728,189 @@ function unstyleBackground(){
     
     //background image fade in
     document.getElementById("fade-in-bg").id = "fade-out-bg";
+}
+
+//_________________________________________________________________________________________
+//STATS
+
+showStatsWindowButton.onclick = function() 
+{   
+    updateSuccessRate();
+}
+
+//Success Rate
+
+function updateSuccessRate()
+{
+    document.getElementById("kdRatio").innerHTML = "100%"; 
+    
+    //TODO: calculate Success Rate from data
+    //TODO: style sucess rate red, white, or yellow for given range of %
+}
+
+//Calendar  ########################################################################################################################
+//TODO: use data to color dates red or yellow
+
+
+function generate_year_range(start, end) {
+    var years = "";
+    for (var year = start; year <= end; year++) {
+        years += "<option value='" + year + "'>" + year + "</option>";
+    }
+    return years;
+}
+
+today = new Date();
+currentMonth = today.getMonth();
+currentYear = today.getFullYear();
+selectYear = document.getElementById("year");
+selectMonth = document.getElementById("month");
+
+
+createYear = generate_year_range(2021, currentYear);
+
+document.getElementById("year").innerHTML = createYear;
+
+var calendar = document.getElementById("calendar");
+var lang = calendar.getAttribute('data-lang');
+
+var months = "";
+var days = "";
+
+var monthDefault = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+var dayDefault = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+if (lang == "en") {
+    months = monthDefault;
+    days = dayDefault;
+} else if (lang == "de") {
+    months = ["", "", "", "", "", "", "", "", "", "", "", ""];
+    days = ["", "", "", "", "", "", ""];
+} else if (lang == "ru") {
+    months = ["", "", "", "", "", "", "", "", "", "", "", ""];
+    days = ["", "", "", "", "", "", ""];
+} else {
+    months = monthDefault;
+    days = dayDefault;
+}
+
+
+var $dataHead = "<tr>";
+for (dhead in days) {
+    $dataHead += "<th data-days='" + days[dhead] + "'>" + days[dhead] + "</th>";
+}
+$dataHead += "</tr>";
+
+//alert($dataHead);
+document.getElementById("thead-month").innerHTML = $dataHead;
+
+
+monthAndYear = document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+
+
+function next() {
+
+    document.getElementById("previous").style.visibility = "unset"
+
+    if (currentMonth == today.getMonth() && currentYear == today.getYear())
+    {
+        
+        document.getElementById("next").style.visibility = "hidden";
+    }
+
+
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+
+}
+
+function previous() {
+
+    document.getElementById("previous").style.visibility = "unset"
+
+    if (currentYear != today.getYear())
+    {
+        document.getElementById("next").style.visibility = "unset";
+    }
+
+    if (currentMonth == 1 && currentYear == 2021)
+    {
+        document.getElementById("previous").style.visibility = "hidden";
+    }
+
+
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+}
+
+function jump() {
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+}
+
+function showCalendar(month, year) { //TODO: add coloration from data
+
+    if (currentMonth == today.getMonth()){
+        document.getElementById("next").style.visibility = "hidden";
+    }
+
+    var firstDay = ( new Date( year, month ) ).getDay();
+
+    tbl = document.getElementById("calendar-body");
+
+    
+    tbl.innerHTML = "";
+
+    
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    var date = 1;
+    for ( var i = 0; i < 6; i++ ) {
+        
+        var row = document.createElement("tr");
+
+        
+        for ( var j = 0; j < 7; j++ ) {
+            if ( i === 0 && j < firstDay ) {
+                cell = document.createElement( "td" );
+                cellText = document.createTextNode("");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            } else if (date > daysInMonth(month, year)) {
+                break;
+            } else {
+                cell = document.createElement("td");
+                cell.setAttribute("data-date", date);
+                cell.setAttribute("data-month", month + 1);
+                cell.setAttribute("data-year", year);
+                cell.setAttribute("data-month_name", months[month]);
+                cell.className = "date-picker";
+                cell.innerHTML = "<span>" + date + "</span>";
+
+                if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
+                    cell.className = "date-picker selected";
+                }
+                row.appendChild(cell);
+                date++;
+            }
+
+
+        }
+
+        tbl.appendChild(row);
+    }
+
+}
+
+function daysInMonth(iMonth, iYear) {
+    return 32 - new Date(iYear, iMonth, 32).getDate();
 }
