@@ -49,10 +49,58 @@
     <!--Additional Title Bar Fields   ----------------------------------------------------------------------->                
                   </div>
                   <div class="col-2" id="additional-fields">
-                    <button id="about">settings</button>
-                    <button id="settings">about</button>
+
+                    <div id="settings-dropdown-box" class="dropdown">
+                        <button id="settings" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                          settings
+                        </button>
+                        <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2"> <!--TODO: ADD BUTTONS DYNAMICALLY VIA JS-->
+                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
+                            <li id="language-radio-buttons">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <label id="radio-label-english"  class="form-check-label" for="exampleRadios1">
+                                      English
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                    <label id="radio-label-russian" class="form-check-label" for="exampleRadios2">
+                                      Russian
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                                    <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
+                                      German
+                                    </label>
+                                  </div>
+                            </li>
+
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+
+                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sounds</text></li>
+                          <li>
+                            <div class="form-check">
+                                <input  id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus lost</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form-check">
+                                <input id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
+                            </div>
+                          </li>
+
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+                          <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</text></li>
+                          
+                        </ul>
+                    </div>
                   </div>
-                  <div class="col-4"></div>
+                  <div id="about-box" class="col-1"><button id="about">about</button></div>
+                  <div class="col-3"></div>
     
     <!--Min and Close Buttons   ----------------------------------------------------------------------->
                   <div class="col" type="button" id="minimize-main">

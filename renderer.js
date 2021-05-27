@@ -17,6 +17,7 @@ var sqlite3 = require('sqlite3').verbose();
 const { desktopCapturer } = require('electron');
 const activeWindows = require('electron-active-window');
 const { windowManager } = require("node-window-manager");
+const { shell } = require('electron');
 
 //colors  --------------------------------------------------------------------------------------------
 const red = '#DBA993';
@@ -132,6 +133,18 @@ databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 //TITLEBAR  ########################################################################################################################
 
 //Search
+
+
+
+//settings
+
+//about
+
+aboutBtn.onclick = function()
+{
+    shell.openExternal('https://buoy-productivity.com/'); //TODO: link to about page
+}
+
 
 
 //Minimize and Quit
