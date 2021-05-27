@@ -38,8 +38,14 @@
                           tags
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
-                            <li><input id="add-tag-input" class="dropdown-item" type="input" placeholder="create a tag" maxlength="12"></input></li> <!--TODO: add listener for enter TODO: change to Bootstrap and integrate button-->
-                            <li><div id="add-tag-input-button-box" class="dropdown-item"><button id="add-tag-input-button">add&nbsp</button></div></li> <!--TODO: REMOVE?-->
+                            <li>
+                                <div class="input-group">
+                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="create a tag" aria-label="create tag" aria-describedby="basic-addon2">
+                                    <div id="add-tag-input-button-box" class="input-group-append">
+                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">add</button>
+                                    </div>
+                                  </div>
+                            </li>
                             <div class="dropdown-divider"></div>
                             <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
                             <!--tags instantiat here-->
@@ -66,13 +72,13 @@
                                   <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                                     <label id="radio-label-russian" class="form-check-label" for="exampleRadios2">
-                                      Russian
+                                      Русский
                                     </label>
                                   </div>
                                   <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
                                     <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
-                                      German
+                                      Deutsch
                                     </label>
                                   </div>
                             </li>
@@ -223,16 +229,17 @@
                     <div class="row">
                         <div class="col-12 py-2">
                             
-                            <div id="tag-buoy-dropdown-box" class="dropdown">
-                                <button id="tag-buoy-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div id="tag-buoy-dropdown-box" class="dropdown tooltip-tag">
+                                <button id="tag-buoy-btn" class="btn btn-secondary " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
                                         <rect id="Rectangle_15" data-name="Rectangle 13" width="106.498" height="27" rx="13.5" fill="#dbdb93"/>
-                                        <text id="tag" transform="translate(40.749 20)" fill="#474747" font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" x="0" y="0">tag</tspan></text>
+                                        <text id="tag" fill="#474747" transform="translate(40.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">tag</tspan></text>
                                         <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(6.381 5)" fill="#474747" stroke="#707070" stroke-width="1">
                                           <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
                                           <circle cx="4.5" cy="4.5" r="4" fill="none"/>
                                         </g>
                                     </svg>
+                                    <span id="chosen-tag-tooltip" class="tooltiptext">test</span> <!--disable this tooltip when timer doesnt run fill placeholder with tag content--> <!--or instantiate this and add class in container-->
                                 </button>
                                 <ul id="tag-buoy-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                                   <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">add a tag</text></li>

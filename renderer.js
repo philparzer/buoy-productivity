@@ -341,6 +341,8 @@ function timeoutClear() {
 
 //TAGS  ########################################################################################################################
 
+
+
 inputElementCheckInterval = setInterval(function() //checks input in input elements each second
     {  
 
@@ -351,9 +353,10 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         
         if (createTagElement.value != "")
         {   
-            if (createTagElement.value.length != 12) {createTagElement.style.borderColor = yellow;}
-            if (createTagElement.value.length == 12) {createTagElement.style.borderColor = red;}
-            //TODO: listen to enter input
+            //listens to enter input
+            
+
+            //sets add button to visible
             createTagButton.style.visibility = "unset";
         }
 
@@ -364,9 +367,21 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
 
     }, 1000)
 
+//creates new tag in both dropdowns new tag when create tag button is pressed
+createTagButton.onclick = function()
+{
+    addNewTag();
+}
 
-    
-createTagButton.onclick = function() //instantiates TAGS in both dropdowns 
+//adds enter listener to tagmanager input element, creates new tag in both dropdowns
+createTagElement.addEventListener("keyup", function(event) {
+    if (event.key === "Enter" && createTagElement.value != "") {
+        addNewTag();
+    }
+});
+
+
+function addNewTag()
 {
     createdTagName = createTagElement.value;
     createTagElement.value = "";
@@ -384,6 +399,8 @@ createTagButton.onclick = function() //instantiates TAGS in both dropdowns
     buoyTagItemBox.id = createdTagName;
     buoyTagItemBox.value = "false"
     buoyTagItemBox.textContent = createdTagName;
+
+
         // add toggle to button
     buoyTagItemBox.onclick = function()
     {
@@ -394,6 +411,7 @@ createTagButton.onclick = function() //instantiates TAGS in both dropdowns
             allDropDownItemTags[i].style.backgroundColor = "unset";
         }
         buoyTagItemBox.value = "true";
+        styleTag();
         buoyTagItemBox.style.backgroundColor = red;
     }
     buoyTagItem.appendChild(buoyTagItemBox);
@@ -404,24 +422,42 @@ createTagButton.onclick = function() //instantiates TAGS in both dropdowns
     var resolveDropdown = document.getElementById("manage-tags-dropdown");
     var resolveTagItem = document.createElement("li");
     resolveDropdown.appendChild(resolveTagItem);
+    resolveTagItem.id = createdTagName;
 
     var resolveTagItemBox = document.createElement("button");
     resolveTagItemBox.className ="dropdown-item tag-resolve";
     resolveTagItemBox.type = "button";
-    resolveTagItemBox.id = createdTagName;
+    
+
 
     resolveTagItemBox.onclick = function ()
-    {
-        document.getElementById(createdTagName).remove(); //removes from resolve dropdown
-        document.getElementById(createdTagName).remove(); //removes from tag buoy dropdown
+    {   
+        
+        resolveTagItem.remove(); //removes from resolve dropdown
+        
+        buoyTagItem.remove(); //removes from tag buoy dropdown
     }
-
+    
     resolveTagItemBox.textContent = createdTagName;
     resolveTagItem.appendChild(resolveTagItemBox);
-
-    //TODO: ADD CHOSEN TAG TO BUOY WHEN TIMER IS RUNNING
-
+    
 }
+
+
+//TODO: ADD CHOSEN TAG TO BUOY WHEN TIMER IS RUNNING
+
+function addTagTooltipOnStart()
+{
+    //TODO: on StartButtonClick call this function
+
+    //add .tooltip-tag to id="tag-buoy-dropdown-box"
+    //instantiate <span id="chosen-tag-tooltip" class="tooltiptext">PLACEHOLDER</span>
+    //fill text content of tooltip with chosen tag
+}
+
+
+
+
 //SET FOCUS  ########################################################################################################################
 
 focusBtn.onclick = function()
@@ -743,6 +779,13 @@ function unstyleBackground(){
     //background image fade in
     document.getElementById("fade-in-bg").id = "fade-out-bg";
 }
+
+
+function styleTag()
+{
+    document.getElementById('Rectangle_15').style.fill = red;
+}
+
 
 //_________________________________________________________________________________________
 //STATS

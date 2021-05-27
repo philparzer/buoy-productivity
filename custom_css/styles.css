@@ -1,5 +1,6 @@
 /* ############  Background, General and Variables  ############*/
 
+
 /*placeholder*/
 label{
   color:var(--white);
@@ -98,6 +99,7 @@ button{
   border: 1px solid var(--darkerGrey);
   border-radius: 0px;
   left: -11px!important;
+  top: 5px !important;
 }
 
 #settings{
@@ -189,6 +191,7 @@ button{
 #search{
     -webkit-app-region: no-drag;
     margin-left: -10px;
+    padding-left: 8px;
     border-radius: 30px;
     color: var(--yellow);
     background-color: var(--primaryGrey);
@@ -270,26 +273,40 @@ button{
   height: 380px;
   left: -1px !important;
   top: 5px !important;
+  border-width: 1px!important;
 }
 
 #add-tag-input{
-  padding-left: 20px;
+  padding-left: 10px!important;
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+  margin-top: 0px!important;
+  margin-bottom: 0px!important;
+  margin-right: 30px;
+  height: 30px;
+  border-radius: 20px;
   background-color: var(--primaryGrey);
   border: solid;
   color: var(--white);
-  border-width: 3px;
-  border-radius: 30px;
   border-color: var(--yellow);
 }
 
-#add-tag-input-button{
+#add-tag-input:focus{
+  box-shadow: none;
+}
 
-  margin-top: 10px;
-  margin-bottom: 2px;
-  text-align: center;
-  color: var(--white);
-  border-radius: 30px;
+#add-tag-input-button{
+  padding-left: 10px!important;
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+  margin-top: 0px!important;
+  margin-bottom: 0px!important;
+  margin-left: -12px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: var(--primaryGrey);
   border: solid;
+  color: var(--white);
   border-color: var(--yellow);
 }
 
@@ -308,6 +325,7 @@ button{
 
 #tag-resolve-headline{
   color: var(--red);
+  margin-left: -10px;
   margin-bottom: -5px;
 }
 
@@ -317,6 +335,7 @@ button{
 
 .tag-resolve{
   margin-top: 10px;
+  margin-left: -10px;
   color: var(--white);
 }
 
@@ -475,14 +494,14 @@ button{
 
 #tag-box{
     margin-top: -10px; 
-    margin-left: 75px;
+    margin-left: 76px;
 }
 
 /*TAG BUOY*/
 
 #tag-buoy-dropdown-box{
   margin-left: 70px;
-  margin-top: -9px;
+  margin-top: -12px;
 }
 
 #tag-buoy-btn{
@@ -525,9 +544,6 @@ button{
   background-color: var(--yellow)!important;
 }
 
-
-
-
 .dropdown-item-tag{
   margin-top: 5px;
   color: var(--primaryGrey)!important;
@@ -538,6 +554,49 @@ button{
   color: var(--yellow)!important;
   background-color: var(--darkerGrey)!important;
 }
+
+/*Tag buoy tooltip*/
+
+
+.tooltip-tag {
+  position: relative;
+  display: inline-block;/* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip-tag .tooltiptext {
+  top: -1px;
+  right: 115%;
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--red);
+  color: var(--darkerGrey);
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip-tag:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip-tag .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--red);
+}
+
+
 
 
 /*FOCUS DROPDOWN*/
