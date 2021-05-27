@@ -30,6 +30,7 @@ const lighterGrey =  "#707070";
 //audio  --------------------------------------------------------------------------------------------
 
 const warningAudio = new Audio("./audio/warningSound.mp3");
+//TODO: const focusAudio = new Audio("./audio/focusSound.mp3");
 
 
 //buttons and input fields --------------------------------------------------------------------------------------------

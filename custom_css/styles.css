@@ -91,6 +91,27 @@ button{
 
 }
 
+/*settings*/
+#settings-dropdown{
+  height: 360px!important;
+  width: 180px!important;
+  border: 1px solid var(--darkerGrey);
+  border-radius: 0px;
+  left: -11px!important;
+}
+
+#settings{
+    -webkit-app-region: no-drag;
+    color: var(--lighterGrey);
+    padding: 0px!important;
+    padding-left: 5px!important;
+    margin: 0px !important;
+    background: var(--darkerGrey);
+    margin-left: 4px!important;
+    margin-top: 9px!important;
+    border: none;
+}
+
 #focus-lost-sound-switch{
   margin-left: -9px;
   margin-right: 10px;
@@ -114,6 +135,7 @@ button{
 
 #sounds-header{
   color: var(--lighterGrey);
+  
 }
 
 #restart-info{
@@ -126,14 +148,15 @@ button{
 }
 
 #radio-label-english{
-  margin-top: 2px!important;
+  margin-top: 3px!important;
 }
 
 #radio-label-russian{
-  margin-top: 2px!important;
+  margin-top: 3px!important;
 }
 #radio-label-german{
-  margin-top: 2px!important;
+  margin-top: 3px!important;
+  
 }
 
 #focus-lost-sound-label{
@@ -145,27 +168,6 @@ button{
   margin-left: -2px;
   margin-top: 2px!important;
 }
-#settings-dropdown{
-  height: 360px!important;
-  width: 180px!important;
-  border: 1px solid var(--darkerGrey);
-  border-radius: 0px;
-  left: -11px!important;
-}
-
-#settings{
-    -webkit-app-region: no-drag;
-    color: var(--lighterGrey);
-    padding: 0px!important;
-    padding-left: 5px!important;
-    margin: 0px !important;
-    background: var(--darkerGrey);
-    margin-left: 4px!important;
-    margin-top: 9px!important;
-    border: none;
-}
-
-
 
 .settings-dropdown-divider{
   margin-top: 20px;
@@ -219,6 +221,13 @@ button{
 
 #additional-fields{
   margin-left: -30px;
+}
+
+/*minimize and close*/
+
+#minimize-main{
+  margin-left:110px;
+  padding-left: -20px;
 }
 
 #minimize-main:hover{
@@ -949,3 +958,17 @@ button{
     transition: background .5s linear;
     
   }
+
+
+
+
+/* ############ DYNAMIC CLASSES, assigned to HTML eles via JS  #######################################################*/
+
+/*
+TODO: completed Dot class
+TODO: failed Dot class
+TODO: success calendar date class
+TODO: failed calendar date class
+
+
+*/
