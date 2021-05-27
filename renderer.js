@@ -1,8 +1,9 @@
-//TODO: stop interval checks when focus dropdown is collapsed to increase performance?
+//TODO: FIXME: electron / buoy itself should always be an exception for check
+
 //TODO: think about APPLICATIONFRAMEHOST windows apps
-//TODO: electron / buoy itself should probably always be an exception for check
-//TODO: snipping tool, search bar, etc should probably always be exceptions for check
+//TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
+//TODO: MACOS filepath
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

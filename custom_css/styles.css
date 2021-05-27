@@ -191,7 +191,6 @@ button{
 #search{
     -webkit-app-region: no-drag;
     margin-left: -10px;
-    padding-left: 8px;
     border-radius: 30px;
     color: var(--yellow);
     background-color: var(--primaryGrey);
@@ -505,6 +504,7 @@ button{
 }
 
 #tag-buoy-btn{
+  margin-top: -10px;
   border-radius: 30px;
   padding: 0;
   border: solid;
@@ -565,12 +565,12 @@ button{
 
 /* Tooltip text */
 .tooltip-tag .tooltiptext {
-  top: -1px;
+  top: -10px;
   right: 115%;
   visibility: hidden;
   width: 120px;
   background-color: var(--red);
-  color: var(--darkerGrey);
+  color: var(--dar);
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
