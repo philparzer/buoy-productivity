@@ -1,13 +1,16 @@
 //HIGH PRIORITY:
+//TODO: Database
 //FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
 
 //LOW PRIORITY:
-//TODO: think about APPLICATIONFRAMEHOST windows apps
+//TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 //TODO: MACOS filepath
 //TODO: CSS: polish overlays
 //TODO: change placeholder alert
+//TODO: fade out overlay background
+//TODO: add version number to html
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
