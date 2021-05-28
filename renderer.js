@@ -1,13 +1,13 @@
-//TODO: FIXME: electron / buoy itself should always be an exception for check
-//FIXME: input fields don't work for short time after timer has failed?
+//HIGH PRIORITY:
+//FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
 
+//LOW PRIORITY:
 //TODO: think about APPLICATIONFRAMEHOST windows apps
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: half-time overlay?
 //TODO: MACOS filepath
-
-
-
+//TODO: CSS: polish overlays
+//TODO: change placeholder alert
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,6 +103,9 @@ let programArray = []; //array of all open programs (placeholder.exe, placeholde
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 let setFocusInterval;
 
+    //exceptions
+let thisApplication = "electron.exe"; //TODO: when application name is defined -> change to application name e.g. "buoy"
+
 let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
 
@@ -197,6 +200,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     let timerRecentlyEnded = false; //used as a bugfix -> warning is displayed when timer ended succesfully
     timerRunning = true;
     manageTagTooltip();
+
+    allowedProgramArray.push(thisApplication);
     
     
     //timer functionality  --------------------------------------------------------------------------------------------
@@ -555,6 +560,9 @@ function parseFilePath(path)
 
 function addProgramToDropdown(program) 
 {
+    if (program == thisApplication){return;} //excludes buoy from dropdown
+
+
     parsedProgram = parseExeForUI(program);
 
     //instantiate list items
@@ -595,7 +603,7 @@ function parseExeForUI(program)
 function retrieveFocusAndExceptions()
 {
     var allCheckboxes = document.querySelectorAll(".exe");
-    
+
     allCheckboxes.forEach(function(element){
         if(element.checked){
             var elementName = element.id;
@@ -637,7 +645,7 @@ function enableDisableStartBtn()
     }
 
     else{
-        focusSet = false; //FIXME:
+        focusSet = false;
         disableStartBtn();
     }
 }
