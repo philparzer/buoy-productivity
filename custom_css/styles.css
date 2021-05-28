@@ -109,7 +109,7 @@ button{
     padding-left: 5px!important;
     margin: 0px !important;
     background: var(--darkerGrey);
-    margin-left: 4px!important;
+    margin-left: 2px!important;
     margin-top: 9px!important;
     border: none;
 }
@@ -146,17 +146,21 @@ button{
 }
 
 #language-radio-buttons{
+  
   margin-left: 14px!important;
 }
 
 #radio-label-english{
+  font-size: 15px!important;
   margin-top: 3px!important;
 }
 
 #radio-label-russian{
+  font-size: 15px!important;
   margin-top: 3px!important;
 }
 #radio-label-german{
+  font-size: 15px!important;
   margin-top: 3px!important;
   
 }
@@ -191,6 +195,7 @@ button{
 #search{
     -webkit-app-region: no-drag;
     margin-left: -10px;
+    padding-left: 10px;
     border-radius: 30px;
     color: var(--yellow);
     background-color: var(--primaryGrey);
@@ -254,7 +259,7 @@ button{
   border-radius: 30px;
   border: none;
   color: var(--yellow);
-  margin-left: 18px;
+  margin-left: 19px;
 }
 
 #manage-tags-btn:hover{
@@ -324,7 +329,7 @@ button{
 
 #tag-resolve-headline{
   color: var(--red);
-  margin-left: -10px;
+  margin-left: -2px;
   margin-bottom: -5px;
 }
 
@@ -334,7 +339,7 @@ button{
 
 .tag-resolve{
   margin-top: 10px;
-  margin-left: -10px;
+  margin-left: -2px;
   color: var(--white);
 }
 
@@ -500,11 +505,10 @@ button{
 
 #tag-buoy-dropdown-box{
   margin-left: 70px;
-  margin-top: -12px;
 }
 
 #tag-buoy-btn{
-  margin-top: -10px;
+  margin-top: -6px;
   border-radius: 30px;
   padding: 0;
   border: solid;
@@ -565,7 +569,7 @@ button{
 
 /* Tooltip text */
 .tooltip-tag .tooltiptext {
-  top: -10px;
+  top: -8px;
   right: 115%;
   visibility: hidden;
   width: 120px;

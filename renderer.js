@@ -1,4 +1,5 @@
 //TODO: FIXME: electron / buoy itself should always be an exception for check
+//FIXME: input fields don't work for short time after timer has failed?
 
 //TODO: think about APPLICATIONFRAMEHOST windows apps
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
@@ -6,10 +7,11 @@
 //TODO: MACOS filepath
 
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //GLOBAL VARIABLES
 
 //imports --------------------------------------------------------------------------------------------
@@ -69,6 +71,7 @@ let mouseHoldValueChangeSpeed = 125; //in milliseconds
 //time  --------------------------------------------------------------------------------------------
 
 let timerLogic;
+let timerRunning = false; //variable for timer state
 
     //main time calculation variables
 let mins = 30; 
@@ -87,6 +90,11 @@ let maxTimeUnfocused = 15; //in seconds
 let unfocusedTime = 0;
 let warningGoneAfter = 4; //in seconds (time it takes for warning to disappear)
 
+//tags  --------------------------------------------------------------------------------------------
+
+const tagBuoyBtnBox = document.getElementById("tag-buoy-dropdown-box");
+let tagTooltip;
+let chosenTag;
 
 //focus  --------------------------------------------------------------------------------------------
 
@@ -99,24 +107,15 @@ let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
 
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
-
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-
-//DEBUG --------------------------------------------------------------------------------
-
-
-
-//--------------------------------------------------------------------------------------
-
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 //DATABASE  ########################################################################################################################
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 function databaseWrite(valueArray){
     var db = new sqlite3.Database('./buoy-db.db');
     db.run('INSERT INTO buoy (programs, tag, time, state, date) VALUES ("' + valueArray[0] + '","' + valueArray[1] + '","' + valueArray[2] + '","' + valueArray[3] + '","' + valueArray[4] +'");"')
@@ -132,13 +131,18 @@ databaseWrite(["TEST","CREATIVE","mins", 0,"DATUM"])
 
 
 
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------
 //TITLEBAR  ########################################################################################################################
-
-//Search
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 
 
-//settings
+//Search TODO:
+
+
+//settings TODO:
+
 
 //about
 
@@ -146,8 +150,6 @@ aboutBtn.onclick = function()
 {
     shell.openExternal('https://buoy-productivity.com/'); //TODO: link to about page
 }
-
-
 
 //Minimize and Quit
 document.getElementById('close-main').onclick = function() {
@@ -159,11 +161,18 @@ document.getElementById('minimize-main').onclick = function() {
 }
 
 
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------
 //MAIN  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
 
 if (focusSet == false){ //make sure that focus is set before enabling start button
     disableStartBtn();
 }
+
+hideFocusBtn();
 
 
 startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
@@ -181,10 +190,13 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     switchButtonStatus(); //switches buttons to unclickable
     styleBuoy(); //styles buoy to indicate that timer is running
     styleBackground();
+    
 
     let timerInput = (parseInt(hoursElement.textContent) * 1000 * 60 * 60) + (parseInt(minutesElement.textContent) * 1000 * 60); //let timerInput: time input by user parsed from HTML elements and converted into milliseconds
     let startingTime = Date.now(); //let starting time = current system clock local time
     let timerRecentlyEnded = false; //used as a bugfix -> warning is displayed when timer ended succesfully
+    timerRunning = true;
+    manageTagTooltip();
     
     
     //timer functionality  --------------------------------------------------------------------------------------------
@@ -279,15 +291,22 @@ function endTimer (){
     clearInterval(timerLogic);
     minutesElement.textContent = numberFormatter(30);
     hoursElement.textContent = numberFormatter(0);
+    hideFocusBtn();
     focusSet = false;
+    timerRunning = false;
+    manageTagTooltip();
     unfocusedTime = 0;
     allowedProgramArray = [];
     uncheckCheckmarks();
     disableStartBtn();
+    resetTagChoice();
 }
 
-//TIMER - Input  ########################################################################################################################
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//TIMER - Input  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
 //1. add listeners to all relevant buttons
 //2. call sanity checks
 //3. increment/decrement code variables
@@ -340,9 +359,10 @@ function timeoutClear() {
     clearTimeout(mouseHoldTimer);
   }
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------
 //TAGS  ########################################################################################################################
-
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 
 inputElementCheckInterval = setInterval(function() //checks input in input elements each second
     {  
@@ -412,11 +432,14 @@ function addNewTag()
             allDropDownItemTags[i].style.backgroundColor = "unset";
         }
         buoyTagItemBox.value = "true";
+        chosenTag = buoyTagItemBox.textContent; //sets chosen tag
+        unhideFocusBtn();
         styleTag();
         buoyTagItemBox.style.backgroundColor = red;
     }
     buoyTagItem.appendChild(buoyTagItemBox);
 
+    
 
     //ADD TAG TO RESOLVE LIST
 
@@ -444,22 +467,47 @@ function addNewTag()
     
 }
 
-
-//TODO: ADD CHOSEN TAG TO BUOY WHEN TIMER IS RUNNING
-
-function addTagTooltipOnStart()
+//handles tooltip that displays tag when timer is started
+function manageTagTooltip()
 {
-    //TODO: on StartButtonClick call this function
 
-    //add .tooltip-tag to id="tag-buoy-dropdown-box"
-    //instantiate <span id="chosen-tag-tooltip" class="tooltiptext">PLACEHOLDER</span>
-    //fill text content of tooltip with chosen tag
+    if (!timerRunning)
+    {   
+        try{tagTooltip.remove();}
+        catch{console.log("couldnt remove anything");}
+        
+        tagBuoyBtnBox.className = "dropdown";
+    }
+
+    if(timerRunning){
+        tagTooltip = document.createElement("span");
+        tagTooltip.className = "tooltiptext";
+        tagTooltip.id = "chosen-tag-tooltip";
+        tagTooltip.textContent = chosenTag;
+    
+        tagBuoyBtnBox.className = "dropdown tooltip-tag"
+        tagBuoyBtnBox.appendChild(tagTooltip);
+    }
+}
+
+//reset tag choice after timer ended
+function resetTagChoice(){
+    chosenTag = "";
+    var allDropDownItemTagsForRemoval = document.getElementsByClassName("dropdown-item dropdown-item-tag");
+        for(var i = 0; i < allDropDownItemTagsForRemoval.length; i++)
+        {
+            allDropDownItemTagsForRemoval[i].value = "false";
+            allDropDownItemTagsForRemoval[i].style.backgroundColor = "unset";
+        }
 }
 
 
 
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 //SET FOCUS  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 focusBtn.onclick = function()
 {
@@ -522,7 +570,7 @@ function addProgramToDropdown(program)
 
     //instantiate checkboxes iniside list items
     var listItemInput = document.createElement("input");
-    listItemInput.className += "form-check-input";
+    listItemInput.className += "form-check-input exe"; //added "exe" to make sure query selectors work
     listItemInput.type = "checkbox";
     listItemInput.id = program;
     listItemBox.appendChild(listItemInput);
@@ -546,7 +594,7 @@ function parseExeForUI(program)
 //loops over html elements, checks checked checkboxes, pushes checked checkboxes to allowedProgramArray //TODO: later: don't start if no checked checkboxes
 function retrieveFocusAndExceptions()
 {
-    var allCheckboxes = document.querySelectorAll(".form-check-input");
+    var allCheckboxes = document.querySelectorAll(".exe");
     
     allCheckboxes.forEach(function(element){
         if(element.checked){
@@ -557,13 +605,18 @@ function retrieveFocusAndExceptions()
 }
 
 
+
+//---------------------------------------------------------------------------------------------------------------------------------------
 //UTIL FUNCTIONS   ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 //enables or disables the start button depending on correct time input (not zero) and on correct checkbox input (at least one checkbox has been checked)
 function enableDisableStartBtn()
 {
     var focusChecked = [];
-    var focusCheckboxes = document.querySelectorAll(".form-check-input");
+    var focusCheckboxes = document.querySelectorAll(".exe");
     
     focusCheckboxes.forEach(function(focusCheckbox){
         if(focusCheckbox.checked){
@@ -584,7 +637,7 @@ function enableDisableStartBtn()
     }
 
     else{
-        focuset = false;
+        focusSet = false; //FIXME:
         disableStartBtn();
     }
 }
@@ -592,7 +645,7 @@ function enableDisableStartBtn()
 
 function uncheckCheckmarks()
 {
-    var checks = document.querySelectorAll(".form-check-input");
+    var checks = document.querySelectorAll(".exe");
     checks.forEach(function(element){
         element.checked = false;
     });
@@ -669,8 +722,10 @@ function minuteSanityCheck()
 }
     
 
-
+//---------------------------------------------------------------------------------------------------------------------------------------
 //Styling  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
 
 function styleBackground(){
     
@@ -788,8 +843,21 @@ function styleTag()
 }
 
 
-//_________________________________________________________________________________________
-//STATS
+function unhideFocusBtn()
+{
+     focusBtn.style.visibility = "unset";
+}
+
+function hideFocusBtn()
+{
+     focusBtn.style.visibility = "hidden";
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//STATS #############################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
 
 showStatsWindowButton.onclick = function() 
 {   
@@ -806,8 +874,12 @@ function updateSuccessRate()
     //TODO: style sucess rate red, white, or yellow for given range of %
 }
 
-//Calendar  ########################################################################################################################
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//CALENDAR  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
 //TODO: use data to color dates red or yellow
+//TODO: rename function names and variables
 
 
 function generate_year_range(start, end) {
