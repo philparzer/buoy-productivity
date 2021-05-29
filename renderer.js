@@ -376,6 +376,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         if(delta >= timerInput) 
         {
             timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS - maybe debug once more?
+            db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
             endTimer();
 
             //TODO: overwrite failed in database entry
@@ -995,8 +996,7 @@ function updateSuccessRate()
             {
                 successRate = 100; //FIXME: No attempts - 0% / 100% ?
             }
-    
-            document.getElementById("kdRatio").innerHTML = successRate + "%";}
+            document.getElementById("kdRatio").innerHTML = Math.round(successRate) + "%";}
             )
         })
     
@@ -1010,7 +1010,7 @@ function updateSuccessRate()
     //     successRate = 100; //FIXME: No attempts - 0% / 100% ?
     // }
     
-    document.getElementById("kdRatio").innerHTML = successRate + "%"; 
+    //document.getElementById("kdRatio").innerHTML = successRate + "%"; 
     
     //TODO: style sucess rate red, white, or yellow for given range of %
 }
