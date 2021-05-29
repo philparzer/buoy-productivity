@@ -19,6 +19,8 @@
 //TODO: add version number to html
 //TODO: handle SQL injection
 
+//TODO: cap search input
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -132,17 +134,18 @@ let recentlyOutOfFocus = false; //state that checks whether user has recently ex
 //DATABASE  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
+let db = new sqlite3.Database('./buoy.db', (err) => {
+    if (err) {
+       console.error(err.message);
+       //TODO: if missing database file -> Display database file downloadlink (Hide Inputs/Stop Programm?)
+    } else{ console.log("Connected")}});
+
 let highestValue = 0
 let tags = []
 let similar = []
 
 function databaseReadTag(searchArg){
-    var db = new sqlite3.Database('./buoy.db', (err) => {
-        if (err) {
-           console.error(err.message);
-           //TODO: if missing database file -> Display database file downloadlink
-        } else{ console.log("Connected")}});
-        
+
     tags.length = 0
     similar.length = 0
     
@@ -162,10 +165,6 @@ function databaseReadTag(searchArg){
         console.log(tags)
         console.log("Highest value: " + highestValue)
     })
-
-        
-
-    db.close()
 }
 
 function similarity(s1, s2) {
@@ -213,16 +212,7 @@ function similarity(s1, s2) {
 
   function startBuoyDBEntry(tag, duration, programs, date, status)
   {
-    console.log("writing to DB");
-    var db = new sqlite3.Database('./buoy.db', (err) => {
-        if (err) {
-           console.error(err.message);
-           //TODO: if missing database file -> Display database file downloadlink
-        } else{ console.log("Connected")}});
-
     db.run('INSERT INTO focus (status, tag, programs, date, duration) VALUES ("' + status + '","' + tag + '","' + programs + '","' + date + '","' + duration + '");"');
-
-    db.close();
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------------
@@ -975,18 +965,53 @@ function hideFocusBtn()
 showStatsWindowButton.onclick = function() 
 {   
     updateSuccessRate();
+    setMostUsedTag();
 }
 
 //Success Rate
 
 function updateSuccessRate()
 {
-    document.getElementById("kdRatio").innerHTML = "100%"; 
+    let success;
+    let total;
+    let successRate;
+    //FIXME: write into single SQL statement?
     
-    //TODO: calculate Success Rate from data
+    db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => {
+        success = row.succeeded
+        db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
+            total = row.totalrows
+            successRate = (success / total) * 100;
+            console.log(successRate)
+            if(total == 0)
+            {
+                successRate = 100; //FIXME: No attempts - 0% / 100% ?
+            }
+    
+            document.getElementById("kdRatio").innerHTML = successRate + "%";}
+            )
+        })
+    
+    //FIXME: async - deswegen dreckiger Code ^^^^
+    // db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => success = row.succeeded)
+    // db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => total = row.totalrows)
+    // successRate = (success / total) * 100;
+    
+    // if(total == 0)
+    // {
+    //     successRate = 100; //FIXME: No attempts - 0% / 100% ?
+    // }
+    
+    document.getElementById("kdRatio").innerHTML = successRate + "%"; 
+    
     //TODO: style sucess rate red, white, or yellow for given range of %
 }
 
+function setMostUsedTag(){
+    db.get('SELECT tag, COUNT(tag) AS counted FROM focus GROUP BY tag ORDER BY counted DESC LIMIT 10;', (error, row) => {
+    document.getElementById("most-used-tag").innerHTML = row.tag;
+    })
+}
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //CALENDAR  ########################################################################################################################
