@@ -1,6 +1,9 @@
 //HIGH PRIORITY:
 //TODO: Database connect once on startup keep open?
+//TODO: Database remaining functionality (status: completed)
 //TODO: implement search input field dropdown
+//TODO: implement database styling (calendar, dots)
+//TODO: implement stats
 //FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
 
 //LOW PRIORITY:
