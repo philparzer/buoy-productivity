@@ -1,13 +1,19 @@
+//-------------
 //HIGH PRIORITY:
-//TODO: Database connect once on startup keep open?
+//-------------
+
+//TODO: should Database connect once on startup and stay open?
 //TODO: Database remaining functionality (status: completed)
 //TODO: implement search input field dropdown
 //TODO: implement database styling (calendar, dots)
-//TODO: implement stats
-//FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
+//TODO: complete stat page functionality
+    //round success ratio (floor or ceiling?)?
+    //2 tags same amount of entries in DB which shows up in stats (most recent, one or the other at random?,...)
 
+//-------------
 //LOW PRIORITY:
-//FIXME: search interval slower / onchange?
+//-------------
+
 //TODO: ELECTRON SAVE for config, 
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
@@ -18,8 +24,10 @@
 //TODO: fade out overlay background
 //TODO: add version number to html
 //TODO: handle SQL injection
-
 //TODO: cap search input
+//FIXME: search interval slower / onchange?
+//FIXME: fix / change -1 output in similarity check when no matching letters in search input
+//FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -144,7 +152,7 @@ let highestValue = 0
 let tags = []
 let similar = []
 
-function databaseReadTag(searchArg){
+function DBSearch(searchArg){
 
     tags.length = 0
     similar.length = 0
@@ -467,7 +475,7 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         if (searchElement.value != "")
         {
             //search database
-            databaseReadTag(searchElement.value);
+            DBSearch(searchElement.value);
         }
         
         if (createTagElement.value != "")
