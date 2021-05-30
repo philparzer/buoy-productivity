@@ -167,6 +167,23 @@ function DBaddTag(tagName){
     })
 }
 
+function DBSettingsChange(){
+    //TODO: read radio/checkbox values
+    //TODO: if settings empty on startup create new row with default values --> main.js
+    db.run('UPDATE settings SET (language = "' + lang + '", focus_lost = "' + focuslostMute + '", focus_gained = "' + focusgainedMute + '" ) WHERE ROWID = 1 FROM settings);');
+}
+
+function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Renderer.js)
+    db.get('SELECT focus_gained, focus_lost FROM settings WHERE ROWID = 1');
+}
+
+function DBGetSettingsLanguage(){ //TODO: default radio button value to html file language (set in html doc) - FIXME: (Called in main.js)
+    //TODO: Establish db connection in main.js
+    db.get('SELECT language FROM settings WHERE ROWID = 1');
+
+    //TODO: load html file with specified language
+}
+
 function DBremTag(tagName){
     db.run('DELETE FROM tags WHERE name = "' + tagName + '";')
     //TODO: remove from buoyTagDropdown & resolveDropdown
