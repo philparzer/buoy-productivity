@@ -148,10 +148,41 @@ let db = new sqlite3.Database('./buoy.db', (err) => {
        //TODO: if missing database file -> Display database file downloadlink (Hide Inputs/Stop Programm?)
     } else{ console.log("Connected")}});
 
+DBReadandDisplayTags()
+
 let highestValue = 0
 let tags = []
 let similar = []
 
+function DBaddTag(tagName){
+    db.get('SELECT name FROM tags WHERE name = "' + tagName + '";', (error, row) => {
+        
+        if(row != null) //tag already exists
+        {
+            return;
+        }
+
+        db.run('INSERT INTO tags (name) VALUES ("'+ tagName +'")')
+        //TODO: row/tag limit?
+    })
+}
+
+function DBremTag(tagName){
+    db.run('DELETE FROM tags WHERE name = "' + tagName + '";')
+    //TODO: remove from buoyTagDropdown & resolveDropdown
+}
+
+function DBReadandDisplayTags(){
+    db.all('SELECT name FROM tags;', (error, rows) => {
+        
+        rows.forEach( row =>
+            {
+            addNewTag(row.name);
+            })
+
+    })
+}
+//FIXME: may stops working if database empty (forEach)
 function DBSearch(searchArg){
 
     tags.length = 0
@@ -498,22 +529,22 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
 //creates new tag in both dropdowns new tag when create tag button is pressed
 createTagButton.onclick = function()
 {
+    DBaddTag(createTagElement.value); //Has to happen first, addNewTag clears value of createTagElement
     addNewTag();
-    //TODO: add to json ELECTRON SAVE?
 }
 
 //adds enter listener to tagmanager input element, creates new tag in both dropdowns
 createTagElement.addEventListener("keyup", function(event) {
     if (event.key === "Enter" && createTagElement.value != "") {
+        DBaddTag(createTagElement.value); //Has to happen first, addNewTag clears value of createTagElement
         addNewTag();
-        //TODO: add to json ELECTRON SAVE?
     }
 });
 
 
-function addNewTag()
+function addNewTag(createdTagName = createTagElement.value)
 {
-    createdTagName = createTagElement.value;
+    //createdTagName = createTagElement.value; moved to function declaration to make it work with values read from the database
     createTagElement.value = "";
 
 
