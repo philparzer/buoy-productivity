@@ -1,8 +1,16 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain, remote} = require('electron')
 const path = require('path')
+var sqlite3 = require('sqlite3').verbose(); 
+
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
+
+let db = new sqlite3.Database('./buoy.db', (err) => {
+  if (err) {
+     console.error(err.message);
+     //TODO: if missing database file -> Display database file downloadlink (Hide Inputs/Stop Programm?)
+  } else{ console.log("Connected")}});
 
 //TODO: use electron-store to store user language settings in preferences and open correct html
 //TODO: disable tab
@@ -17,7 +25,8 @@ function createWindow () {
   mainWindow.setIcon(path.join(__dirname, '/images/icon.ico'));
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html');
+  //mainWindow.loadFile('index.html');
+  DBGetSettingsLanguage(mainWindow)
   
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -57,9 +66,33 @@ ipcMain.on( 'app:minimize', () => {
 } )
 
 
-// function DBGetSettingsLanguage(){ //TODO: default radio button value to html file language (set in html doc) - FIXME: (Called in main.js)
-//   //TODO: Establish db connection in main.js
-//   db.get('SELECT language FROM settings WHERE ROWID = 1');
+function DBGetSettingsLanguage(mainWindow){ //TODO: default radio button value to html file language (set in html doc)
+  //TODO: Establish db connection in main.js
+  db.get('SELECT language FROM settings WHERE ROWID = 1', (error, row) => {
+    
+    switch(row.language){
+      case "en":
+        console.log("en selected")
+        mainWindow.loadFile('index.html');
+        break;
 
-//   //TODO: load html file with specified language
-// }
+      case "ru":
+        console.log("ru selected")
+        mainWindow.loadFile('index.html');
+        break;
+
+      case "de":
+        console.log("de selected")
+        mainWindow.loadFile('index.html');
+        break;
+
+      default:
+        console.log("language not specified")
+        //mainWindow.loadFile('index.html');
+
+    }
+    
+  });
+
+  //TODO: load html file with specified language
+}
