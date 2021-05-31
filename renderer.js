@@ -1171,11 +1171,11 @@ if (lang == "en") {
     months = monthDefault;
     days = dayDefault;
 } else if (lang == "de") {
-    months = ["", "", "", "", "", "", "", "", "", "", "", ""];
-    days = ["", "", "", "", "", "", ""];
+    months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 } else if (lang == "ru") {
-    months = ["", "", "", "", "", "", "", "", "", "", "", ""];
-    days = ["", "", "", "", "", "", ""];
+    months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+    days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 } else {
     months = monthDefault;
     days = dayDefault;

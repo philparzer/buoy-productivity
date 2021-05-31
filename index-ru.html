@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru"> <!--TODO: fix styling-->
+
+  <head>
+    <meta charset="UTF-8">
+    <title>buoy productivity</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./custom_css/styles.css">
+
+    <!-- First popper.js then bootstrap (jquery no longer needed since bootstrap 5.0)-->
+
+    <script>require('popper.js');</script>
+    <script src="./contents/bootstrap/bootstrap-5.0.0-beta3-dist/js/bootstrap.bundle.js"></script>
+
+
+  </head>
+
+  <body>
+
+      <div id="main-background"> <!--Sets the png background image-->
+
+
+<!--################## Titlebar ##########################-->
+          <div class="container-fluid" id="title-bar">
+              <div class="row">
+                  <div class="col-1 p-0 m-0">
+                      <span id="title-logo">buoy</span>
+                  </div>
+                  <div class="col-2">
+                      <input id="search" class="form" placeholder="search"></form>
+                  </div>
+                  <div class="col-1">
+    <!--Tag Manager ----------------------------------------------------------------------->
+                    <div id="manage-tags-dropdown-box" class="dropdown"> 
+                        <button id="manage-tags-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                          tags
+                        </button>
+                            <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
+                            <li>
+                                <div class="input-group">
+                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="create a tag" aria-label="create tag" aria-describedby="basic-addon2">
+                                    <div id="add-tag-input-button-box" class="input-group-append">
+                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">add</button>
+                                    </div>
+                                  </div>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
+                            <!--tags instantiat here-->
+                            </ul>
+                    </div>
+
+    <!--Additional Title Bar Fields   ----------------------------------------------------------------------->                
+                  </div>
+                  <div class="col-2" id="additional-fields">
+
+                    <div id="settings-dropdown-box" class="dropdown">
+                        <button id="settings" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                          settings
+                        </button>
+                        <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
+                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
+                            <li id="language-radio-buttons">
+                                <div class="form-check">
+                                    <input onclick="DBSettingsChange('en')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <label id="radio-label-english"  class="form-check-label" for="exampleRadios1">
+                                      English
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input onclick="DBSettingsChange('ru')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" checked>
+                                    <label id="radio-label-russian" class="form-check-label" for="exampleRadios2">
+                                      Русский
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input onclick="DBSettingsChange('de')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                                    <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
+                                      Deutsch
+                                    </label>
+                                  </div>
+                            </li>
+
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+
+                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sounds</text></li>
+                          <li>
+                            <div class="form-check">
+                                <input  onclick="DBSettingsChange('lost')" id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus lost</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form-check" onclick="">
+                                <input onclick="DBSettingsChange('gained')" id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
+                            </div>
+                          </li>
+
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+                          <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</text></li>
+                          
+                        </ul>
+                    </div>
+                  </div>
+                  <div id="about-box" class="col-1"><button id="about">about</button></div>
+                  <div class="col-3"></div>
+    
+    <!--Min and Close Buttons   ----------------------------------------------------------------------->
+                  <div class="col" type="button" id="minimize-main">
+                      <button id="min-btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="2" viewBox="0 0 12 1">
+                          <line x2="12" transform="translate(0 0.5)" fill="none" stroke="#707070" stroke-width="1.5"/>
+                          </svg>
+                      </button>
+                  </div>
+                  <div class="col" type="button" id="close-main">
+                      <button id="close-btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18">
+                              <g transform="translate(-1073.612 -15.134)">
+                              <line id="Line_11" data-name="Line 11" y1="13" x2="14" transform="translate(1073.953 15.5)" fill="none" stroke="#707070" stroke-width="1.5"/>
+                              <line id="Line_12" data-name="Line 12" x2="14" y2="13" transform="translate(1073.953 15.5)" fill="none" stroke="#707070" stroke-width="1.5"/>
+                              </g>
+                          </svg>
+                      </button>
+                  </div>
+              </div>
+          </div>
+
+<!--#################### Main #####################-->
+          <div class="container-fluid h-75">
+              
+    <!--Calendar Button: FIXME: Rename to Statsbutton ----------------------------------------------------------------------->
+              <div class="row pt-5">
+                  <div id="calendar-box" class="col-1 pt-3">
+                      <button id="calendar-btn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
+                        <svg id="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="25.601" height="45.586" viewBox="0 0 25.601 45.586">
+                            <path id="Path_10" data-name="Path 10" d="M957.531,451.806l16.621-15.945,17.66,15.945" transform="translate(457.461 -951.876) rotate(90)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                      </button>
+                  </div>
+
+                  
+
+    <!--Add Timer Input Buttons-->
+                  <div class="col-8"></div>
+                  <div class="col-1">
+                    <button id="time-hours-add-btn">
+                        <svg id="svg-hrs-up-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                            <path id="hrs-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                    </button>                      
+                  </div>
+                  <div class="col-1">
+                    <button id="time-minutes-add-btn">
+                        <svg id="svg-min-up-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                            <path id="min-btn-up" id="Path_4" data-name="Path 4" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(-952.066 -431.861)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                        </svg>
+                    </button>
+                  </div>
+                  <div class="col-1"></div>
+              </div>
+
+    <!--Most recent Tasks (Dots)  ----------------------------------------------------------------------->
+              <div class="row h-75">
+                
+                  <div class="col-1 pt-5">
+                      <a class="fade-in" id="dot-1"></a>
+                  </div>
+                  <div class="col-1 pt-5 ">
+                      <a class="fade-in" id="dot-2"></a>
+                  </div>
+                  <div class="col-1 pt-5 ">
+                      <a class="fade-in" id="dot-3"></a>
+                  </div>
+                  <div class="col-1 pt-5 ">
+                      <a class="fade-in" id="dot-4"></a>
+                  </div>
+                  <div class="col-1 pt-5 ">
+                      <a class="fade-in" id="dot-5"></a>
+                  </div>
+
+                  <div class="col-3"></div>
+
+
+    <!-- Timer ----------------------------------------------------------------------->
+                <div class="col-3 my-2 mx-2">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        
+                        <div class="col-8" id="timer-box">
+                            <div class="row">
+                                <div class="col" id="hours">00</div>
+                                <div class="col" id="semicolon">:</div>
+                                <div class="col" id="minutes">30</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col" id="unit-hours">h</div>
+                                <div class="col" id="unit-minutes">m</div>
+                                <div class="col"></div>
+                            </div>
+                        </div> 
+                        <div class="col-2"></div>
+                    </div>
+
+    <!-- Subtract Timer Input Buttons   ----------------------------------------------------------------------->
+                    <div class="row">
+                        <div class="col-6">
+                            <button id="time-hours-subtract-btn">
+                                <svg id="svg-hrs-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                    <path id="hrs-btn-down" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button id="time-minutes-subtract-btn">
+                                <svg id="svg-min-down-box" xmlns="http://www.w3.org/2000/svg" width="45.172" height="19.085" viewBox="0 0 45.172 19.085">
+                                    <path id="min-btn-down" id="Path_6" data-name="Path 6" d="M957.531,445.479l16.621-9.619,17.66,9.619" transform="translate(997.238 450.945) rotate(180)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+
+    <!--Tags ----------------------------------------------------------------------->
+                    <div class="row">
+                        <div class="col-12 py-2">
+                            
+                            <div id="tag-buoy-dropdown-box" class="dropdown"> <!--tooltip-tag class is added here-->
+                                <button id="tag-buoy-btn" class="btn btn-secondary " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
+                                        <rect id="Rectangle_15" data-name="Rectangle 13" width="106.498" height="27" rx="13.5" fill="#dbdb93"/>
+                                        <text id="tag" fill="#474747" transform="translate(40.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">tag</tspan></text>
+                                        <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(6.381 5)" fill="#474747" stroke="#707070" stroke-width="1">
+                                          <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
+                                          <circle cx="4.5" cy="4.5" r="4" fill="none"/>
+                                        </g>
+                                    </svg>
+                                     <!--tooltip instantiates here-->
+                                </button>
+                                <ul id="tag-buoy-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
+                                  <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">add a tag</text></li>
+                                  <div class="dropdown-divider"></div>
+                                    <!--tags instantiate here-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+    <!--Focus   ----------------------------------------------------------------------->
+                  
+                    <div class="row py-3">
+                        <div class="col-12" id="focus-col">
+
+                            <div id="focus-dropdown-box" class="dropdown">
+                                <button id="focus-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  focus
+                                </button>
+                                <ul id="focus-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
+                                  <li><text id="focus-dropdown-heading" class="dropdown-item">add focus and exceptions</text></li>
+                                  <div class="dropdown-divider"></div>
+                                    <!--programs instantiate here-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+    <!--Start   ----------------------------------------------------------------------->
+                    <div class="row py-2">
+                        <div class="col-12">
+                            <button id="start-btn">
+                                <svg id="start-box" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
+                                    <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
+                                    <text id="start" transform="translate(32 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em">start</text>
+                                </svg>
+                                <div id="loadingButton">
+                                    <span class="loadingDots">
+                                        <span class="loadingDot"></span>
+                                        <span class="loadingDot"></span>
+                                        <span class="loadingDot"></span>
+                                    </span>
+                                </div>
+                            </button>    
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col"></div>
+
+              </div>
+          </div>
+      </div>
+
+
+    <!--STAT SIDEBAR  ----------------------------------------------------------------------->
+
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">stats</h5>
+            </div>
+            <div class="offcanvas-body">
+                
+                <!--stats-->
+                <div id="stats-box" class="container">
+                    <div class="row">
+                        <div class ="col">
+                            <div id="kdRatio" class="text-center"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class ="col">
+                            <div class="stat-description text-center">success ratio</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class ="col">
+                            <div id="most-used-tag" class="text-center">PLACEHOLDER</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class ="col">
+                            <div class="stat-description text-center">most used tag</div>
+                        </div>
+                    </div>
+
+                    <!--TODO: most failed tag?-->
+                </div>
+
+                <!--calendar-->
+                <div id="calendar-container-fluid" class="container-fluid">
+                    <div class="wrapper">
+
+                        <div class="container-calendar">
+                            <h3 id="monthAndYear"></h3>
+                            
+                            <div class="button-container-calendar">
+                                <button id="previous" onclick="previous()">&#8249;</button>
+                                <button id="next" onclick="next()">&#8250;</button>
+                            </div>
+                            
+                            <table class="table-calendar" id="calendar" data-lang="ru">
+                                <thead id="thead-month"></thead>
+                                <tbody id="calendar-body"></tbody>
+                            </table>
+                            <!--hidden, could integrate later on-->
+                            <div class="footer-container-calendar">
+                                <label for="month"></label>
+                                <select id="month" onchange="jump()">
+                                    <option value=0>Jan</option>
+                                    <option value=1>Feb</option>
+                                    <option value=2>Mar</option>
+                                    <option value=3>Apr</option>
+                                    <option value=4>May</option>
+                                    <option value=5>Jun</option>
+                                    <option value=6>Jul</option>
+                                    <option value=7>Aug</option>
+                                    <option value=8>Sep</option>
+                                    <option value=9>Oct</option>
+                                    <option value=10>Nov</option>
+                                    <option value=11>Dec</option>
+                                </select>
+                                <select id="year" onchange="jump()"></select>       
+                            </div>
+                    
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+      </div>
+
+
+
+      
+    
+<!--#################### JS #############################-->
+
+    
+
+    <!-- Electron Render Script -->
+    <script src="./renderer.js"> </script>
+
+
+    
+
+  </body>
+</html>
