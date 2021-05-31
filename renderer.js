@@ -13,10 +13,8 @@
 //LOW PRIORITY:
 //-------------
 
-//TODO: ELECTRON SAVE for config, 
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
-//TODO: half-time overlay?
 //TODO: MACOS filepath
 //TODO: CSS: polish overlays
 //TODO: change placeholder alert
@@ -26,7 +24,6 @@
 //TODO: cap search input
 //FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
-//FIXME: input fields don't work for short time after timer has failed / only work when window is minimized?
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1267,7 +1264,17 @@ function showCalendar(month, year) { //TODO: add coloration from data
         
         var row = document.createElement("tr");
 
-        
+
+        //create concetanated string out of these 3:
+        //cell.setAttribute("data-date", date);
+        //cell.setAttribute("data-month", month + 1);
+        //cell.setAttribute("data-year", year);
+        //
+        //dann:
+        //arrayFailed.includes(celldate) -> css
+        //arrayCompleted.includes(celldate) -> css
+
+
         for ( var j = 0; j < 7; j++ ) {
             if ( i === 0 && j < firstDay ) {
                 cell = document.createElement( "td" );
