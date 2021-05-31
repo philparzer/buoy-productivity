@@ -55,3 +55,11 @@ ipcMain.on( 'app:quit', () => {
 ipcMain.on( 'app:minimize', () => {
   BrowserWindow.getFocusedWindow().minimize();
 } )
+
+
+// function DBGetSettingsLanguage(){ //TODO: default radio button value to html file language (set in html doc) - FIXME: (Called in main.js)
+//   //TODO: Establish db connection in main.js
+//   db.get('SELECT language FROM settings WHERE ROWID = 1');
+
+//   //TODO: load html file with specified language
+// }

@@ -159,7 +159,7 @@ function DBaddTag(tagName){
         
         if(row != null) //tag already exists
         {
-            return;
+            return; //FIXME: same values added to dropdown more than once
         }
 
         db.run('INSERT INTO tags (name) VALUES ("'+ tagName +'")')
@@ -177,16 +177,10 @@ function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Rende
     db.get('SELECT focus_gained, focus_lost FROM settings WHERE ROWID = 1');
 }
 
-function DBGetSettingsLanguage(){ //TODO: default radio button value to html file language (set in html doc) - FIXME: (Called in main.js)
-    //TODO: Establish db connection in main.js
-    db.get('SELECT language FROM settings WHERE ROWID = 1');
 
-    //TODO: load html file with specified language
-}
 
 function DBremTag(tagName){
     db.run('DELETE FROM tags WHERE name = "' + tagName + '";')
-    //TODO: remove from buoyTagDropdown & resolveDropdown
 }
 
 function DBReadandDisplayTags(){
@@ -199,7 +193,8 @@ function DBReadandDisplayTags(){
 
     })
 }
-//FIXME: may stops working if database empty (forEach)
+
+//FIXME: may stop working if database empty (forEach)
 function DBSearch(searchArg){
 
     tags.length = 0
@@ -613,10 +608,9 @@ function addNewTag(createdTagName = createTagElement.value)
 
     resolveTagItemBox.onclick = function ()
     {   
-        
         resolveTagItem.remove(); //removes from resolve dropdown
-        
         buoyTagItem.remove(); //removes from tag buoy dropdown
+        DBremTag(createdTagName); //removes tag from database
     }
     
     resolveTagItemBox.textContent = createdTagName;
