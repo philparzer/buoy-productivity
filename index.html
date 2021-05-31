@@ -64,19 +64,19 @@
                           <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
                             <li id="language-radio-buttons">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <input onclick="DBSettingsChange('en')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                                     <label id="radio-label-english"  class="form-check-label" for="exampleRadios1">
                                       English
                                     </label>
                                   </div>
                                   <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                                    <input onclick="DBSettingsChange('ru')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
                                     <label id="radio-label-russian" class="form-check-label" for="exampleRadios2">
                                       Русский
                                     </label>
                                   </div>
                                   <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                                    <input onclick="DBSettingsChange('de')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
                                     <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
                                       Deutsch
                                     </label>
@@ -88,13 +88,13 @@
                           <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sounds</text></li>
                           <li>
                             <div class="form-check">
-                                <input  id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <input  onclick="DBSettingsChange('lost')" id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                                 <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus lost</label>
                             </div>
                           </li>
                           <li>
-                            <div class="form-check">
-                                <input id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <div class="form-check" onclick="">
+                                <input onclick="DBSettingsChange('gained')" id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                                 <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
                             </div>
                           </li>

@@ -78,12 +78,12 @@ function DBGetSettingsLanguage(mainWindow){ //TODO: default radio button value t
 
       case "ru":
         console.log("ru selected")
-        mainWindow.loadFile('index.html');
+        mainWindow.loadFile('index-ru.html');
         break;
 
       case "de":
         console.log("de selected")
-        mainWindow.loadFile('index.html');
+        mainWindow.loadFile('index-de.html');
         break;
 
       default:

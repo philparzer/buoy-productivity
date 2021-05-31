@@ -2,13 +2,12 @@
 //HIGH PRIORITY:
 //-------------
 
-//TODO: should Database connect once on startup and stay open?
-//TODO: Database remaining functionality (status: completed)
+//FIXME: resolve + buoy tag menu same tag twice -> check if tag in db?
+//TODO: uncheck settings dropdown checkboxes on startup (checked boxes already defined)
+//TODO: localize html files (don't forget checking appropriate checkboxes)
 //TODO: implement search input field dropdown
 //TODO: implement database styling (calendar, dots)
-//TODO: complete stat page functionality
-    //round success ratio (floor or ceiling?)?
-    //2 tags same amount of entries in DB which shows up in stats (most recent, one or the other at random?,...)
+
 
 //-------------
 //LOW PRIORITY:
@@ -159,7 +158,7 @@ function DBaddTag(tagName){
         
         if(row != null) //tag already exists
         {
-            return; //FIXME: same values added to dropdown more than once
+            return; //FIXME: same values added to dropdown more than once - Return value / global boolean
         }
 
         db.run('INSERT INTO tags (name) VALUES ("'+ tagName +'")')
@@ -167,14 +166,86 @@ function DBaddTag(tagName){
     })
 }
 
-function DBSettingsChange(){
-    //TODO: read radio/checkbox values
-    //TODO: if settings empty on startup create new row with default values --> main.js
-    db.run('UPDATE settings SET (language = "' + lang + '", focus_lost = "' + focuslostMute + '", focus_gained = "' + focusgainedMute + '" ) WHERE ROWID = 1 FROM settings);');
+function DBSettingsChange(param){
+
+    //onclick event calls this function w parameter signalling which element was clicked
+
+    //languages
+    if(param == 'en')
+    {
+        if (document.getElementById("exampleRadios1").checked == true)
+        {
+            db.run('UPDATE settings SET language = "en" WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET language = "en" WHERE ROWID = 1;')
+        }
+    }
+
+    if(param == 'ru')
+    {
+        if (document.getElementById("exampleRadios2").checked == true)
+        {
+            db.run('UPDATE settings SET language = "' + param +'" WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
+        }
+    }
+
+    if(param == 'de')
+    {
+        if (document.getElementById("exampleRadios3").checked == true)
+        {
+            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
+        }
+    }
+
+
+    //sounds
+    if(param == 'lost')
+    {
+        if (document.getElementById("focus-lost-sound-switch").checked == true)
+        {
+            db.run('UPDATE settings SET focus_lost = 1  WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET focus_lost = 0  WHERE ROWID = 1;')
+        }
+    }
+
+    if(param == 'gained')
+    {
+        if (document.getElementById("focus-gained-sound-switch").checked == true)
+        {
+            db.run('UPDATE settings SET focus_gained = 1  WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET focus_gained = 0  WHERE ROWID = 1;')
+        }
+    }
+
+    
 }
 
 function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Renderer.js)
     db.get('SELECT focus_gained, focus_lost FROM settings WHERE ROWID = 1');
+
+
+    
 }
 
 
