@@ -895,7 +895,9 @@ function disableStartBtn()
 function enableStartBtn()
 {
     document.getElementById('Rectangle_13').style.display = "unset";
-    document.getElementById('start').textContent = "start";
+    if(document.documentElement.lang == "en"){document.getElementById('start').textContent = "start";}
+    if(document.documentElement.lang == "ru"){document.getElementById('start').textContent = "старт";}
+    if(document.documentElement.lang == "de"){document.getElementById('start').textContent = "Start";}
     startBtn.disabled = false;
 }
 

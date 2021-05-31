@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru"> <!--TODO: fix styling-->
+<html lang="ru">
 
   <head>
     <meta charset="UTF-8">
@@ -29,25 +29,25 @@
                       <span id="title-logo">buoy</span>
                   </div>
                   <div class="col-2">
-                      <input id="search" class="form" placeholder="search"></form>
+                      <input id="search" class="form" placeholder="найти метки"></form>
                   </div>
                   <div class="col-1">
     <!--Tag Manager ----------------------------------------------------------------------->
-                    <div id="manage-tags-dropdown-box" class="dropdown"> 
+                    <div id="manage-tags-dropdown-box"  class="dropdown"> 
                         <button id="manage-tags-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                          tags
+                          метки
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li>
                                 <div class="input-group">
-                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="create a tag" aria-label="create tag" aria-describedby="basic-addon2">
+                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="создать метку" aria-label="create tag" aria-describedby="basic-addon2">
                                     <div id="add-tag-input-button-box" class="input-group-append">
-                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">add</button>
+                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">+</button>
                                     </div>
                                   </div>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
+                            <li><text id="tag-resolve-headline" class="dropdown-item">снять метки</text></li>
                             <!--tags instantiat here-->
                             </ul>
                     </div>
@@ -56,12 +56,12 @@
                   </div>
                   <div class="col-2" id="additional-fields">
 
-                    <div id="settings-dropdown-box" class="dropdown">
+                    <div id="settings-dropdown-box" style="margin-left: 22px;" class="dropdown">
                         <button id="settings" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                          settings
+                          настройки
                         </button>
                         <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
-                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
+                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">языки</text></li>
                             <li id="language-radio-buttons">
                                 <div class="form-check">
                                     <input onclick="DBSettingsChange('en')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
@@ -85,38 +85,38 @@
 
                           <div class="dropdown-divider settings-dropdown-divider"></div>
 
-                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sounds</text></li>
+                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">звуки</text></li>
                           <li>
                             <div class="form-check">
                                 <input  onclick="DBSettingsChange('lost')" id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus lost</label>
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">сосредоточение</label>
                             </div>
                           </li>
                           <li>
                             <div class="form-check" onclick="">
                                 <input onclick="DBSettingsChange('gained')" id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">рассеяние</label>
                             </div>
                           </li>
 
                           <div class="dropdown-divider settings-dropdown-divider"></div>
-                          <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</text></li>
+                          <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">требуется перезагрузка</text></li>
                           
                         </ul>
                     </div>
                   </div>
-                  <div id="about-box" class="col-1"><button id="about">about</button></div>
+                  <div id="about-box" style="margin-left: -70px;" class="col-1"><button id="about">о&nbspприложении</button></div>
                   <div class="col-3"></div>
     
     <!--Min and Close Buttons   ----------------------------------------------------------------------->
-                  <div class="col" type="button" id="minimize-main">
+                  <div class="col" type="button" style="margin-left: 50px;" id="minimize-main">
                       <button id="min-btn">
                           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="2" viewBox="0 0 12 1">
                           <line x2="12" transform="translate(0 0.5)" fill="none" stroke="#707070" stroke-width="1.5"/>
                           </svg>
                       </button>
                   </div>
-                  <div class="col" type="button" id="close-main">
+                  <div class="col" type="button" style="margin-left: 5px;" id="close-main">
                       <button id="close-btn">
                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18">
                               <g transform="translate(-1073.612 -15.134)">
@@ -198,8 +198,8 @@
                             </div>
                             <div class="row">
                                 <div class="col"></div>
-                                <div class="col" id="unit-hours">h</div>
-                                <div class="col" id="unit-minutes">m</div>
+                                <div class="col" id="unit-hours">ч</div>
+                                <div class="col" id="unit-minutes">м</div>
                                 <div class="col"></div>
                             </div>
                         </div> 
@@ -233,7 +233,7 @@
                                 <button id="tag-buoy-btn" class="btn btn-secondary " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
                                         <rect id="Rectangle_15" data-name="Rectangle 13" width="106.498" height="27" rx="13.5" fill="#dbdb93"/>
-                                        <text id="tag" fill="#474747" transform="translate(40.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">tag</tspan></text>
+                                        <text id="tag" fill="#474747" transform="translate(30.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">метка</tspan></text>
                                         <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(6.381 5)" fill="#474747" stroke="#707070" stroke-width="1">
                                           <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
                                           <circle cx="4.5" cy="4.5" r="4" fill="none"/>
@@ -242,7 +242,7 @@
                                      <!--tooltip instantiates here-->
                                 </button>
                                 <ul id="tag-buoy-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
-                                  <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">add a tag</text></li>
+                                  <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">добавить метку</text></li>
                                   <div class="dropdown-divider"></div>
                                     <!--tags instantiate here-->
                                 </ul>
@@ -256,11 +256,11 @@
                         <div class="col-12" id="focus-col">
 
                             <div id="focus-dropdown-box" class="dropdown">
-                                <button id="focus-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  focus
+                                <button id="focus-btn" class="btn btn-secondary" style="margin-left: -7px; height: 83px; margin-top: -3px;" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Фокус
                                 </button>
                                 <ul id="focus-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
-                                  <li><text id="focus-dropdown-heading" class="dropdown-item">add focus and exceptions</text></li>
+                                  <li><text id="focus-dropdown-heading" class="dropdown-item">отметить приложения </text></li>
                                   <div class="dropdown-divider"></div>
                                     <!--programs instantiate here-->
                                 </ul>
@@ -274,7 +274,7 @@
                             <button id="start-btn">
                                 <svg id="start-box" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
                                     <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
-                                    <text id="start" transform="translate(32 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em">start</text>
+                                    <text id="start" transform="translate(28 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em">старт</text>
                                 </svg>
                                 <div id="loadingButton">
                                     <span class="loadingDots">
@@ -299,7 +299,7 @@
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">stats</h5>
+                <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">статистика</h5>
             </div>
             <div class="offcanvas-body">
                 
@@ -313,7 +313,7 @@
 
                     <div class="row">
                         <div class ="col">
-                            <div class="stat-description text-center">success ratio</div>
+                            <div class="stat-description text-center">показатель успешности</div>
                         </div>
                     </div>
 
@@ -325,7 +325,7 @@
 
                     <div class="row">
                         <div class ="col">
-                            <div class="stat-description text-center">most used tag</div>
+                            <div class="stat-description text-center">найболее использоваемая метка</div>
                         </div>
                     </div>
 

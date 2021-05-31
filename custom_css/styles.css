@@ -254,6 +254,7 @@ button{
 /*MANAGE TAGS*/
 #manage-tags-btn{
   background-color: var(--darkerGrey);
+  -webkit-app-region: no-drag;
   line-height: 10px;
   margin-top: 10px;
   border-radius: 30px;
@@ -263,8 +264,8 @@ button{
 }
 
 #manage-tags-btn:hover{
-  background: var(--lighterGrey);
-  color: var(--white);
+  background: var(--lighterGrey)!important;
+  color: var(--white)!important;
 }
 
 #manage-tags-dropdown-box{
@@ -272,7 +273,9 @@ button{
   
 }
 
+
 #manage-tags-dropdown{
+  -webkit-app-region: no-drag;
   width: 180px;
   height: 380px;
   left: -1px !important;
@@ -724,9 +727,9 @@ button{
     
 
 
-#start{
+/* #start{
     transform: translate(32px, 21px);
-}
+} */
 
 
 /* ############ DOTS (5 most recent tasks)  #######################################################*/
@@ -806,8 +809,12 @@ button{
 
 .stat-description{
   color: var(--lighterGrey);
+
 }
 
+#most-used-tag-description{
+  margin-top: 7px;
+}
 
 /* ############ Calendar  #######################################################*/
 
