@@ -139,6 +139,7 @@ let thisApplication = "electron.exe"; //TODO: when application name is defined -
 
 let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
+let doneOverlay;
 
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -390,7 +391,7 @@ hideFocusBtn();
 
 
 startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
-    
+
     //preparations
     clearInterval(setFocusInterval);
     retrieveFocusAndExceptions();
@@ -514,8 +515,13 @@ function endTimer (){
     switchButtonStatus();
     unstyleBuoy();
     unstyleBackground();
-    alert("Time Over");
     
+    
+    
+    //alert("Time Over");
+    doneOverlay = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+    setTimeout(() => {doneOverlay.close()}, 3000);
+
     //cleanup
     recentlyOutOfFocus = false;
     clearInterval(timerLogic);
