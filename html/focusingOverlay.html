@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-12">
-                    <div id="focus">Focusing...</div>
+                    <div id="focus">focusing...</div>
                 </div>
             </div>
             <div class="row text-center">
@@ -35,5 +35,17 @@
     
         
     </div>
+
+    <script>
+
+        var op = 0.294;
+        
+        setInterval(function() {
+            op -= 0.012
+            document.body.style.backgroundColor =  "hsla(51, 78%, 75%," + op.toString() + ")" ;
+            
+        },100)
+        
+    </script>
 
 </html>

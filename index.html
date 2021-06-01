@@ -29,7 +29,12 @@
                       <span id="title-logo">buoy</span>
                   </div>
                   <div class="col-2">
-                    <input id="search" class="form" placeholder="search for tags"></input>
+                    <input id="search"  class="form-control" list="datalistOptions" placeholder="search for tags" maxlength="12">
+                    <datalist id="datalistOptions">
+                        <option value="Instantiate tags here?">
+                        <option value="Instantiate all tags?">
+                        <option value="Style this box?">
+                    </datalist>
                   </div>
                   <div class="col-1">
     <!--Tag Manager ----------------------------------------------------------------------->
@@ -57,7 +62,7 @@
                   <div class="col-2" id="additional-fields">
 
                     <div id="settings-dropdown-box" class="dropdown">
-                        <button id="settings" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="settings"  class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                           settings
                         </button>
                         <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
@@ -105,7 +110,7 @@
                         </ul>
                     </div>
                   </div>
-                  <div id="about-box" class="col-1"><button id="about">about</button></div>
+                  <div id="about-box" style="margin-left: -95px" class="col-1"><button id="about">about</button></div>
                   <div class="col-3"></div>
     
     <!--Min and Close Buttons   ----------------------------------------------------------------------->

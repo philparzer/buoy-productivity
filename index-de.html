@@ -29,13 +29,18 @@
                       <span id="title-logo">buoy</span>
                   </div>
                   <div class="col-2">
-                      <input id="search" class="form" placeholder="Markierungen suchen"></input>
+                    <input id="search" style="padding-right: 2px;" class="form-control" list="datalistOptions" placeholder="Markierungen suchen" maxlength="12">
+                    <datalist id="datalistOptions">
+                        <option value="Instantiate tags here?">
+                        <option value="Instantiate all tags?">
+                        <option value="Style this box?">
+                    </datalist>
                   </div>
                   <div class="col-1">
     <!--Tag Manager ----------------------------------------------------------------------->
                     <div id="manage-tags-dropdown-box"  class="dropdown"> 
                         <button id="manage-tags-btn"  class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                          Markierung
+                          Markierungen
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li>
@@ -56,7 +61,7 @@
                   </div>
                   <div class="col-2"  id="additional-fields">
 
-                    <div id="settings-dropdown-box" style="margin-left: 55px;" class="dropdown">
+                    <div id="settings-dropdown-box" style="margin-left: 65px;" class="dropdown">
                         <button id="settings"  class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                           Einstellungen
                         </button>
@@ -105,7 +110,7 @@
                         </ul>
                     </div>
                   </div>
-                  <div id="about-box" style="margin-left: -22px;" class="col-1"><button id="about">Informationen</button></div>
+                  <div id="about-box" style="margin-left: -10px;" class="col-1"><button id="about">Informationen</button></div>
                   <div class="col-3"></div>
     
     <!--Min and Close Buttons   ----------------------------------------------------------------------->

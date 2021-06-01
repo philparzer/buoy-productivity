@@ -10,30 +10,50 @@
     </head>
 
     <body>
-        
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <div id="warning">focus lost</div>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div id="warning">focus lost</div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div id="info"><span id="seconds">10</span> secs left</div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12"></div>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col-12">
-                    <div id="info">10 secs left</div>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-12">
-                    <div id="info">get your focus back!</div>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-12"></div>
-            </div>
-        </div>
+
+            <script>
+
+                var op = 0.623;
+                var textOp = 1;
+                var secsIterator = 0;
+                var secs = 10;
+                
+                setInterval(function() {
+                    secsIterator += 1;
+                    if (secsIterator == 10) 
+                    {   
+                        secs -= 1;
+                        secsIterator = 0;
+                        document.getElementById("seconds").textContent = secs.toString(); 
+                    }
+                    op -= 0.015
+                    document.body.style.backgroundColor =  "hsla(7, 20%, 49%," + op.toString() + ")" ;
+                    
+                },100)
+                
+            </script>
+
     </body>
     
-        
-    </div>
 
 </html>

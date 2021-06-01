@@ -9,21 +9,35 @@ body{
 
 
 #warning{
-    background-color: #DBDB93;
+    background-color: #DBA993;
     margin-top: 50px;
+    margin-left: 150px;
+    margin-right: 150px;
     font-size: 200px;
     line-height: 180px;
+    padding-top: 20px;
     color: #3F3F3F;
+    position: relative;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: 2;
+    animation-direction: alternate; 
 }
 
 #info{
     font-size: 100px;
     color:#FAFAFA;
+    position: relative;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: 2;
+    animation-direction: alternate; 
 }
 
-.badckground-buoy{
-    background: url(images/Buoy.svg);
-    background-position: right bottom;
-}
 
-/*TODO: Fade out background*/
+@keyframes example {
+    0%   { left:0px; top:-800px;}
+    15%  { left:0ps; top:0px;}
+    85%  { left:0px; top:0px;}
+    100% { left:0px; top:-800px;}
+}

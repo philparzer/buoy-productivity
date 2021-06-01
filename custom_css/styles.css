@@ -194,19 +194,25 @@ button{
 
 #search{
     -webkit-app-region: no-drag;
-    margin-left: -10px;
-    padding-left: 10px;
-    border-radius: 30px;
-    color: var(--yellow);
-    background-color: var(--primaryGrey);
-    border: solid;
-    border-color: var(--primaryGrey);
-    margin-top: 7px;
+    margin-left: -10px!important;
+    padding: 0px!important;
+    line-height: 21px!important;
+    padding-left: 10px!important;
+    border-radius: 30px!important;
+    color: var(--yellow)!important;
+    background-color: var(--primaryGrey)!important;
+    border: solid!important;
+    border-color: var(--primaryGrey)!important;
+    margin-top: 8px!important;
     
 }
 
 #search:hover{
-  border: solid;
+  border: solid!important;
+}
+
+#search:focus{
+  box-shadow: none!important;
 }
 
 
@@ -227,7 +233,7 @@ button{
 }
 
 #additional-fields{
-  margin-left: -30px;
+  margin-left: -70px;
 }
 
 /*minimize and close*/
@@ -260,7 +266,7 @@ button{
   border-radius: 30px;
   border: none;
   color: var(--yellow);
-  margin-left: 19px;
+  margin-left: -25px;
 }
 
 #manage-tags-btn:hover{

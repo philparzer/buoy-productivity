@@ -1,25 +1,41 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
+//TODO: implement State Completed
 //TODO: implement search input field dropdown
 //TODO: implement database styling (calendar, dots)
+
 
 
 //-------------
 //LOW PRIORITY:
 //-------------
-
+//TODO: create custom alert that replaces alert
+//TODO: localize overlays
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
-//TODO: CSS: polish overlays
 //TODO: change placeholder alert
-//TODO: fade out overlay background
 //TODO: add version number to html
 //TODO: handle SQL injection
-//TODO: cap search input
+//TODO: try to make clickable ele click radius bigger to improve ease of use e.g.: https://stackoverflow.com/questions/15611905/making-the-clickable-area-of-in-line-links-bigger-without-affecting-the-layout
+            // .padded-click {
+            //     position: relative; 
+            //   }
+            //   .padded-click:after{
+            //     padding: 30px;
+            //     content: '';
+            //     position: absolute;
+            //     top: 50%;
+            //     left: 50%;
+            //     transform: translate(-50%, -50%);
+            //   }
 //FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
+
+
+
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
