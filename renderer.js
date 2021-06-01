@@ -1,10 +1,6 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
-
-//FIXME: resolve + buoy tag menu same tag twice -> check if tag in db?
-//TODO: uncheck settings dropdown checkboxes on startup (checked boxes already defined)
-//TODO: localize html files (don't forget checking appropriate checkboxes)
 //TODO: implement search input field dropdown
 //TODO: implement database styling (calendar, dots)
 
@@ -113,6 +109,7 @@ let warningGoneAfter = 4; //in seconds (time it takes for warning to disappear)
 const tagBuoyBtnBox = document.getElementById("tag-buoy-dropdown-box");
 let tagTooltip;
 let chosenTag;
+var frontEndTags = [];
 
 //focus  --------------------------------------------------------------------------------------------
 
@@ -583,6 +580,7 @@ function timeoutClear() {
 
 inputElementCheckInterval = setInterval(function() //checks input in input elements each second
     {  
+        document.getElementById("add-tag-input").style.borderColor = "unset";
 
         if (searchElement.value != "")
         {
@@ -609,24 +607,30 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
 //creates new tag in both dropdowns new tag when create tag button is pressed
 createTagButton.onclick = function()
 {
-    DBaddTag(createTagElement.value); //Has to happen first, addNewTag clears value of createTagElement
-    addNewTag();
+    tagAddingPreprocessor(createTagElement);
 }
 
 //adds enter listener to tagmanager input element, creates new tag in both dropdowns
 createTagElement.addEventListener("keyup", function(event) {
     if (event.key === "Enter" && createTagElement.value != "") {
-        DBaddTag(createTagElement.value); //Has to happen first, addNewTag clears value of createTagElement
-        addNewTag();
+        
+        tagAddingPreprocessor(createTagElement);
     }
 });
 
+function tagAddingPreprocessor(createTagElement)
+{
+    if (frontEndTags.includes(createTagElement.value)){document.getElementById("add-tag-input").style.borderColor = red; return;}; //stops duplicate tags
+        DBaddTag(createTagElement.value);
+        addNewTag();
+}
 
 function addNewTag(createdTagName = createTagElement.value)
 {
     //createdTagName = createTagElement.value; moved to function declaration to make it work with values read from the database
     createTagElement.value = "";
 
+    frontEndTags.push(createdTagName);
 
     //ADD TAG TO BUOY INPUT LIST
 

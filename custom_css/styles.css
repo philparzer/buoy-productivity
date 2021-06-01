@@ -738,7 +738,7 @@ button{
 #dot-1 {
     height: 44px;
     width: 46px;
-    background-color: var(--yellow);
+    background-color: var(--primaryGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 270px;
@@ -748,7 +748,7 @@ button{
 #dot-2 {
     height: 58px;
     width: 61px;
-    background-color: var(--yellow);
+    background-color: var(--primaryGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 290px;
@@ -758,7 +758,7 @@ button{
 #dot-3 {
     height: 80px;
     width: 84px;
-    background-color: var(--red);
+    background-color: var(--primaryGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 260px;
@@ -768,7 +768,7 @@ button{
 #dot-4 {
     height: 100px;
     width: 105px;
-    background-color: var(--yellow);
+    background-color: var(--primaryGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 200px;
@@ -778,7 +778,7 @@ button{
 #dot-5 {
     height: 119px;
     width: 128px;
-    background-color: var(--yellow);
+    background-color: var(--primaryGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 120px;
