@@ -32,9 +32,7 @@
             //   }
 //FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
-
-
-
+//FIXME: possible bug w snipping tabbing out
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,6 +73,13 @@ const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
 const createTagButton = document.getElementById("add-tag-input-button");
 let inputElementCheckInterval;
+
+    //dots
+const dot1 = document.getElementById("dot-1");
+const dot2 = document.getElementById("dot-2");
+const dot3 = document.getElementById("dot-3");
+const dot4 = document.getElementById("dot-4");
+const dot5 = document.getElementById("dot-5"); // <- most recent action
 
     //calendar
 const showStatsWindowButton = document.getElementById("calendar-btn");
@@ -254,8 +259,6 @@ function DBSettingsChange(param){
 
 function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Renderer.js)
     db.get('SELECT focus_gained, focus_lost FROM settings WHERE ROWID = 1');
-
-
     
 }
 
@@ -505,8 +508,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             endTimer();
             doneOverlay = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
             setTimeout(() => {doneOverlay.close()}, 3500);
-
-            //TODO: overwrite failed in database entry
         }
 
     }, 1000);
@@ -1159,6 +1160,36 @@ function setMostUsedTag(){
     document.getElementById("most-used-tag").innerHTML = row.tag;
     })
 }
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//DOTS  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+lastAction = "0";
+secondToLastAction = "1";
+thirdToLastAction = "0";
+fourthToLastAction = "1";
+fifthToLastAction = "0";
+
+
+if (lastAction == "0") {dot5.style.backgroundColor = red;}
+else if (lastAction == "1")  {dot5.style.backgroundColor = yellow;}
+
+if (secondToLastAction == "0") {dot4.style.backgroundColor = red;}
+else if (secondToLastAction == "1") {dot4.style.backgroundColor = yellow;}
+
+if (thirdToLastAction == "0") {dot3.style.backgroundColor = red;}
+else if (thirdToLastAction == "1") {dot3.style.backgroundColor = yellow;}
+
+if (fourthToLastAction == "0") {dot2.style.backgroundColor = red;}
+else if (fourthToLastAction == "1") {dot2.style.backgroundColor = yellow;}
+
+if (fifthToLastAction == "0") {dot1.style.backgroundColor = red;}
+else if (fifthToLastAction == "1") {dot1.style.backgroundColor = yellow;}
+
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //CALENDAR  ########################################################################################################################
