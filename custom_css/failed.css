@@ -27,7 +27,7 @@ body{
 
 #message-text{
     z-index: -1;
-    background-color: #DBDB93;
+    background-color: #DBA993;
     font-size: 50px;
     padding: 20px;
     padding-left: 80px;
@@ -71,7 +71,7 @@ body{
     
     #message-text{
         z-index: -1;
-        background-color: #DBDB93;
+        background-color: #DBA993;
         font-size: 50px;
         padding: 20px;
         padding-left: 80px;
