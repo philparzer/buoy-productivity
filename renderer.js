@@ -3,6 +3,7 @@
 //-------------
 //TODO: implement search functionality
 //TODO: implement calendar functionality
+//TODO: stats page average focus duration
 //FIXME: fix / implement additional media queries for animations
 //FIXME: handle problems / bugs related to empty database
 
@@ -33,6 +34,7 @@
 //TODO: maybe color dottooltip background color according to focus status
 //TODO: maybe implement restart button in settings menu
 //TODO: localize overlays (french)
+//TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //FIXME: polish overlay positions, anims, text, etc.
 //FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
