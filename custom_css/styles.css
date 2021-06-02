@@ -798,6 +798,64 @@ button{
     margin-left: 115px;
 }
 
+
+
+
+.tooltip-dot {
+  position: relative;
+  display: inline-block;/* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip-dot .tooltiptextdot {
+  top: -8px;
+  right: 115%;
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--yellow);
+  color: var(--darkerGrey);
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 115px!important;
+  padding-top: 8px;
+  padding-bottom: 6px;
+  border-radius: 25px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip-dot:hover .tooltiptextdot {
+  visibility: visible;
+}
+
+
+
+#chosen-dot-tooltip-dot-1{
+  top: 60% !important;
+  left: -1%!important;
+}
+#chosen-dot-tooltip-dot-2{
+  top: 60% !important;
+  left: -30%!important;
+}
+#chosen-dot-tooltip-dot-3{
+  top: 55% !important;
+  left: -50%!important;
+}
+#chosen-dot-tooltip-dot-4{
+  top: 48% !important;
+  left: -15%!important;
+}
+#chosen-dot-tooltip-dot-5{
+  top: 30% !important;
+  left: 1%!important;
+}
+
+
+
 /* ############ Stats  #######################################################*/
 #stats-box{
   margin-top: 40px;

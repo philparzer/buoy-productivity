@@ -1262,7 +1262,58 @@ function updateDots(){
 
 
 updateDots() //updates dots at startup
+instantiateDotTooltips() //instantiate tooltips at start
 
+function instantiateDotTooltips()
+{   
+    //TODO: get DB tag data, TODO: cleanup -> use loops and string concatenation
+    let dotBox1 = document.getElementById("dot-box-1");
+    let dotBox2 = document.getElementById("dot-box-2")
+    let dotBox3 = document.getElementById("dot-box-3")
+    let dotBox4 = document.getElementById("dot-box-4")
+    let dotBox5 = document.getElementById("dot-box-5")
+
+    let dotTooltip = document.createElement("span");
+        dotTooltip.className = "tooltiptextdot";
+        dotTooltip.id = "chosen-dot-tooltip-dot-1";
+        dotTooltip.textContent = "PLACEHOLDER1";
+    
+        dotBox1.className = " tooltip-dot"
+        dotBox1.appendChild(dotTooltip);
+
+    let dotTooltip2 = document.createElement("span");
+        dotTooltip2.className = "tooltiptextdot";
+        dotTooltip2.id = "chosen-dot-tooltip-dot-2";
+        dotTooltip2.textContent = "PLACEHOLDER2";
+    
+        dotBox2.className = " tooltip-dot"
+        dotBox2.appendChild(dotTooltip2);
+    
+    let dotTooltip3 = document.createElement("span");
+        dotTooltip3.className = "tooltiptextdot";
+        dotTooltip3.id = "chosen-dot-tooltip-dot-3";
+        dotTooltip3.textContent = "PLACEHOLDER3";
+    
+        dotBox3.className = " tooltip-dot"
+        dotBox3.appendChild(dotTooltip3);
+
+    let dotTooltip4 = document.createElement("span");
+        dotTooltip4.className = "tooltiptextdot";
+        dotTooltip4.id = "chosen-dot-tooltip-dot-4";
+        dotTooltip4.textContent = "PLACEHOLDER4";
+    
+        dotBox4.className = " tooltip-dot"
+        dotBox4.appendChild(dotTooltip4);
+
+    let dotTooltip5 = document.createElement("span");
+        dotTooltip5.className = "tooltiptextdot";
+        dotTooltip5.id = "chosen-dot-tooltip-dot-5";
+        dotTooltip5.textContent = "PLACEHOLDER5";
+    
+        dotBox5.className = " tooltip-dot"
+        dotBox5.appendChild(dotTooltip5);
+
+}
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //CALENDAR  ########################################################################################################################
