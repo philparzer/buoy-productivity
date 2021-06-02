@@ -815,8 +815,7 @@ button{
   background-color: var(--yellow);
   color: var(--darkerGrey);
   text-align: center;
-  padding-left: 10px;
-  padding-right: 115px!important;
+
   padding-top: 8px;
   padding-bottom: 6px;
   border-radius: 25px;
@@ -834,11 +833,11 @@ button{
 
 
 #chosen-dot-tooltip-dot-1{
-  top: 60% !important;
+  top: 55% !important;
   left: -1%!important;
 }
 #chosen-dot-tooltip-dot-2{
-  top: 60% !important;
+  top: 55% !important;
   left: -30%!important;
 }
 #chosen-dot-tooltip-dot-3{

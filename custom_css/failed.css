@@ -86,8 +86,8 @@ body{
 
     @keyframes example {
         0%   { right:-300%; top:0px;}
-        30%  { right: -140%; top:0px;}
-        80% { right: -140%; top:0px;}
+        30%  { right: -120%; top:0px;}
+        80% { right: -120%; top:0px;}
         100%   { right:-300%; top:0px;}
     }
 }
