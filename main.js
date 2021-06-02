@@ -34,11 +34,11 @@ function createWindow () {
     // splash.loadURL(`file://${__dirname}/splash.html`);
     // mainWindow.loadURL(`file://${__dirname}/index.html`);
   
-    // if main window is ready to show, then destroy the splash window and show up the main window
-    mainWindow.once('ready-to-show', () => {
-      splash.destroy();
-      mainWindow.show();
-    });
+    // // if main window is ready to show, then destroy the splash window and show up the main window
+    // mainWindow.once('ready-to-show', () => {
+    //   splash.destroy();
+    //   mainWindow.show();
+    // });
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()

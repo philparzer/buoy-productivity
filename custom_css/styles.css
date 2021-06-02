@@ -193,6 +193,7 @@ button{
 }
 
 #search{
+    
     -webkit-app-region: no-drag;
     margin-left: -10px!important;
     padding: 0px!important;
@@ -205,6 +206,10 @@ button{
     border-color: var(--primaryGrey)!important;
     margin-top: 8px!important;
     
+}
+
+#search::placeholder{
+  color: var(--lighterGrey)!important;
 }
 
 #search:hover{
@@ -303,6 +308,8 @@ button{
   color: var(--white);
   border-color: var(--yellow);
 }
+
+#add-tag-input::placeholder{color: var(--lighterGrey)}
 
 #add-tag-input:focus{
   box-shadow: none;
@@ -744,7 +751,7 @@ button{
 #dot-1 {
     height: 44px;
     width: 46px;
-    background-color: var(--primaryGrey);
+    background-color: var(--lighterGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 270px;
@@ -754,7 +761,7 @@ button{
 #dot-2 {
     height: 58px;
     width: 61px;
-    background-color: var(--primaryGrey);
+    background-color: var(--lighterGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 290px;
@@ -764,7 +771,7 @@ button{
 #dot-3 {
     height: 80px;
     width: 84px;
-    background-color: var(--primaryGrey);
+    background-color: var(--lighterGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 260px;
@@ -774,7 +781,7 @@ button{
 #dot-4 {
     height: 100px;
     width: 105px;
-    background-color: var(--primaryGrey);
+    background-color: var(--lighterGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 200px;
@@ -784,7 +791,7 @@ button{
 #dot-5 {
     height: 119px;
     width: 128px;
-    background-color: var(--primaryGrey);
+    background-color: var(--lighterGrey);
     border-radius: 50%;
     display: inline-block;
     margin-top: 120px;

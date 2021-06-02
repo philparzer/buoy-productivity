@@ -1,21 +1,19 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
-//TODO: implement State Completed
 //TODO: implement search input field dropdown
-//TODO: implement database styling (calendar, dots)
-//TODO: implement failed overlay
+//TODO: implement database styling (calendar)
+//FIXME: fix / implement media queries for animations
+//FIXME: handle problems / bugs related to empty database
 
 
 //-------------
 //LOW PRIORITY:
 //-------------
-//TODO: create custom alert that replaces alert
-//TODO: localize overlays
+//TODO: localize overlays (french)
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
-//TODO: change placeholder alert
 //TODO: add version number to html
 //TODO: handle SQL injection
 //TODO: try to make clickable ele click radius bigger to improve ease of use e.g.: https://stackoverflow.com/questions/15611905/making-the-clickable-area-of-in-line-links-bigger-without-affecting-the-layout
@@ -151,6 +149,8 @@ let thisApplication = "electron.exe"; //TODO: when application name is defined -
 let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
 let doneOverlay;
+let doneAlert;
+let failedAlert;
 
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -471,7 +471,17 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if (recentlyOutOfFocus)
                 {
                     //TODO: play focusing... sound
-                    focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                    switch(document.documentElement.lang)
+                    {
+                        case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': focusingOverlay = window.open('html/focusingOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang")
+                    }
                     setTimeout(() => {focusingOverlay.close()}, 2000)
                     recentlyOutOfFocus = false;
                 }
@@ -489,7 +499,19 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
                     warningAudio.play();
-                    warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                    
+                    switch(document.documentElement.lang)
+                    {
+                        case 'en': warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': warningOverlay = window.open('html/warningOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': warningOverlay = window.open('html/warningOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang")
+                    }
+                    
                 }
 
                 if(unfocusedTime == warningGoneAfter)
@@ -502,18 +524,47 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
                     
                     endTimer();
+
+                    switch(document.documentElement.lang)
+                    {
+                        case 'en': failedAlert = window.open('html/failedAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': failedAlert = window.open('html/failedAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': failedAlert = window.open('html/failedAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang")
+                    }   
+
+                    setTimeout(() => {failedAlert.close()}, 3500);
+                    
                 }
             }
         });
 
         //timer finished succesfully
-        if(delta >= timerInput) 
+        if(delta >= timerInput)
         {
             timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS - maybe debug once more?
             db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
+            
+            
+            
             endTimer();
-            doneOverlay = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-            setTimeout(() => {doneOverlay.close()}, 3500);
+            switch(document.documentElement.lang)
+                    {
+                        case 'en': doneAlert = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': doneAlert = window.open('html/doneAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': doneAlert = window.open('html/doneAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang")
+                    }
+            
+            setTimeout(() => {doneAlert.close()}, 3500);
         }
 
     }, 1000);
@@ -521,15 +572,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
 
 function endTimer (){ 
+    updateDots();
     switchButtonStatus();
     unstyleBuoy();
     unstyleBackground();
-    
-    
-    
-    //alert("Time Over");
-    
-
     //cleanup
     recentlyOutOfFocus = false;
     clearInterval(timerLogic);
@@ -866,7 +912,7 @@ function retrieveFocusAndExceptions()
 //UTIL FUNCTIONS   ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
-
+//TODO: function that checks if database is empty
 
 //enables or disables the start button depending on correct time input (not zero) and on correct checkbox input (at least one checkbox has been checked)
 function enableDisableStartBtn()
@@ -1137,7 +1183,6 @@ function updateSuccessRate()
         db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
             total = row.totalrows
             successRate = (success / total) * 100;
-            console.log(successRate)
             if(total == 0)
             {
                 successRate = 100; //FIXME: No attempts - 0% / 100% ?
@@ -1172,7 +1217,7 @@ function setMostUsedTag(){
 //---------------------------------------------------------------------------------------------------------------------------------------
 //DOTS  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
-function updateCircles(){
+function updateDots(){
     db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-4 FROM focus);', (error, row) => {try{fifthToLastAction = row.status;}catch{}
     db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-3 FROM focus);)', (error, row) => {try{fourthToLastAction = row.status;}catch{}
     db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-2 FROM focus);)', (error, row) => {try{thirdToLastAction = row.status;}catch{}
@@ -1203,15 +1248,7 @@ function updateCircles(){
 }
 
 
-updateCircles()
-
-console.log(lastAction)
-console.log(secondToLastAction)
-console.log(thirdToLastAction)
-console.log(fourthToLastAction)
-console.log(fifthToLastAction)
-
-
+updateDots() //updates dots at startup
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------
