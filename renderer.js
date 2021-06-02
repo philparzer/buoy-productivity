@@ -4,7 +4,7 @@
 //TODO: implement State Completed
 //TODO: implement search input field dropdown
 //TODO: implement database styling (calendar, dots)
-
+//TODO: implement failed overlay
 
 
 //-------------
@@ -503,6 +503,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS - maybe debug once more?
             db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
             endTimer();
+            doneOverlay = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+            setTimeout(() => {doneOverlay.close()}, 3500);
 
             //TODO: overwrite failed in database entry
         }
@@ -519,8 +521,7 @@ function endTimer (){
     
     
     //alert("Time Over");
-    doneOverlay = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-    setTimeout(() => {doneOverlay.close()}, 3000);
+    
 
     //cleanup
     recentlyOutOfFocus = false;
