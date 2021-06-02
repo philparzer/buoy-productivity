@@ -158,7 +158,6 @@ let recentlyOutOfFocus = false; //state that checks whether user has recently ex
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
 //---------------------------------------------------------------------------------------------------------------------------------------
 //DATABASE  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
@@ -571,7 +570,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 }
 
 
-function endTimer (){ 
+function endTimer (){
+    showStatsWindowButton.style.visibility = 'unset'; //relevant for 1st entry
     updateDots();
     switchButtonStatus();
     unstyleBuoy();
@@ -1163,6 +1163,7 @@ function hideFocusBtn()
 //---------------------------------------------------------------------------------------------------------------------------------------
 
 
+
 showStatsWindowButton.onclick = function() 
 {   
     updateSuccessRate();
@@ -1176,42 +1177,54 @@ function updateSuccessRate()
     let success;
     let total;
     let successRate;
+    showStatsWindowButton.style.visibility ="unset";
     //FIXME: write into single SQL statement?
     
-    db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => {
-        success = row.succeeded
-        db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
-            total = row.totalrows
-            successRate = (success / total) * 100;
-            if(total == 0)
-            {
-                successRate = 100; //FIXME: No attempts - 0% / 100% ?
-            }
-            document.getElementById("kdRatio").innerHTML = Math.round(successRate) + "%";}
-            )
-        })
+    try 
+    {
+        db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => {
+            success = row.succeeded
+            db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
+                total = row.totalrows
+                successRate = (success / total) * 100;
+                if(total == 0)
+                {
+                    console.log("disable stats button no success rate")
+                    successRate = 100; //FIXME: No attempts - 0% / 100% ?
+                }
+
+                Math.round(successRate)
+
+                //TODO: color success rate red, yellow, white
+                document.getElementById("kdRatio").innerHTML = Math.round(successRate) + "%";}
+                )
+            })
+    }
     
-    //FIXME: async - deswegen dreckiger Code ^^^^
-    // db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => success = row.succeeded)
-    // db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => total = row.totalrows)
-    // successRate = (success / total) * 100;
+    catch
+    {
+        showStatsWindowButton.style.visibility ="hidden";
+    }
     
-    // if(total == 0)
-    // {
-    //     successRate = 100; //FIXME: No attempts - 0% / 100% ?
-    // }
-    
-    //document.getElementById("kdRatio").innerHTML = successRate + "%"; 
-    
-    //TODO: style sucess rate red, white, or yellow for given range of %
 }
 
 function setMostUsedTag(){
-    db.get('SELECT tag, COUNT(tag) AS counted FROM focus GROUP BY tag ORDER BY counted DESC LIMIT 10;', (error, row) => {
-    document.getElementById("most-used-tag").innerHTML = row.tag;
-    })
+
+    showStatsWindowButton.style.visibility ="unset";
+    
+        db.get('SELECT tag, COUNT(tag) AS counted FROM focus GROUP BY tag ORDER BY counted DESC LIMIT 10;', (error, row) => {
+                    
+            try {document.getElementById("most-used-tag").innerHTML = row.tag;}
+            catch {showStatsWindowButton.style.visibility ="hidden";}
+
+            })
+
+
 }
 
+
+updateSuccessRate(); //calls on startup to catch error when new user tries to click on button without any entries
+setMostUsedTag();
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------
@@ -1224,7 +1237,7 @@ function updateDots(){
     db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-1 FROM focus);', (error, row) => {try{secondToLastAction = row.status;}catch{}
     db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID) FROM focus);', (error, row) => {try{lastAction = row.status;}catch{}
 
-        if (lastAction == 0) {dot5.style.backgroundColor = red;}
+    if (lastAction == 0) {dot5.style.backgroundColor = red;}
     else if (lastAction == 1)  {dot5.style.backgroundColor = yellow;}
 
     if (secondToLastAction == 0) {dot4.style.backgroundColor = red;}
