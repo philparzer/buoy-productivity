@@ -10,7 +10,6 @@
 //-------------
 //LOW PRIORITY:
 //-------------
-//TODO: localize overlays (french)
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
@@ -28,13 +27,17 @@
             //     left: 50%;
             //     transform: translate(-50%, -50%);
             //   }
+
+//TODO: implement audio settings
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on window
 //TODO: maybe color dottooltip background color according to focus status
 //TODO: maybe implement restart button in settings menu
+//TODO: localize overlays (french)
 //FIXME: polish overlay positions, anims, text, etc.
 //FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
 //FIXME: possible bug w snipping tabbing out
+//FIXME: audio too slow if user switches to out of focus program too soon after timer started
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -724,6 +727,7 @@ function addNewTag(createdTagName = createTagElement.value)
     //ADD TAG TO BUOY INPUT LIST
 
     var buoyTagDropdown = document.getElementById("tag-buoy-dropdown");
+
     var buoyTagItem = document.createElement("li");
     buoyTagDropdown.appendChild(buoyTagItem);
 

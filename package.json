@@ -14,7 +14,7 @@
     "buoy",
     "productivity"
   ],
-  "author": "Philipp Parzer, Johannes Parzer, Marko Topalovic (SFX)",
+  "author": "authors: Philipp Parzer, Johannes Parzer | contributors: Polina Matviyenko (Translation, QA); Marko Topalovic (SFX)",
   "license": "TODO:",
   "devDependencies": {
     "electron": "^12.0.7"
