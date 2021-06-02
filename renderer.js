@@ -29,7 +29,7 @@
             //     transform: translate(-50%, -50%);
             //   }
 
-//TODO: implement audio settings
+//TODO: implement / create remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on window
 //TODO: maybe color dottooltip background color according to focus status
 //TODO: maybe implement restart button in settings menu
@@ -100,6 +100,8 @@ let dotTooltip3;
 let dotTooltip4;
 let dotTooltip5;
 
+    //stats
+const successRateElement = document.getElementById("kdRatio");
 
     //calendar
 const showStatsWindowButton = document.getElementById("calendar-btn");
@@ -1227,11 +1229,18 @@ function updateSuccessRate()
                     successRate = 100; //FIXME: No attempts - 0% / 100% ?
                 }
 
-                Math.round(successRate)
+                var roundedRate = Math.round(successRate);
+                console.log(roundedRate);
+                
+                successRateElement.innerHTML = roundedRate + "%";
 
-                //TODO: color success rate red, yellow, white
-                document.getElementById("kdRatio").innerHTML = Math.round(successRate) + "%";}
-                )
+                //color success rate
+                if (roundedRate <= 65) {successRateElement.style.color = red;}
+                else if (roundedRate <=  95){successRateElement.style.color = white;}
+                else if (roundedRate >= 95){successRateElement.style.color = yellow;}
+
+
+                })
             })
     }
     
