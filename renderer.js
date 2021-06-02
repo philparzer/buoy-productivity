@@ -534,7 +534,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                         case 'de': failedAlert = window.open('html/failedAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
                         default:
-                            console.log("error lang")
+                            console.log("error lang");
                     }   
 
                     setTimeout(() => {failedAlert.close()}, 3500);
