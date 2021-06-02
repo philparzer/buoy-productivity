@@ -5,6 +5,7 @@ var sqlite3 = require('sqlite3').verbose();
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
+// let splash; TODO: think about SPLASH SCREEN
 
 let db = new sqlite3.Database('./buoy.db', (err) => {
   if (err) {
@@ -12,8 +13,7 @@ let db = new sqlite3.Database('./buoy.db', (err) => {
      //TODO: if missing database file -> Display database file downloadlink (Hide Inputs/Stop Programm?)
   } else{ console.log("Connected")}});
 
-//TODO: use electron-store to store user language settings in preferences and open correct html
-//TODO: disable tab
+//TODO: disable tab here?
 
 function createWindow () {
   // Create the browser window.
@@ -28,6 +28,18 @@ function createWindow () {
   //mainWindow.loadFile('index.html');
   DBGetSettingsLanguage(mainWindow)
   
+
+    // // create a new `splash`-Window  TODO: think about SPLASH SCREEN
+    // splash = new BrowserWindow({width: 810, height: 610, transparent: true, frame: false, alwaysOnTop: true});
+    // splash.loadURL(`file://${__dirname}/splash.html`);
+    // mainWindow.loadURL(`file://${__dirname}/index.html`);
+  
+    // if main window is ready to show, then destroy the splash window and show up the main window
+    mainWindow.once('ready-to-show', () => {
+      splash.destroy();
+      mainWindow.show();
+    });
+
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 }
