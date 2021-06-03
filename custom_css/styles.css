@@ -886,6 +886,25 @@ button{
   margin-top: 7px;
 }
 
+#avg-duration{
+  color: var(--white);
+  font-size: 180%;
+  margin-top: 35px;
+  margin-bottom: 3px;
+  line-height: 12px;
+}
+
+
+#avg-duration-description{
+  color: var(--lighterGrey);
+}
+
+#unit-specification{
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+
 /* ############ Calendar  #######################################################*/
 
 
@@ -900,7 +919,7 @@ button{
 
 .wrapper {
   margin: 15px auto;
-  margin-top: 80px;
+  margin-top: 45px;
   max-width: 1100px;
 }
 

@@ -2,6 +2,11 @@
 //HIGH PRIORITY:
 //-------------
 //TODO: implement search functionality
+    // 1. create function that gets tags + associated time from DB -> adds time -> clears options -> instantiates tags as options in form-control search inputElement
+    // 2. call function on startup
+    // 3. call function on tag add
+    // 4. think about time (on hover?)
+
 //TODO: implement calendar functionality
 //TODO: stats page average focus duration
 //FIXME: fix / implement additional media queries for animations
@@ -101,7 +106,7 @@ let dotTooltip4;
 let dotTooltip5;
 
     //stats
-const successRateElement = document.getElementById("kdRatio");
+const successRateElement = document.getElementById("kdRatio"); 
 
     //calendar
 const showStatsWindowButton = document.getElementById("calendar-btn");
@@ -250,7 +255,7 @@ function DBSettingsChange(param){
     }
 
 
-    //sounds
+    //sounds TODO: set global boolean
     if(param == 'lost')
     {
         if (document.getElementById("focus-lost-sound-switch").checked == true)
@@ -592,7 +597,7 @@ function endTimer (){
     showStatsWindowButton.style.visibility = 'unset'; //relevant for 1st entry
     instantiateDotTooltips();
     updateDots();
-    
+    updateAvgFocusDuration();
     switchButtonStatus();
     unstyleBuoy();
     unstyleBackground();
@@ -1230,7 +1235,7 @@ function updateSuccessRate()
                 }
 
                 var roundedRate = Math.round(successRate);
-                console.log(roundedRate);
+                
                 
                 successRateElement.innerHTML = roundedRate + "%";
 
@@ -1266,8 +1271,31 @@ function setMostUsedTag(){
 }
 
 
+function updateAvgFocusDuration(){
+
+    let averageDuration = 0;
+
+    db.all('SELECT duration FROM focus WHERE status = 1;', (error, val) => {
+        db.get('SELECT Count(*) AS "count" FROM focus WHERE status = 1', (error, row) => {
+
+
+            val.forEach(element => 
+                {   
+                    
+                    averageDuration += element.duration;
+
+                }
+            )
+            
+            averageDuration = averageDuration / row.count;
+            document.getElementById("avg-duration-value").textContent = Math.round(averageDuration);
+        })
+    })
+}
+
 updateSuccessRate(); //calls on startup to catch error when new user tries to click on button without any entries
 setMostUsedTag();
+updateAvgFocusDuration();
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------
