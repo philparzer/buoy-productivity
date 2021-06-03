@@ -8,9 +8,7 @@
     // 4. think about time (on hover?)
 
 //TODO: implement calendar functionality
-//TODO: stats page average focus duration
 //FIXME: fix / implement additional media queries for animations
-//FIXME: handle problems / bugs related to empty database
 
 
 //-------------
