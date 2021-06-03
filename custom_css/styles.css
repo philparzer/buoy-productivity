@@ -344,7 +344,7 @@ button{
 
 #manage-tags-dropdown{
   -webkit-app-region: no-drag;
-  width: 180px;
+  width: 200px;
   height: 380px;
   left: -1px !important;
   top: 5px !important;
