@@ -2,7 +2,8 @@
 //HIGH PRIORITY:
 //-------------
 //TODO: implement search functionality
-    // 1. create function that gets tags + associated time from DB -> adds time -> clears options -> instantiates tags as options in form-control search inputElement
+    // 0. remove form-control element change to standard input element use tooltip on focus or on change to instantiate results into
+    // 1. SELECT tag, SUM([duration]) FROM focus WHERE status = 1 GROUP BY tag; create function that gets tags + associated time from DB -> adds time -> clears options -> instantiates tags as options in form-control search inputElement
     // 2. call function on startup
     // 3. call function on tag add
     // 4. think about time (on hover?)
