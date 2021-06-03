@@ -383,17 +383,31 @@ function similarity(s1, s2) {
 //---------------------------------------------------------------------------------------------------------------------------------------
 
 
-//Search TODO:
+//Search
+
+instantiateSearchResults();//TODO: think about when this is supposed to be called -> when search box is shown
+                                //on input element focus?
+                                //if search field != "" -> clear button?
+                                //on input element change?
+                                //...
+                
+
+function instantiateSearchResults(){
 
 
-//settings TODO:
+    //TODO: think about how many results should be shown (x number of DB entries -> descending similarity)
+    //TODO: instantiate bootstrap grid divs
+    //TODO: get cumulative successful focus duration for each tag
+    //TODO: fill text content of divs w DB results
+
+}
 
 
 //about
 
 aboutBtn.onclick = function()
 {
-    shell.openExternal('https://buoy-productivity.com/'); //TODO: link to about page
+    shell.openExternal('https://buoy-productivity.com/'); //TODO: link to respective page as soon as website is done
 }
 
 //Minimize and Quit

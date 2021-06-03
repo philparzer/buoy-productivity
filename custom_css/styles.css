@@ -221,12 +221,60 @@ button{
         box-shadow: none!important;
       }
 
-      #option1{
-        background-color: #DBDB93!important;
-        color: var(--yellow)!important;
-        border: #DBA993!important;
-        border-radius: 30px;
+      /* Tooltip search */
+    
+      .tooltip-search {
+        position: relative;
+        display: inline-block;/* If you want dots under the hoverable text */
       }
+      
+      
+      .tooltip-search .tooltip-search-text  {
+        top: 115%!important;
+        right: -58%;
+        visibility: hidden;
+        width: 290px;
+        height: 350px;
+        background-color: var(--darkerGrey);
+        color: var(--white);
+        text-align: center;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-top: 8px;
+        padding-bottom: 6px;
+        
+       
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+      }
+      
+      /* TODO: FIXME: change this in JS */ 
+      .tooltip-search:hover .tooltip-search-text {
+        visibility: visible;
+      }
+
+      .search-tag-result{
+        margin-left: -10px;
+        text-align: left!important;
+        color: var(--yellow);
+        margin-bottom: 5px;
+        margin-top: 5px;
+    
+      }
+
+      .search-tag-duration{
+        text-align: left;
+        padding-left: 2px!important;
+        border-left: 2px solid;
+        border-left-color: var(--lighterGrey);
+        color: var(--white);
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+
 
   /*Window Management*/
 
