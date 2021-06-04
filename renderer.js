@@ -2,14 +2,13 @@
 //HIGH PRIORITY:
 //-------------
 //TODO: implement search functionality
-    // 0. instantiate empty tooltip "box" on focus or on change to instantiate results into
-    // 1. SELECT tag, SUM([duration]) FROM focus WHERE status = 1 GROUP BY tag; create function that gets tags + associated time from DB -> adds time -> clears options -> instantiates tags into tooltip box
-    // 2. call function on startup
-    // 3. call function on tag add
-    // 4. think about time (on hover?)
+    // 1. use similarityCheck() to display (top 5?) tags w highest similarity to user input, get cumulative duration
+    // 2. instantiate divs w text content into tooltip container
+    // 3. call instantiation function in interval? | on change? | ...
+    // 4. clear interval when input field is not in focus?
 
 //TODO: implement calendar functionality
-//FIXME: fix / implement additional media queries for animations
+
 
 
 //-------------
@@ -44,6 +43,7 @@
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
 //FIXME: possible bug w snipping tabbing out
 //FIXME: audio too slow if user switches to out of focus program too soon after timer started
+//FIXME: fix / implement additional media queries for animations
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -84,6 +84,20 @@ const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
 const createTagButton = document.getElementById("add-tag-input-button");
 let inputElementCheckInterval;
+
+    //search box fields
+
+const tagTop1Result = document.getElementById("top1-tag");
+const tagTop2Result = document.getElementById("top2-tag");
+const tagTop3Result = document.getElementById("top3-tag");
+const tagTop4Result = document.getElementById("top4-tag");
+const tagTop5Result = document.getElementById("top5-tag");
+
+const durationTop1Result = document.getElementById("top1-duration");
+const durationTop2Result = document.getElementById("top2-duration");
+const durationTop3Result = document.getElementById("top3-duration");
+const durationTop4Result = document.getElementById("top4-duration");
+const durationTop5Result = document.getElementById("top5-duration");
 
     //dots
 const dot1 = document.getElementById("dot-1");
@@ -320,7 +334,7 @@ function DBSearch(searchArg){
         similar.push(sim)
 
     });
-        highestValue = Math.max.apply(null, similar)
+        highestValue = Math.max.apply(null, similar)    //TODO: return relevant variables
         
         console.log("Math Max Index: " + similar.indexOf(highestValue)) 
         console.log("Tag: " + tags[similar.indexOf(highestValue)])
@@ -385,21 +399,53 @@ function similarity(s1, s2) {
 
 //Search
 
-instantiateSearchResults();//TODO: think about when this is supposed to be called -> when search box is shown
-                                //on input element focus?
-                                //if search field != "" -> clear button?
-                                //on input element change?
-                                //...
                 
+function getSearchResults(searchInput)
+{
 
-function instantiateSearchResults(){
+    //database search TODO: get duration and tag
+    DBSearch(searchInput);
 
 
-    //TODO: think about how many results should be shown (x number of DB entries -> descending similarity)
-    //TODO: instantiate bootstrap grid divs
-    //TODO: get cumulative successful focus duration for each tag
-    //TODO: fill text content of divs w DB results
+    //instantiate search results   
+    tagTop1Result.textContent = "test1";
+    tagTop2Result.textContent = "test2";
+    tagTop3Result.textContent = "test3";
+    tagTop4Result.textContent = "test4";
+    tagTop5Result.textContent = "test5";
 
+    durationTop1Result.textContent = "10" + "h";
+    durationTop2Result.textContent = "100" + "h";
+    durationTop3Result.textContent = "1000" + "h";
+    durationTop4Result.textContent = "10000"+ "h";
+    durationTop5Result.textContent = "100000"+ "h";
+
+    let allDurationResults = document.querySelectorAll(".search-tag-duration");
+    allDurationResults.forEach((element) => {
+        element.style.borderLeft = "2px solid #707070";
+    })
+}
+
+
+function clearSearchResults()
+{
+    try
+    {
+        let allTagResults = document.querySelectorAll(".search-tag-result");
+        let allDurationResults = document.querySelectorAll(".search-tag-duration");
+
+        allTagResults.forEach((element) => {
+            element.textContent = "";
+        })
+
+        allDurationResults.forEach((element) => {
+            element.textContent = "";
+            element.style.borderLeft = darkerGrey;
+        })
+    }
+
+    catch{}
+    
 }
 
 
@@ -696,11 +742,18 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
     {  
         document.getElementById("add-tag-input").style.borderColor = "unset";
 
-        if (searchElement.value != "")
+        if (searchElement.value != "") //TODO: maybe change this to onchange input event or to if hovering over input
         {
             //search database
-            DBSearch(searchElement.value);
+            getSearchResults(searchElement.value);
+
         }
+
+        else 
+        {
+            clearSearchResults();
+        }
+
         
         if (createTagElement.value != "")
         {   
@@ -712,7 +765,7 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         }
 
         else
-        {
+        {   
             createTagButton.style.visibility = "hidden";
         }
 

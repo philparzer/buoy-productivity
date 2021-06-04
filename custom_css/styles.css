@@ -234,7 +234,7 @@ button{
         right: -58%;
         visibility: hidden;
         width: 290px;
-        height: 350px;
+        height: 175px;
         background-color: var(--darkerGrey);
         color: var(--white);
         text-align: center;
@@ -260,16 +260,14 @@ button{
         margin-left: -10px;
         text-align: left!important;
         color: var(--yellow);
-        margin-bottom: 5px;
-        margin-top: 5px;
+        margin-bottom: 6px;
+        margin-top: 6px;
     
       }
 
       .search-tag-duration{
         text-align: left;
         padding-left: 2px!important;
-        border-left: 2px solid;
-        border-left-color: var(--lighterGrey);
         color: var(--white);
         margin-bottom: 5px;
         margin-top: 5px;
@@ -581,7 +579,7 @@ button{
 }
 
 #tag-buoy-btn{
-  margin-left: 2px;
+  margin-left: 1px;
   margin-top: -6px;
   border-radius: 30px;
   padding: 0;
