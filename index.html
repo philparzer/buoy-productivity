@@ -31,7 +31,7 @@
                   <div class="col-2 tooltip-search">
                     <input id="search"  class="form-control"  placeholder="search for tags" maxlength="12">
                     
-                    <div class="container tooltip-search-text">
+                    <div id="tooltip-search-box" class="container tooltip-search-text">
 
                         <div class="row">
                             <div id="top1-tag" class="col-6 search-tag-result">
@@ -97,14 +97,14 @@
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li>
-                                <div class="input-group">
+                                <div id="tag-input-box" class="input-group">
                                     <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="create a tag" aria-label="create tag" aria-describedby="basic-addon2">
                                     <div id="add-tag-input-button-box" class="input-group-append">
                                       <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">add</button>
                                     </div>
-                                  </div>
+                                </div>
                             </li>
-                            <div class="dropdown-divider"></div>
+                            <!-- <div class="dropdown-divider"></div> -->
                             <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
                             <!--tags instantiat here-->
                             </ul>

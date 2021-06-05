@@ -251,9 +251,9 @@ button{
         z-index: 1;
       }
       
-      /* TODO: FIXME: change this in JS */ 
-      .tooltip-search:hover .tooltip-search-text {
-        visibility: visible;
+
+      #tooltip-search-box{
+        visibility: hidden;
       }
 
       .search-tag-result{
@@ -349,19 +349,24 @@ button{
   border-width: 1px!important;
 }
 
+
 #add-tag-input{
-  padding-left: 10px!important;
   padding-top: 0px!important;
   padding-bottom: 0px!important;
-  margin-top: 0px!important;
-  margin-bottom: 0px!important;
+  margin-top: 5px!important;
+  margin-bottom: 20px!important;
   margin-right: 30px;
   height: 30px;
-  border-radius: 20px;
+  /* border-radius: 20px; */
+  border-radius: 0px!important;
+  line-height: 30px!important;
   background-color: var(--primaryGrey);
-  border: solid;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: solid 3px;
   color: var(--white);
-  border-color: var(--yellow);
+  border-color: var(--darkerGrey);
 }
 
 #add-tag-input::placeholder{color: var(--lighterGrey)}
@@ -374,33 +379,34 @@ button{
   padding-left: 10px!important;
   padding-top: 0px!important;
   padding-bottom: 0px!important;
-  margin-top: 0px!important;
+  margin-top: 5px!important;
   margin-bottom: 0px!important;
   margin-left: -12px;
+  margin-right: 2px;
   height: 30px;
-  border-radius: 20px;
-  background-color: var(--primaryGrey);
+  border-radius: 20px!important;
+  background-color: var(--yellow);
   border: solid;
-  color: var(--white);
-  border-color: var(--yellow);
+  color: var(--darkerGrey);
+  border-color: var(--primaryGrey);
 }
 
 #add-tag-input-button:hover{
-  background-color: var(--yellow);
+  background-color: var(--white);
   text-align: center;
   color: var(--darkerGrey);
   border-radius: 30px;;
-}
+} 
 
 
-#add-tag-input:hover{
+/* #add-tag-input:hover{
   background-color: var(--primaryGrey);
   border-color: var(--white);
-}
+} */
 
 #tag-resolve-headline{
   color: var(--red);
-  margin-left: -2px;
+  margin-left: -4px;
   margin-bottom: -5px;
 }
 
@@ -410,7 +416,7 @@ button{
 
 .tag-resolve{
   margin-top: 10px;
-  margin-left: -2px;
+  margin-left: -4px;
   color: var(--white);
 }
 

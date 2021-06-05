@@ -87,6 +87,8 @@ let inputElementCheckInterval;
 
     //search box fields
 
+const searchBox = document.getElementById("tooltip-search-box");
+
 const tagTop1Result = document.getElementById("top1-tag");
 const tagTop2Result = document.getElementById("top2-tag");
 const tagTop3Result = document.getElementById("top3-tag");
@@ -396,14 +398,18 @@ function similarity(s1, s2) {
 //TITLEBAR  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
-
 //Search
 
-                
-function getSearchResults(searchInput)
+  //add input event listener to search element
+searchElement.addEventListener('input', getSearchResults);
+
+  //gets DB entries and updates html
+function getSearchResults()
 {
 
-    //database search TODO: get duration and tag
+    let searchInput = searchElement.value;
+
+    //database search TODO: get duration and tag (return an array?)
     DBSearch(searchInput);
 
 
@@ -738,36 +744,36 @@ function timeoutClear() {
 //TAGS  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
-inputElementCheckInterval = setInterval(function() //checks input in input elements each second
+inputElementCheckInterval = setInterval(function() //checks input in input elements each second TODO: change this to input event as well? more performant?
     {  
-        document.getElementById("add-tag-input").style.borderColor = "unset";
-
-        if (searchElement.value != "") //TODO: maybe change this to onchange input event or to if hovering over input
-        {
-            //search database
-            getSearchResults(searchElement.value);
-
-        }
-
-        else 
-        {
-            clearSearchResults();
-        }
-
         
+
+        if (searchElement.value == "")
+        {
+            
+            searchBox.style.visibility = "hidden";
+            clearSearchResults();
+        } 
+
+        else
+        {
+            
+            searchBox.style.visibility = "visible";
+        }
+
         if (createTagElement.value != "")
         {   
-            //listens to enter input
-            
-
-            //sets add button to visible
+            document.getElementById("add-tag-input").style.borderColor = lighterGrey;
             createTagButton.style.visibility = "unset";
         }
 
         else
         {   
+            document.getElementById("add-tag-input").style.borderColor = darkerGrey;
             createTagButton.style.visibility = "hidden";
         }
+
+        
 
     }, 1000)
 
@@ -1407,7 +1413,7 @@ updateDots() //updates dots at startup
 instantiateDotTooltips() //instantiate tooltips at start
 
 
-function instantiateDotTooltips() //FIXME: visual bug when instantiating empty tooltips / when database empty
+function instantiateDotTooltips() //FIXME: color tags accordingly
 {   
 
     let dotBox1 = document.getElementById("dot-box-1");
@@ -1425,7 +1431,16 @@ function instantiateDotTooltips() //FIXME: visual bug when instantiating empty t
         dotTooltip1.className = "tooltiptextdot";
         dotTooltip1.id = "chosen-dot-tooltip-dot-1";
 
-        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-4 FROM focus);', (error, row) => {try{dotTooltip1.textContent = row.tag;}catch{console.log("didnt work")}
+        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-4 FROM focus);', (error, row) => {
+            try
+            {
+                dotTooltip1.textContent = row.tag;
+                if (row.state = 0){dotTooltip1.style.backgroundColor = red;}
+                else {dotTooltip1.style.backgroundColor = yellow;}
+            }
+            
+            catch{console.log("didnt work")}
+
         dotBox1.className = " tooltip-dot"
 
         dotBox1.appendChild(dotTooltip1);
@@ -1442,7 +1457,15 @@ function instantiateDotTooltips() //FIXME: visual bug when instantiating empty t
         dotTooltip2.className = "tooltiptextdot";
         dotTooltip2.id = "chosen-dot-tooltip-dot-2";
 
-        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-3 FROM focus);', (error, row) => {try{dotTooltip2.textContent = row.tag;}catch{console.log("didnt work")}
+        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-3 FROM focus);', (error, row) => {
+            try
+            {
+                dotTooltip2.textContent = row.tag;
+                if (row.state = 0){dotTooltip2.style.backgroundColor = red;}
+                else {dotTooltip2.style.backgroundColor = yellow;}
+            }
+
+            catch{console.log("didnt work")}
         dotBox2.className = " tooltip-dot"
         dotBox2.appendChild(dotTooltip2);
     
