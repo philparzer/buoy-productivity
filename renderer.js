@@ -12,8 +12,6 @@
 //-------------
 //LOW PRIORITY:
 //-------------
-//TODO: disable autocorrection underline?
-//TODO: update other HTML elements
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
@@ -146,6 +144,9 @@ let mouseHoldTimer;
 let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
+
+var hoursUnit = "h"; //search box suffix
+if (document.documentElement.lang == "ru"){hoursUnit = "ч";}
 
 let timerLogic;
 let timerRunning = false; //variable for timer state
@@ -420,11 +421,12 @@ function getSearchResults()
     tagTop4Result.textContent = "test4";
     tagTop5Result.textContent = "test5";
 
-    durationTop1Result.textContent = "10" + "h";
-    durationTop2Result.textContent = "100" + "h";
-    durationTop3Result.textContent = "1000" + "h";
-    durationTop4Result.textContent = "10000"+ "h";
-    durationTop5Result.textContent = "100000"+ "h";
+
+    durationTop1Result.textContent = "10" + hoursUnit;
+    durationTop2Result.textContent = "100" + hoursUnit;
+    durationTop3Result.textContent = "1000" + hoursUnit;
+    durationTop4Result.textContent = "10000"+ hoursUnit;
+    durationTop5Result.textContent = "100000"+ hoursUnit;
 
     let allDurationResults = document.querySelectorAll(".search-tag-duration");
     allDurationResults.forEach((element) => {

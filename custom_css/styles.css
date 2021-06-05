@@ -94,7 +94,7 @@ button{
 
 /*settings*/
 #settings-dropdown{
-  height: 360px!important;
+  height: 465px!important;
   width: 180px!important;
   border: 1px solid var(--darkerGrey);
   border-radius: 0px;
@@ -142,7 +142,7 @@ button{
 
 #restart-info{
   color: var(--red);
-  margin-bottom: -5px!important;
+  margin-bottom: 8px!important;
 }
 
 #language-radio-buttons{
@@ -176,7 +176,7 @@ button{
 }
 
 .settings-dropdown-divider{
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .settings-dropdown-heading{
@@ -190,6 +190,11 @@ button{
 
 #settings:focus{
     box-shadow: none!important;
+}
+
+#version-number-field{
+  margin: 0!important;
+  color: var(--lighterGrey);
 }
   /*search*/
 

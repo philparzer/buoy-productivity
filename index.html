@@ -104,7 +104,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <!-- <div class="dropdown-divider"></div> -->
                             <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
                             <!--tags instantiat here-->
                             </ul>
@@ -139,6 +138,12 @@
                                       Deutsch
                                     </label>
                                   </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"> <!--TODO: onclick="DBSettingsChange('fr')"-->
+                                    <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
+                                      Français
+                                    </label>
+                                  </div>
                             </li>
 
                           <div class="dropdown-divider settings-dropdown-divider"></div>
@@ -151,15 +156,27 @@
                             </div>
                           </li>
                           <li>
-                            <div class="form-check" onclick="">
+                            <div class="form-check">
                                 <input onclick="DBSettingsChange('gained')" id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                                 <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
                             </div>
                           </li>
-
+                          <li>
+                            <div class="form-check">
+                                <input id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('fail')"-->
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">fail</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form-check">
+                                <input  id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('completion')"-->
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">completion</label>
+                            </div>
+                          </li>
                           <div class="dropdown-divider settings-dropdown-divider"></div>
                           <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</text></li>
-                          
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+                          <li><text id="version-number-field" class="dropdown-item settings-dropdown-heading">version <span id="version-number">0.1</span></text></li> <!--TODO: update version number on startup-->
                         </ul>
                     </div>
                   </div>

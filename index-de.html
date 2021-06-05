@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
-
+    
   <head>
     <meta charset="UTF-8">
     <title>buoy productivity</title>
@@ -23,17 +23,73 @@
 
 
 <!--################## Titlebar ##########################-->
-          <div class="container-fluid" id="title-bar">
+<div class="container-fluid" id="title-bar">
+    <div class="row">
+        <div class="col-1 p-0 m-0">
+            <span id="title-logo">buoy</span>
+        </div>
+        <div class="col-2 tooltip-search">
+          <input id="search"  class="form-control"  placeholder="Markierungen suchen" maxlength="12">
+          
+          <div id="tooltip-search-box" class="container tooltip-search-text">
+
               <div class="row">
-                  <div class="col-1 p-0 m-0">
-                      <span id="title-logo">buoy</span>
+                  <div id="top1-tag" class="col-6 search-tag-result">
+                      <!--DB Result is instantiated here-->
                   </div>
-                  <div class="col-2">
-                    <input id="search" style="padding-right: 2px;" list="datalistOptions" placeholder="Markierungen suchen" maxlength="12">
-                    <!--TODO: Tooltip instantiates here-->
-                        <!--TODO: search element inside Tooltip instantiates here-->
+                  <div class="col-4"></div>
+                  <div id="top1-duration" class="col-2 search-tag-duration">
+                      <!--DB Result is instantiated here-->
                   </div>
-                  <div class="col-1">
+              </div>
+
+              <div  class="row">
+                  <div id="top2-tag" class="col-6 search-tag-result">
+                      <!--DB Result is instantiated here-->
+                  </div>
+                  <div class="col-4"></div>
+                  <div id="top2-duration" class="col-2 search-tag-duration">
+                     <!--DB Result is instantiated here-->
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div id="top3-tag" class="col-6 search-tag-result">
+                      <!--DB Result is instantiated here-->
+                  </div>
+                  <div class="col-4"></div>
+                  <div id="top3-duration" class="col-2 search-tag-duration">
+                      <!--DB Result is instantiated here-->
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div id="top4-tag" class="col-6 search-tag-result">
+                      <!--DB Result is instantiated here-->
+                  </div>
+                  <div class="col-4"></div>
+                  <div id="top4-duration" class="col-2 search-tag-duration">
+                      <!--DB Result is instantiated here-->
+                  </div>
+              </div>
+
+              <div  class="row">
+                  <div id="top5-tag" class="col-6 search-tag-result">
+                      <!--DB Result is instantiated here-->
+                  </div>
+                  <div class="col-4"></div>
+                  <div id="top5-duration" class="col-2 search-tag-duration">
+                      <!--DB Result is instantiated here-->
+                  </div>
+              </div>
+
+
+          </div>
+          
+          
+
+        </div>
+        <div class="col-1">
     <!--Tag Manager ----------------------------------------------------------------------->
                     <div id="manage-tags-dropdown-box"  class="dropdown"> 
                         <button id="manage-tags-btn"  class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,7 +104,6 @@
                                     </div>
                                   </div>
                             </li>
-                            <div class="dropdown-divider"></div>
                             <li><text id="tag-resolve-headline" class="dropdown-item">Markierungen entfernen</text></li>
                             <!--tags instantiat here-->
                             </ul>
@@ -83,6 +138,12 @@
                                       Deutsch
                                     </label>
                                   </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"> <!--TODO: onclick="DBSettingsChange('fr')"-->
+                                    <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
+                                      Français
+                                    </label>
+                                  </div>
                             </li>
 
                           <div class="dropdown-divider settings-dropdown-divider"></div>
@@ -100,10 +161,22 @@
                                 <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">fokussiert</label>
                             </div>
                           </li>
-
+                          <li>
+                            <div class="form-check">
+                                <input id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('fail')"-->
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">Misserfolg</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form-check">
+                                <input  id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('completion')"-->
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">Erfolg</label>
+                            </div>
+                          </li>
                           <div class="dropdown-divider settings-dropdown-divider"></div>
                           <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">Neustart benötigt</text></li>
-                          
+                          <div class="dropdown-divider settings-dropdown-divider"></div>
+                          <li><text id="version-number-field" class="dropdown-item settings-dropdown-heading">Version <span id="version-number">0.1</span></text></li> <!--TODO: update version number on startup-->
                         </ul>
                     </div>
                   </div>
