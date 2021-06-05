@@ -124,6 +124,10 @@ const startBtn = document.getElementById('start-btn');
 var versionNumber = "0.1"
 document.getElementById("version-number").innerHTML = versionNumber;
 
+//search
+
+var searchResultTags = [];
+
 //timerInput -----------------------------------------------------------------------------------------
 
     //used to set and clear intervals for mouse hold functionality
@@ -257,6 +261,18 @@ function DBSettingsChange(param){
         }
     }
 
+    if(param == 'fr')
+    {
+        if (document.getElementById("exampleRadios3").checked == true)
+        {
+            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
+        }
+
+        else 
+        {
+            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
+        }
+    }
 
     //sounds TODO: set global boolean
     if(param == 'lost')
@@ -310,28 +326,39 @@ function DBReadandDisplayTags(){
     })
 }
 
-//FIXME: may stop working if database empty (forEach)
 function DBSearch(searchArg){
 
-    tags.length = 0
-    similar.length = 0
+    tags.length = 0;
+    similar.length = 0;
     
 
     db.all('SELECT duration, tag FROM focus WHERE tag LIKE "%' + searchArg + '%"', (error, rows) => {
         rows.forEach( row => {
-        tags.push(row.tag)
-        sim = similarity(searchArg, row.tag)
-        similar.push(sim)
+        tags.push(row.tag);
+        sim = similarity(searchArg, row.tag);
+        similar.push(sim);
 
     });
-        highestValue = Math.max.apply(null, similar)    //TODO: return relevant variables
+        highestValue = Math.max.apply(null, similar)    
         
-        console.log("Math Max Index: " + similar.indexOf(highestValue)) 
-        console.log("Tag: " + tags[similar.indexOf(highestValue)])
-        console.log(similar)
-        console.log(tags)
-        console.log("Highest value: " + highestValue)
+        
+
+        //5 most similar results
+    
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+
+        // console.log("Math Max Index: " + similar.indexOf(highestValue));
+        // console.log("Most similar tag: " + tags[similar.indexOf(highestValue)]);
+        // console.log(similar);
+        // console.log("all tags = " + tags);
+        // console.log("Highest value: " + highestValue);
     })
+
+
 }
 
 function similarity(s1, s2) {
@@ -377,6 +404,26 @@ function similarity(s1, s2) {
 
 
 
+  function addSearchResults(allTags, mostSimilarTag)
+  {
+    try 
+    {
+        searchResultTags.push(mostSimilarTag);
+
+        for (var i = allTags.length - 1; i >= 0; i--) 
+        {
+            if (allTags[i] === mostSimilarTag) {
+                allTags.splice(i, 1);
+            }
+        }
+    }
+
+    catch{}
+
+    return allTags;
+  }
+
+
   function startBuoyDBEntry(tag, duration, programs, date, status)
   {
     db.run('INSERT INTO focus (status, tag, programs, date, duration) VALUES ("' + status + '","' + tag + '","' + programs + '","' + date + '","' + duration + '");"');
@@ -397,8 +444,12 @@ function getSearchResults()
 
     let searchInput = searchElement.value;
 
-    //database search TODO: get duration and tag (return an array?)
+    //database search
     DBSearch(searchInput);
+
+    //TODO: use searchResultTags, split into 5 results
+    //TODO: use results to search DB and calculate cumulative time
+    //TODO: pass into text content
 
 
     //instantiate search results   

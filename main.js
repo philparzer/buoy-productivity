@@ -98,6 +98,11 @@ function DBGetSettingsLanguage(mainWindow){ //TODO: default radio button value t
         mainWindow.loadFile('index-de.html');
         break;
 
+      case "fr":
+        console.log("fr selected")
+        mainWindow.loadFile('index-fr.html');
+        break;
+
       default:
         console.log("language not specified")
         //mainWindow.loadFile('index.html');
