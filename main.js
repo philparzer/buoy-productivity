@@ -20,7 +20,7 @@ function createWindow () {
   
   const mainWindow = new BrowserWindow({
     width: 1100, height: 800, resizable: false, frame: false,
-    webPreferences: {nodeIntegration: true, contextIsolation: false}
+    webPreferences: {nodeIntegration: true, contextIsolation: false, spellcheck: false}
   })
   mainWindow.setIcon(path.join(__dirname, '/images/icon.ico'));
 

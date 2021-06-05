@@ -491,6 +491,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     //preparations
     clearInterval(setFocusInterval);
     retrieveFocusAndExceptions();
+    searchElement.value = ""; //collapses search if search window still open when start is hit
     
     if (allowedProgramArray.length == 0){
         startBtnStyledFocusNotSet = true;
