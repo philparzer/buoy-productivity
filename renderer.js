@@ -36,7 +36,7 @@
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on window
 //TODO: maybe color dottooltip background color according to focus status
 //TODO: maybe implement restart button in settings menu
-//TODO: localize overlays (french)
+//TODO: localize overlays (french?, spanish?)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //FIXME: polish overlay positions, anims, text, etc.
 //FIXME: search interval slower / onchange?
@@ -1413,7 +1413,7 @@ updateDots() //updates dots at startup
 instantiateDotTooltips() //instantiate tooltips at start
 
 
-function instantiateDotTooltips() //FIXME: color tags accordingly
+function instantiateDotTooltips()
 {   
 
     let dotBox1 = document.getElementById("dot-box-1");
@@ -1435,14 +1435,33 @@ function instantiateDotTooltips() //FIXME: color tags accordingly
             try
             {
                 dotTooltip1.textContent = row.tag;
-                if (row.state = 0){dotTooltip1.style.backgroundColor = red;}
-                else {dotTooltip1.style.backgroundColor = yellow;}
+                
+                db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-4 FROM focus);', (error, row) => {
+                    try
+                    {
+                        if (row.status == 0) 
+                        {
+                            console.log("dot1 - status: " + row.status); 
+                            dotTooltip1.style.backgroundColor = red;
+                        }
+
+                        else
+                        {
+                            dotTooltip1.style.backgroundColor = yellow;
+                        }
+                        
+                    }
+                    
+                    catch{console.log("didnt work")}
+                })
             }
             
             catch{console.log("didnt work")}
 
-        dotBox1.className = " tooltip-dot"
+            
 
+
+        dotBox1.className = " tooltip-dot"
         dotBox1.appendChild(dotTooltip1);
     
         })
@@ -1461,8 +1480,27 @@ function instantiateDotTooltips() //FIXME: color tags accordingly
             try
             {
                 dotTooltip2.textContent = row.tag;
-                if (row.state = 0){dotTooltip2.style.backgroundColor = red;}
-                else {dotTooltip2.style.backgroundColor = yellow;}
+
+                db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-3 FROM focus);', (error, row) => {
+                    try
+                    {
+                        if (row.status == 0) 
+                        {
+                            console.log("dot2 - status: " + row.status); 
+                            dotTooltip2.style.backgroundColor = red;
+                        }
+
+                        else
+                        {
+                            dotTooltip2.style.backgroundColor = yellow;
+                        }
+                        
+                    }
+                    
+                    catch{console.log("didnt work")}
+                })
+
+
             }
 
             catch{console.log("didnt work")}
@@ -1479,7 +1517,35 @@ function instantiateDotTooltips() //FIXME: color tags accordingly
         dotTooltip3.className = "tooltiptextdot";
         dotTooltip3.id = "chosen-dot-tooltip-dot-3";
 
-        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-2 FROM focus);', (error, row) => {try{dotTooltip3.textContent = row.tag;}catch{console.log("didnt work")}
+        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-2 FROM focus);', (error, row) => 
+        {
+            try
+            {
+                dotTooltip3.textContent = row.tag;
+
+                db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-2 FROM focus);', (error, row) => {
+                    try
+                    {
+                        if (row.status == 0) 
+                        {
+                            console.log("dot3 - status: " + row.status); 
+                            dotTooltip3.style.backgroundColor = red;
+                        }
+
+                        else
+                        {
+                            dotTooltip3.style.backgroundColor = yellow;
+                        }
+                        
+                    }
+                    
+                    catch{console.log("didnt work")}
+                })
+            }
+            
+            catch {console.log("didnt work")}
+
+
         dotBox3.className = " tooltip-dot"
         dotBox3.appendChild(dotTooltip3);
     
@@ -1494,7 +1560,33 @@ function instantiateDotTooltips() //FIXME: color tags accordingly
         dotTooltip4.className = "tooltiptextdot";
         dotTooltip4.id = "chosen-dot-tooltip-dot-4";
 
-        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-1 FROM focus);', (error, row) => {try{dotTooltip4.textContent = row.tag;}catch{console.log("didnt work")}
+        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID)-1 FROM focus);', (error, row) => {
+            try
+            {
+                dotTooltip4.textContent = row.tag;
+
+                db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID)-1 FROM focus);', (error, row) => {
+                    try
+                    {
+                        if (row.status == 0) 
+                        {
+                            console.log("dot4 - status: " + row.status); 
+                            dotTooltip4.style.backgroundColor = red;
+                        }
+
+                        else
+                        {
+                            dotTooltip4.style.backgroundColor = yellow;
+                        }
+                        
+                    }
+                    
+                    catch{console.log("didnt work")}
+                })
+            }
+            
+            catch{console.log("didnt work")}
+
         dotBox4.className = " tooltip-dot"
         dotBox4.appendChild(dotTooltip4);
     
@@ -1508,7 +1600,32 @@ function instantiateDotTooltips() //FIXME: color tags accordingly
         dotTooltip5.className = "tooltiptextdot";
         dotTooltip5.id = "chosen-dot-tooltip-dot-5";
 
-        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID) FROM focus);', (error, row) => {try{dotTooltip5.textContent = row.tag;}catch{console.log("didnt work")}
+        db.get('SELECT tag FROM focus WHERE ROWID = (SELECT MAX(ROWID) FROM focus);', (error, row) => {
+            try
+            {
+                dotTooltip5.textContent = row.tag;
+
+                db.get('SELECT status FROM focus WHERE ROWID = (SELECT MAX(ROWID) FROM focus);', (error, row) => {
+                    try
+                    {
+                        if (row.status == 0) 
+                        {
+                            console.log("dot5 - status: " + row.status); 
+                            dotTooltip5.style.backgroundColor = red;
+                        }
+
+                        else
+                        {
+                            dotTooltip5.style.backgroundColor = yellow;
+                        }
+                        
+                    }
+                    
+                    catch{console.log("didnt work")}
+                })
+            }
+            
+            catch{console.log("didnt work")}
         dotBox5.className = " tooltip-dot"
         dotBox5.appendChild(dotTooltip5);
     

@@ -375,6 +375,10 @@ button{
   box-shadow: none;
 }
 
+#add-tag-input:hover::placeholder{
+  color: var(--white);
+}
+
 #add-tag-input-button{
   padding-left: 10px!important;
   padding-top: 0px!important;
