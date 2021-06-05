@@ -2,11 +2,7 @@
 //HIGH PRIORITY:
 //-------------
 //TODO: implement search functionality
-    // 1. use similarityCheck() to display (top 5?) tags w highest similarity to user input, get cumulative duration
-    // 2. instantiate divs w text content into tooltip container
-    // 3. call instantiation function in interval? | on change? | ...
-    // 4. clear interval when input field is not in focus?
-
+    // use similarityCheck() to display (top 5?) tags w highest similarity to user input, get cumulative duration
 //TODO: implement calendar functionality
 
 //-------------
@@ -15,33 +11,16 @@
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
-//TODO: add version number to html
 //TODO: handle SQL injection
-//TODO: maybe try to make clickable ele click radius bigger to improve ease of use e.g.: https://stackoverflow.com/questions/15611905/making-the-clickable-area-of-in-line-links-bigger-without-affecting-the-layout
-            // .padded-click {
-            //     position: relative; 
-            //   }
-            //   .padded-click:after{
-            //     padding: 30px;
-            //     content: '';
-            //     position: absolute;
-            //     top: 50%;
-            //     left: 50%;
-            //     transform: translate(-50%, -50%);
-            //   }
-
 //TODO: implement / create remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
-//TODO: think about closing overlays and alerts when click somewhere specific / anywhere on window
-//TODO: maybe color dottooltip background color according to focus status
-//TODO: maybe implement restart button in settings menu
-//TODO: localize overlays (french?, spanish?)
+//TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
+//TODO: maybe implement restart button in settings menu (when clicking on restart required?)
+//TODO: localize overlays (french)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //FIXME: polish overlay positions, anims, text, etc.
-//FIXME: search interval slower / onchange?
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
-//FIXME: possible bug w snipping tabbing out
-//FIXME: audio too slow if user switches to out of focus program too soon after timer started
-//FIXME: fix / implement additional media queries for animations
+//FIXME: audio start delayed if user switches to out of focus program too soon after timer started
+//FIXME: fix / implement additional media queries for animations (ultrawide etc)
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +47,11 @@ const lighterGrey =  "#707070";
 //audio  --------------------------------------------------------------------------------------------
 
 const warningAudio = new Audio("./audio/warningSound.mp3");
-//TODO: const focusAudio = new Audio("./audio/focusSound.mp3");
+/* TODO:
+const focusAudio = new Audio("./audio/focusSound.mp3");
+const failAudio = new Audio("./audio/failSound.mp3");
+const completionAudio = new Audio("./audio/completionSound.mp3");
+*/
 
 
 //buttons and input fields --------------------------------------------------------------------------------------------
@@ -136,6 +119,10 @@ const focusBtn = document.getElementById('focus-btn');
 const tagBtn = document.getElementById('tag-buoy-btn');
 const startBtn = document.getElementById('start-btn');
 
+//general vars
+
+var versionNumber = "0.1"
+document.getElementById("version-number").innerHTML = versionNumber;
 
 //timerInput -----------------------------------------------------------------------------------------
 
