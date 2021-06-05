@@ -9,11 +9,11 @@
 
 //TODO: implement calendar functionality
 
-
-
 //-------------
 //LOW PRIORITY:
 //-------------
+//TODO: disable autocorrection underline?
+//TODO: update other HTML elements
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 //TODO: MACOS filepath
