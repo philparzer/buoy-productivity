@@ -1,8 +1,6 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
-//TODO: implement search functionality
-    // use similarityCheck() to display (top 5?) tags w highest similarity to user input, get cumulative duration
 //TODO: implement calendar functionality
 
 //-------------
@@ -136,8 +134,10 @@ let mouseHoldValueChangeSpeed = 125; //in milliseconds
 
 //time  --------------------------------------------------------------------------------------------
 
+var minutesUnit = "m";
 var hoursUnit = "h"; //search box suffix
 if (document.documentElement.lang == "ru"){hoursUnit = "ч";}
+if (document.documentElement.lang == "ru"){hoursUnit = "м";}
 
 let timerLogic;
 let timerRunning = false; //variable for timer state
@@ -460,12 +460,88 @@ function updateSearchBox()
     var tagFourthSimilar = searchResultTags[3]; 
     var tagFifthSimilar = searchResultTags[4];
 
+    var tagMostSimilarDuration;
+    var tagSecondSimilarDuration;
+    var tagThirdSimilarDuration;
+    var tagFourthSimilarDuration;
+    var tagFifthSimilarDuration;
+
     //TODO: use results to search DB and calculate cumulative time
     //TODO: pass into text content
 
-    db.all('SELECT tag, SUM([duration]) AS cumulativeDuration FROM focus WHERE status = 1 GROUP BY tag;', (error, row) => {
-        
-        
+    db.all('SELECT tag, SUM([duration]) AS cumulativeDuration FROM focus WHERE status = 1 GROUP BY tag;', (error, rows) => {
+        rows.forEach(row => {
+            if (row.tag == tagMostSimilar)
+            {   
+
+                if (row.cumulativeDuration < 60)
+                {
+                    tagMostSimilarDuration = row.cumulativeDuration + minutesUnit;
+                }
+
+                else
+                {
+                    tagMostSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                }
+                
+            }
+
+            if (row.tag == tagSecondSimilar)
+            {   
+
+                if (row.cumulativeDuration < 60)
+                {
+                    tagSecondSimilarDuration = row.cumulativeDuration + minutesUnit;
+                }
+
+                else
+                {
+                    tagSecondSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                }
+            }
+
+            if (row.tag == tagThirdSimilar)
+            {
+
+                if (row.cumulativeDuration < 60)
+                {
+                    tagThirdSimilarDuration = row.cumulativeDuration + minutesUnit;
+                }
+
+                else
+                {
+                    tagThirdSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                }
+            }
+
+            if (row.tag == tagFourthSimilar)
+            {   
+
+                if (row.cumulativeDuration < 60)
+                {
+                    tagFourthSimilarDuration = row.cumulativeDuration + minutesUnit;
+                }
+
+                else
+                {
+                    tagFourthSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                }
+            }
+
+            if (row.tag == tagFifthSimilar)
+            {
+
+                if (row.cumulativeDuration < 60)
+                {
+                    tagFifthSimilarDuration = row.cumulativeDuration + minutesUnit;
+                }
+
+                else
+                {
+                    tagFifthSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                }
+            }
+        })
         
         //instantiate search results   
         tagTop1Result.textContent = tagMostSimilar;
@@ -475,18 +551,38 @@ function updateSearchBox()
         tagTop5Result.textContent = tagFifthSimilar;
 
         console.log("Search tag results" + searchResultTags);
-        searchResultTags.length = 0;
+        
 
-        durationTop1Result.textContent = "10" + hoursUnit;
-        durationTop2Result.textContent = "100" + hoursUnit;
-        durationTop3Result.textContent = "1000" + hoursUnit;
-        durationTop4Result.textContent = "10000"+ hoursUnit;
-        durationTop5Result.textContent = "100000"+ hoursUnit;
+        durationTop1Result.textContent = tagMostSimilarDuration;
+        if (durationTop1Result.textContent == ""){tagTop1Result.style.color = red;}
+        else {tagTop1Result.style.color = yellow;}
+
+        durationTop2Result.textContent = tagSecondSimilarDuration;
+        if (durationTop2Result.textContent == ""){tagTop2Result.style.color = red;}
+        else {tagTop2Result.style.color = yellow;}
+
+        durationTop3Result.textContent = tagThirdSimilarDuration;
+        if (durationTop3Result.textContent == ""){tagTop3Result.style.color = red;}
+        else {tagTop3Result.style.color = yellow;}
+        
+        durationTop4Result.textContent = tagFourthSimilarDuration;
+        if (durationTop4Result.textContent == ""){tagTop4Result.style.color = red;}
+        else {tagTop4Result.style.color = yellow;}
+        
+        durationTop5Result.textContent = tagFifthSimilarDuration;
+        if (durationTop5Result.textContent == ""){tagTop5Result.style.color = red;}
+        else {tagTop5Result.style.color = yellow;}
 
         let allDurationResults = document.querySelectorAll(".search-tag-duration");
         allDurationResults.forEach((element) => {
-            element.style.borderLeft = "2px solid #707070";
+            if (element.textContent != ""){element.style.borderLeft = "2px solid #707070";}
+            else 
+            {
+                element.style.borderLeft = "none";
+            }
         })
+
+        searchResultTags.length = 0;
     })
 
     
