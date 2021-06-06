@@ -228,11 +228,6 @@ function DBSettingsChange(param){
         {
             db.run('UPDATE settings SET language = "en" WHERE ROWID = 1;')
         }
-
-        else 
-        {
-            db.run('UPDATE settings SET language = "en" WHERE ROWID = 1;')
-        }
     }
 
     if(param == 'ru')
@@ -240,11 +235,6 @@ function DBSettingsChange(param){
         if (document.getElementById("exampleRadios2").checked == true)
         {
             db.run('UPDATE settings SET language = "' + param +'" WHERE ROWID = 1;')
-        }
-
-        else 
-        {
-            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
         }
     }
 
@@ -254,21 +244,11 @@ function DBSettingsChange(param){
         {
             db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
         }
-
-        else 
-        {
-            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
-        }
     }
 
     if(param == 'fr')
     {
         if (document.getElementById("exampleRadios3").checked == true)
-        {
-            db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
-        }
-
-        else 
         {
             db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
         }
@@ -367,8 +347,7 @@ function DBremTag(tagName){
 function DBReadandDisplayTags(){
     db.all('SELECT name FROM tags;', (error, rows) => {
         
-        rows.forEach( row =>
-            {
+        rows.forEach( row => {
             addNewTag(row.name);
             })
 
@@ -383,24 +362,19 @@ function DBSearch(searchArg){
 
     db.all('SELECT duration, tag FROM focus WHERE tag LIKE "%' + searchArg + '%"', (error, rows) => {
         rows.forEach( row => {
-        tags.push(row.tag);
-        sim = similarity(searchArg, row.tag);
-        similar.push(sim);
-
-    });
-        highestValue = Math.max.apply(null, similar);
+            tags.push(row.tag);
+            sim = similarity(searchArg, row.tag);
+            similar.push(sim);
+        });
+        
+        // highestValue = Math.max.apply(null, similar);
         
         //5 most similar results
-    
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
-        highestValue = Math.max.apply(null, similar);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
-        highestValue = Math.max.apply(null, similar);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
-        highestValue = Math.max.apply(null, similar);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
-        highestValue = Math.max.apply(null, similar);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
+        tags = addSearchResults(tags, similar);
+        tags = addSearchResults(tags, similar);
+        tags = addSearchResults(tags, similar);
+        tags = addSearchResults(tags, similar);
+        tags = addSearchResults(tags, similar);
 
         // console.log("Math Max Index: " + similar.indexOf(highestValue));
         // console.log("Most similar tag: " + tags[similar.indexOf(highestValue)]);
@@ -455,8 +429,10 @@ function similarity(s1, s2) {
 
 
 
-  function addSearchResults(allTags, mostSimilarTag, similarArray)
-  { 
+  function addSearchResults(allTags, similarArray)
+  {
+    highestValue = Math.max.apply(null, similar);
+    mostSimilarTag = tags[similar.indexOf(highestValue)] 
     try 
     {
         searchResultTags.push(mostSimilarTag);
@@ -469,9 +445,8 @@ function similarity(s1, s2) {
             }
         }
     }
-
     catch{}
-
+    
     return allTags;
   }
 
