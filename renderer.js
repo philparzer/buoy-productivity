@@ -343,19 +343,22 @@ function DBStyleCalendar(){
         rows.forEach(row => {
             try{
                 var date = row.date.split("-")
+                
+                dateToStyle = document.querySelector('[data-date = "'+ date[0] +'"][data-month = "'+ date[1] +'"][data-year = "'+ date[2] +'"]')
 
-                if(status == 0){
-                    //Style red where data-date = date[0] AND data-month = date[1] AND data-year = date[2]
+                if(row.status == 0){
+                    dateToStyle.style.color = red;
                 }
 
-                else if(status == 1){
-                    //Style yellow where data-date = date[0] AND data-month = date[1] AND data-year = date[2]
+                else if(row.status == 1){
+                    dateToStyle.style.color = yellow;
                 }
             }catch{}
         })
     })
 }
 
+DBStyleCalendar() //add to endTimer
 
 function DBremTag(tagName){
     db.run('DELETE FROM tags WHERE name = "' + tagName + '";')
