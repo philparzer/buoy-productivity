@@ -98,13 +98,13 @@
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li>
                                 <div id="tag-input-box" class="input-group">
-                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="create a tag" aria-label="create tag" aria-describedby="basic-addon2">
+                                    <input id="add-tag-input" maxlength="12" type="text" class="form-control" placeholder="créer une marque" aria-label="create tag" aria-describedby="basic-addon2">
                                     <div id="add-tag-input-button-box" class="input-group-append">
-                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">add</button>
+                                      <button id="add-tag-input-button" class="btn btn-outline-secondary" type="button">+</button>
                                     </div>
                                 </div>
                             </li>
-                            <li><text id="tag-resolve-headline" class="dropdown-item">resolve tags</text></li>
+                            <li><text id="tag-resolve-headline" class="dropdown-item">effacer une marque</text></li>
                             <!--tags instantiat here-->
                             </ul>
                     </div>
@@ -118,7 +118,7 @@
                           parametres
                         </button>
                         <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
-                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
+                          <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">langues</text></li>
                             <li id="language-radio-buttons">
                                 <div class="form-check">
                                     <input onclick="DBSettingsChange('en')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
@@ -148,34 +148,33 @@
 
                           <div class="dropdown-divider settings-dropdown-divider"></div>
 
-                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sounds</text></li>
+                          <li><text id="sounds-header" class="dropdown-item settings-dropdown-heading">sons</text></li>
                           <li>
                             <div class="form-check">
                                 <input  onclick="DBSettingsChange('lost')" id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus lost</label>
+                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">distraction</label>
                             </div>
                           </li>
                           <li>
                             <div class="form-check">
                                 <input onclick="DBSettingsChange('gained')" id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">focus gained</label>
+                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">reconcentration</label>
                             </div>
                           </li>
                           <li>
                             <div class="form-check">
-                                <input id="focus-lost-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('fail')"-->
-                                <label id="focus-lost-sound-label"class="form-check-label" for="flexSwitchCheckChecked">fail</label>
+                                <input onclick="DBSettingsChange('fail')" id="focus-fail-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('fail')"-->
+                                <label id="focus-fail-sound-label"class="form-check-label" for="flexSwitchCheckChecked">échec</label>
                             </div>
                           </li>
                           <li>
                             <div class="form-check">
-                                <input  id="focus-gained-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('completion')"-->
-                                <label id="focus-gained-sound-label"class="form-check-label" for="flexSwitchCheckChecked">completion</label>
+                                <input onclick="DBSettingsChange('completion')" id="focus-completion-sound-switch" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked> <!--TODO: onclick="DBSettingsChange('completion')"-->
+                                <label id="focus-completion-sound-label"class="form-check-label" for="flexSwitchCheckChecked">succès</label>
                             </div>
                           </li>
                           <div class="dropdown-divider settings-dropdown-divider"></div>
-                          <li><button id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</button></li>
-                          <div class="dropdown-divider settings-dropdown-divider"></div>
+                          <li><button id="restart-info" class="dropdown-item settings-dropdown-heading">redémarrage requis</button></li>
                           <li><text id="version-number-field" class="dropdown-item settings-dropdown-heading">version <span id="version-number">0.1</span></text></li> <!--TODO: update version number on startup-->
                         </ul>
                     </div>
@@ -323,7 +322,7 @@
                                 <button id="tag-buoy-btn" class="btn btn-secondary " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="106.498" height="27" viewBox="0 0 106.498 27">
                                         <rect id="Rectangle_15" data-name="Rectangle 13" width="106.498" height="27" rx="13.5" fill="#dbdb93"/>
-                                        <text id="tag" fill="#474747" transform="translate(40.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">tag</tspan></text>
+                                        <text id="tag" fill="#474747" transform="translate(25.749 20)"font-size="20" font-family="Bahnschrift" letter-spacing="-0.08em"><tspan id="tagText" text-align="center" x="0" y="0">marque</tspan></text>
                                         <g id="Ellipse_10" data-name="Ellipse 10" transform="translate(6.381 5)" fill="#474747" stroke="#707070" stroke-width="1">
                                           <circle cx="4.5" cy="4.5" r="4.5" stroke="none"/>
                                           <circle cx="4.5" cy="4.5" r="4" fill="none"/>
@@ -332,7 +331,7 @@
                                      <!--tooltip instantiates here-->
                                 </button>
                                 <ul id="tag-buoy-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
-                                  <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">add a tag</text></li>
+                                  <li><text id="tag-buoy-dropdown-heading" class="dropdown-item">ajouter une marque</text></li>
                                   <div class="dropdown-divider"></div>
                                     <!--tags instantiate here-->
                                 </ul>
@@ -344,13 +343,13 @@
                   
                     <div class="row py-3">
                         <div class="col-12" id="focus-col">
-
+ 
                             <div id="focus-dropdown-box" class="dropdown">
-                                <button id="focus-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  focus
+                                <button id="focus-btn" style="margin-left: 5px; padding-right: 10px; width: 88px; height: 80px; margin-top: -3px;" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  but
                                 </button>
                                 <ul id="focus-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
-                                  <li><text id="focus-dropdown-heading" class="dropdown-item">add focus and exceptions</text></li>
+                                  <li><text id="focus-dropdown-heading" class="dropdown-item">ajout de programmes</text></li>
                                   <div class="dropdown-divider"></div>
                                     <!--programs instantiate here-->
                                 </ul>
@@ -364,7 +363,7 @@
                             <button id="start-btn">
                                 <svg id="start-box" xmlns="http://www.w3.org/2000/svg" width="102" height="29" viewBox="0 0 102 29">
                                     <rect id="Rectangle_13" data-name="Rectangle 13" width="102" height="29" rx="14.5" fill="#474747"/>
-                                    <text id="start" transform="translate(32 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em">start</text>
+                                    <text id="start" transform="translate(28 21)" fill="#fafafa" font-size="21" font-family="Bahnschrift" letter-spacing="-0.08em">débuter</text>
                                 </svg>
                                 <div id="loadingButton">
                                     <span class="loadingDots">
@@ -389,7 +388,7 @@
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">stats</h5>
+                <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">statistiques</h5>
             </div>
             <div class="offcanvas-body">
                 
@@ -403,7 +402,7 @@
 
                     <div class="row">
                         <div class ="col">
-                            <div class="stat-description text-center">success ratio</div>
+                            <div class="stat-description text-center">taux de succès</div>
                         </div>
                     </div>
 
@@ -415,7 +414,7 @@
 
                     <div class="row">
                         <div class ="col">
-                            <div id ="most-used-tag-description" class="stat-description text-center">most used tag</div>
+                            <div id ="most-used-tag-description" class="stat-description text-center">marque récurrente</div>
                         </div>
                     </div>
 
@@ -427,7 +426,7 @@
 
                     <div class="row">
                         <div class ="col">
-                            <div id ="avg-duration-description" class="stat-description text-center">average focus duration</div>
+                            <div id ="avg-duration-description" class="stat-description text-center">durée moyenne de concentration </div>
                         </div>
                     </div>
 
@@ -445,7 +444,7 @@
                                 <button id="next" onclick="next()">&#8250;</button>
                             </div>
                             
-                            <table class="table-calendar" id="calendar" data-lang="en">
+                            <table class="table-calendar" id="calendar" data-lang="fr">
                                 <thead id="thead-month"></thead>
                                 <tbody id="calendar-body"></tbody>
                             </table>

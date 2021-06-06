@@ -94,7 +94,7 @@ button{
 
 /*settings*/
 #settings-dropdown{
-  height: 465px!important;
+  height: 450px!important;
   width: 180px!important;
   border: 1px solid var(--darkerGrey);
   border-radius: 0px;
@@ -124,6 +124,16 @@ button{
   margin-right: 10px;
 }
 
+#focus-fail-sound-switch{
+  margin-left: -9px;
+  margin-right: 10px;
+}
+
+#focus-completion-sound-switch{
+  margin-left: -9px;
+  margin-right: 10px;
+}
+
 
 #settings-dropdown-box{
   margin-left: 10px;
@@ -141,14 +151,15 @@ button{
 }
 
 #restart-info{
+  visibility: hidden;
   color: var(--red);
-  margin-bottom: 8px!important;
+  margin-bottom: 4px!important;
 }
 
 #restart-info:hover{
   color: var(--darkerGrey);
   background-color: var(--red);
-  margin-bottom: 8px!important;
+  margin-bottom: 4px!important;
 }
 
 #language-radio-buttons{
@@ -177,6 +188,16 @@ button{
 }
 
 #focus-gained-sound-label{
+  margin-left: -2px;
+  margin-top: 2px!important;
+}
+
+#focus-completion-sound-label{
+  margin-left: -2px;
+  margin-top: 2px!important;
+}
+
+#focus-fail-sound-label{
   margin-left: -2px;
   margin-top: 2px!important;
 }

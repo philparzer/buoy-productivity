@@ -1,13 +1,14 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
-//TODO: implement calendar functionality
+//TODO: calendar coloration if more than one entry on given date
+//TODO: APPLICATIONFRAMEHOST windows apps?
+//TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
 
 //-------------
 //LOW PRIORITY:
 //-------------
-//TODO: APPLICATIONFRAMEHOST windows apps?
-//TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
+
 //TODO: MACOS filepath
 //TODO: handle SQL injection
 //TODO: implement / create remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
@@ -58,6 +59,7 @@ const completionAudio = new Audio("./audio/completionSound.mp3");
 const aboutBtn = document.getElementById('about');
 const settingsBtn = document.getElementById('settings');
 const addTagBtn = document.getElementById('add-tag-input-button')
+const restartBtn = document.getElementById('restart-info');
 
 const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
@@ -209,21 +211,22 @@ function DBaddTag(tagName){
         
         if(row != null) //tag already exists
         {
-            return; //FIXME: same values added to dropdown more than once - Return value / global boolean
+            return;
         }
 
         db.run('INSERT INTO tags (name) VALUES ("'+ tagName +'")')
-        //TODO: row/tag limit?
     })
 }
 
 function DBSettingsChange(param){
+
 
     //onclick event calls this function w parameter signalling which element was clicked
 
     //languages
     if(param == 'en')
     {
+        restartBtn.style.visibility = "visible";
         if (document.getElementById("exampleRadios1").checked == true)
         {
             db.run('UPDATE settings SET language = "en" WHERE ROWID = 1;')
@@ -232,6 +235,7 @@ function DBSettingsChange(param){
 
     if(param == 'ru')
     {
+        restartBtn.style.visibility = "visible";
         if (document.getElementById("exampleRadios2").checked == true)
         {
             db.run('UPDATE settings SET language = "' + param +'" WHERE ROWID = 1;')
@@ -240,6 +244,7 @@ function DBSettingsChange(param){
 
     if(param == 'de')
     {
+        restartBtn.style.visibility = "visible";
         if (document.getElementById("exampleRadios3").checked == true)
         {
             db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
@@ -248,6 +253,7 @@ function DBSettingsChange(param){
 
     if(param == 'fr')
     {
+        restartBtn.style.visibility = "visible";
         if (document.getElementById("exampleRadios4").checked == true)
         {
             db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
@@ -282,7 +288,7 @@ function DBSettingsChange(param){
     }
 
     if(param == 'completion'){
-        if(document.getElementById("ELEMENT_ID").checked == true)     //FIXME: SET ELEMENT ID
+        if(document.getElementById("focus-completion-sound-switch").checked == true)
         {
             db.run('UPDATE settings SET completion = 1 WHERE ROWID = 1')
         }
@@ -293,7 +299,7 @@ function DBSettingsChange(param){
     }
 
     if(param == 'fail'){
-        if(document.getElementById("ELEMENT_ID").checked == true)     //FIXME: SET ELEMENT ID
+        if(document.getElementById("focus-fail-sound-switch").checked == true)
         {
             db.run('UPDATE settings SET fail = 1 WHERE ROWID = 1')
         }
@@ -304,14 +310,17 @@ function DBSettingsChange(param){
     } 
 }
 
-function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Renderer.js)
+function DBGetSettingsDropdown(){ 
     db.get('SELECT focus_gained, focus_lost, completion, fail FROM settings WHERE ROWID = 1', (error, row) => {
-        try{
+        try
+        {
         document.getElementById("focus-gained-sound-switch").checked = (row.focus_gained == 1);
         document.getElementById("focus-lost-sound-switch").checked = (row.focus_lost == 1);
-        //FIXME: add completion & fail sound switches
-
-        }catch{}
+        document.getElementById("focus-fail-sound-switch").checked = (row.fail == 1);
+        document.getElementById("focus-completion-sound-switch").checked = (row.completion == 1);
+        }
+        
+        catch{}
     });
 }
 
@@ -370,20 +379,12 @@ function DBSearch(searchArg){
             similar.push(sim);
         });
         
-        // highestValue = Math.max.apply(null, similar);
-        
         //5 most similar results
         tags = addSearchResults(tags, similar);
         tags = addSearchResults(tags, similar);
         tags = addSearchResults(tags, similar);
         tags = addSearchResults(tags, similar);
         tags = addSearchResults(tags, similar);
-
-        // console.log("Math Max Index: " + similar.indexOf(highestValue));
-        // console.log("Most similar tag: " + tags[similar.indexOf(highestValue)]);
-        // console.log(similar);
-        // console.log("all tags = " + tags);
-        // console.log("Highest value: " + highestValue);
 
         updateSearchBox();
     })
@@ -493,8 +494,6 @@ function updateSearchBox()
     var tagFourthSimilarDuration;
     var tagFifthSimilarDuration;
 
-    //TODO: use results to search DB and calculate cumulative time
-    //TODO: pass into text content
 
     db.all('SELECT tag, SUM([duration]) AS cumulativeDuration FROM focus WHERE status = 1 GROUP BY tag;', (error, rows) => {
         rows.forEach(row => {
@@ -647,7 +646,7 @@ aboutBtn.onclick = function()
 
 //settings
 
-document.getElementById('restart-info').onclick = function (){
+restartBtn.onclick = function (){
     ipcRenderer.send( 'app:relaunch' );
 }
 
@@ -708,8 +707,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         //get current date
         dayMonthYearToday = today.getDate() + "-" + (today.getMonth()+1) + "-" + today.getFullYear();
 
-        //TODO: write to database
-        startBuoyDBEntry(chosenTag, (timerInput / 60000), "/**/", dayMonthYearToday, 0); //TODO: add programs into empty string
+        //write to database
+        startBuoyDBEntry(chosenTag, (timerInput / 60000), "/**/", dayMonthYearToday, 0);
         
     
     
@@ -756,8 +755,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             break;
                         case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
+                        case 'fr': focusingOverlay = window.open('html/focusingOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
                         default:
-                            console.log("error lang")
+                            console.log("error lang");
                     }
                     setTimeout(() => {focusingOverlay.close()}, 2000)
                     recentlyOutOfFocus = false;
@@ -785,6 +786,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             break;
                         case 'de': warningOverlay = window.open('html/warningOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
+                        case 'fr': warningOverlay = window.open('html/warningOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
                         default:
                             console.log("error lang")
                     }
@@ -809,6 +812,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                         case 'ru': failedAlert = window.open('html/failedAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
                         case 'de': failedAlert = window.open('html/failedAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'fr': failedAlert = window.open('html/failedAlert-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
                         default:
                             console.log("error lang");
@@ -836,6 +841,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                         case 'ru': doneAlert = window.open('html/doneAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
                         case 'de': doneAlert = window.open('html/doneAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'fr': doneAlert = window.open('html/doneAlert-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break;
                         default:
                             console.log("error lang")
@@ -1182,7 +1189,7 @@ function parseExeForUI(program)
 }
 
 
-//loops over html elements, checks checked checkboxes, pushes checked checkboxes to allowedProgramArray //TODO: later: don't start if no checked checkboxes
+//loops over html elements, checks checked checkboxes, pushes checked checkboxes to allowedProgramArray
 function retrieveFocusAndExceptions()
 {
     var allCheckboxes = document.querySelectorAll(".exe");
@@ -1200,8 +1207,6 @@ function retrieveFocusAndExceptions()
 //---------------------------------------------------------------------------------------------------------------------------------------
 //UTIL FUNCTIONS   ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
-
-//TODO: function that checks if database is empty
 
 //enables or disables the start button depending on correct time input (not zero) and on correct checkbox input (at least one checkbox has been checked)
 function enableDisableStartBtn()
@@ -1267,6 +1272,7 @@ function enableStartBtn()
     if(document.documentElement.lang == "en"){document.getElementById('start').textContent = "start";}
     if(document.documentElement.lang == "ru"){document.getElementById('start').textContent = "старт";}
     if(document.documentElement.lang == "de"){document.getElementById('start').textContent = "Start";}
+    if(document.documentElement.lang == "fr"){document.getElementById('start').textContent = "début";}
     startBtn.disabled = false;
 }
 
@@ -1367,7 +1373,6 @@ function styleBuoy(){
 
     //tag button
     tagBtn.disabled = true;
-    //TODO: document.getElementById("tagText").textContent = "mytag"; or use POPPER.JS to display chosen tag on hover
     document.getElementById('Rectangle_15').style.fill = red;
     
 
@@ -1482,7 +1487,6 @@ function updateSuccessRate()
     let total;
     let successRate;
     showStatsWindowButton.style.visibility ="unset";
-    //FIXME: write into single SQL statement?
     
     try 
     {
@@ -1494,7 +1498,7 @@ function updateSuccessRate()
                 if(total == 0)
                 {
                     console.log("disable stats button no success rate")
-                    successRate = 100; //FIXME: No attempts - 0% / 100% ?
+                    successRate = 100;
                 }
 
                 var roundedRate = Math.round(successRate);
@@ -1834,9 +1838,6 @@ function instantiateDotTooltips()
 //---------------------------------------------------------------------------------------------------------------------------------------
 //CALENDAR  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
-//TODO: use data to color dates red or yellow
-//TODO: rename function names and variables
-
 
 function generate_year_range(start, end) {
     var years = "";
@@ -1876,6 +1877,10 @@ if (lang == "en") {
 } else if (lang == "ru") {
     months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
     days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+} else if (lang == "fr") {
+    months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    days = ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"];
+
 } else {
     months = monthDefault;
     days = dayDefault;

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>focus lost</title>
+        <link rel="stylesheet" href="../contents/bootstrap/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../custom_css/warning.css">
+    </head>
+
+    <body>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div id="warning" style="font-size: 145px">distraction...</div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        <div id="info"> il&nbspreste&nbsp<span id="seconds">10</span>&nbspsecondes</div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12">
+                        
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12"></div>
+                </div>
+            </div>
+
+            <script>
+
+                var op = 0.623;
+                var textOp = 1;
+                var secsIterator = 0;
+                var secs = 10;
+                
+                setInterval(function() {
+                    secsIterator += 1;
+                    if (secsIterator == 10) 
+                    {   
+                        secs -= 1;
+                        secsIterator = 0;
+                        document.getElementById("seconds").textContent = secs.toString(); 
+                    }
+                    op -= 0.015
+                    document.body.style.backgroundColor =  "hsla(7, 20%, 49%," + op.toString() + ")" ;
+                    
+                },100)
+                
+            </script>
+
+    </body>
+    
+
+</html>
