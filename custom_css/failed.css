@@ -93,7 +93,7 @@ body{
 }
 
 
-@media screen and (min-width: 2560px){
+@media screen and (min-width: 3440px){
     #message-box{
         margin-top: 90%;
     }
@@ -115,7 +115,7 @@ body{
 
     #message-text{
         z-index: -1;
-        background-color: #DBDB93;
+        background-color: #DBA993;
         font-size: 50px;
         padding: 20px;
         padding-top: 25px;
