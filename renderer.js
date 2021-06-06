@@ -248,7 +248,7 @@ function DBSettingsChange(param){
 
     if(param == 'fr')
     {
-        if (document.getElementById("exampleRadios3").checked == true)
+        if (document.getElementById("exampleRadios4").checked == true)
         {
             db.run('UPDATE settings SET language = "' + param +'"  WHERE ROWID = 1;')
         }
@@ -318,7 +318,7 @@ function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Rende
 DBGetSettingsDropdown() //call at startup
 
 
-function DBStyleCalendar(){
+function DBStyleCalendar(){ 
     db.all('SELECT status, date FROM focus', (error,rows) => {
         rows.forEach(row => {
             try{
@@ -327,11 +327,14 @@ function DBStyleCalendar(){
                 dateToStyle = document.querySelector('[data-date = "'+ date[0] +'"][data-month = "'+ date[1] +'"][data-year = "'+ date[2] +'"]')
 
                 if(row.status == 0){
-                    dateToStyle.style.color = red;
+                    dateToStyle.style.backgroundColor = red;
+                    dateToStyle.style.color = darkerGrey;
+
                 }
 
                 else if(row.status == 1){
-                    dateToStyle.style.color = yellow;
+                    dateToStyle.style.backgroundColor = yellow;
+                    dateToStyle.style.color = darkerGrey;
                 }
             }catch{}
         })
@@ -641,6 +644,13 @@ aboutBtn.onclick = function()
     shell.openExternal('https://buoy-productivity.com/'); //TODO: link to respective page as soon as website is done
 }
 
+
+//settings
+
+document.getElementById('restart-info').onclick = function (){
+    ipcRenderer.send( 'app:relaunch' );
+}
+
 //Minimize and Quit
 document.getElementById('close-main').onclick = function() {
     ipcRenderer.send( 'app:quit' );
@@ -860,6 +870,7 @@ function endTimer (){
     uncheckCheckmarks();
     disableStartBtn();
     resetTagChoice();
+    DBStyleCalendar();
 }
 
 

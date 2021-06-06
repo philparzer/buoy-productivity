@@ -68,6 +68,12 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 
+ipcMain.on('app:relaunch', () => {
+    app.relaunch();
+    app.exit();
+} )
+
+
 ipcMain.on( 'app:quit', () => {
     app.quit();
 } )

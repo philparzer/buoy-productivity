@@ -145,6 +145,12 @@ button{
   margin-bottom: 8px!important;
 }
 
+#restart-info:hover{
+  color: var(--darkerGrey);
+  background-color: var(--red);
+  margin-bottom: 8px!important;
+}
+
 #language-radio-buttons{
   
   margin-left: 14px!important;

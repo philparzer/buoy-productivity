@@ -29,7 +29,7 @@
                       <span id="title-logo">buoy</span>
                   </div>
                   <div class="col-2 tooltip-search">
-                    <input id="search"  class="form-control"  placeholder="search for tags" maxlength="12">
+                    <input id="search"  class="form-control"  placeholder="chercher une marque" maxlength="12">
                     
                     <div id="tooltip-search-box" class="container tooltip-search-text">
 
@@ -93,7 +93,7 @@
     <!--Tag Manager ----------------------------------------------------------------------->
                     <div id="manage-tags-dropdown-box" class="dropdown"> 
                         <button id="manage-tags-btn" class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                          tags
+                            marques
                         </button>
                             <ul id="manage-tags-dropdown" class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenu2">
                             <li>
@@ -113,9 +113,9 @@
                   </div>
                   <div class="col-2" id="additional-fields">
 
-                    <div id="settings-dropdown-box" class="dropdown">
+                    <div id="settings-dropdown-box" style="margin-left: 35px;" class="dropdown">
                         <button id="settings"  class="btn btn-secondary" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                          fr
+                          parametres
                         </button>
                         <ul id="settings-dropdown" class="dropdown-menu overflow-auto dropdown-menu-center" aria-labelledby="dropdownMenu2">
                           <li><text id="languages-header" class="dropdown-item settings-dropdown-heading">languages</text></li>
@@ -139,8 +139,8 @@
                                     </label>
                                   </div>
                                   <div class="form-check">
-                                    <input onclick="DBSettingsChange('fr')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" checked>
-                                    <label id="radio-label-german" class="form-check-label" for="exampleRadios3">
+                                    <input onclick="DBSettingsChange('fr')" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option4" checked>
+                                    <label id="radio-label-french" class="form-check-label" for="exampleRadios4">
                                       Français
                                     </label>
                                   </div>
@@ -174,13 +174,13 @@
                             </div>
                           </li>
                           <div class="dropdown-divider settings-dropdown-divider"></div>
-                          <li><text id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</text></li>
+                          <li><button id="restart-info" class="dropdown-item settings-dropdown-heading">restart required</button></li>
                           <div class="dropdown-divider settings-dropdown-divider"></div>
                           <li><text id="version-number-field" class="dropdown-item settings-dropdown-heading">version <span id="version-number">0.1</span></text></li> <!--TODO: update version number on startup-->
                         </ul>
                     </div>
                   </div>
-                  <div id="about-box" style="margin-left: -95px" class="col-1"><button id="about">about</button></div>
+                  <div id="about-box" style="margin-left: -50px;" class="col-1"><button id="about">informations</button></div>
                   <div class="col-3"></div>
     
     <!--Min and Close Buttons   ----------------------------------------------------------------------->
