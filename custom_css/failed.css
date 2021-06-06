@@ -50,7 +50,7 @@ body{
 }
 
 
-@media screen and (min-width: 1921px) and (max-width:2559px){
+@media screen and (min-width: 1921px){
     #message-box{
         margin-top: 90%;
     }
@@ -88,49 +88,6 @@ body{
         0%   { right:-300%; top:0px;}
         30%  { right: -120%; top:0px;}
         80% { right: -120%; top:0px;}
-        100%   { right:-300%; top:0px;}
-    }
-}
-
-
-@media screen and (min-width: 3440px){
-    #message-box{
-        margin-top: 90%;
-    }
-
-    #message{
-
-        position: relative;
-        animation-name: example;
-        animation-duration: 4s;
-        animation-iteration-count: 1;
-        animation-direction: alternate;
-    }
-
-    #image-buoy{
-        z-index: 20!important;
-        position: absolute;
-        margin-top: -12px;
-    }
-
-    #message-text{
-        z-index: -1;
-        background-color: #DBA993;
-        font-size: 50px;
-        padding: 20px;
-        padding-top: 25px;
-        padding-left: 80px;
-        padding-right: 60px;
-        border-radius: 20px;
-        color: #3F3F3F;
-        margin-left: 90px;
-        position: absolute;
-    }
-
-    @keyframes example {
-        0%   { right:-300%; top:0px;}
-        30%  { right: -220%; top:0px;}
-        80% { right: -220%; top:0px;}
         100%   { right:-300%; top:0px;}
     }
 }
