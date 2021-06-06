@@ -301,14 +301,60 @@ function DBSettingsChange(param){
         }
     }
 
-    
+    if(param == 'completion'){
+        if(document.getElementById("ELEMENT_ID").checked == true)     //FIXME: SET ELEMENT ID
+        {
+            db.run('UPDATE settings SET completion = 1 WHERE ROWID = 1')
+        }
+        else
+        {
+            db.run('UPDATE settings SET completion = 0 WHERE ROWID = 1')
+        } 
+    }
+
+    if(param == 'fail'){
+        if(document.getElementById("ELEMENT_ID").checked == true)     //FIXME: SET ELEMENT ID
+        {
+            db.run('UPDATE settings SET fail = 1 WHERE ROWID = 1')
+        }
+        else
+        {
+            db.run('UPDATE settings SET fail = 0 WHERE ROWID = 1')
+        }
+    } 
 }
 
 function DBGetSettingsDropdown(){   //TODO: Set Mute Checkboxes (Called in Renderer.js)
-    db.get('SELECT focus_gained, focus_lost FROM settings WHERE ROWID = 1');
-    
+    db.get('SELECT focus_gained, focus_lost, completion, fail FROM settings WHERE ROWID = 1', (error, row) => {
+        try{
+        document.getElementById("focus-gained-sound-switch").checked = (row.focus_gained == 1);
+        document.getElementById("focus-lost-sound-switch").checked = (row.focus_lost == 1);
+        //FIXME: add completion & fail sound switches
+
+        }catch{}
+    });
 }
 
+DBGetSettingsDropdown() //call at startup
+
+
+function DBStyleCalendar(){
+    db.all('SELECT status, date FROM focus', (error,rows) => {
+        rows.forEach(row => {
+            try{
+                var date = row.date.split("-")
+
+                if(status == 0){
+                    //Style red where data-date = date[0] AND data-month = date[1] AND data-year = date[2]
+                }
+
+                else if(status == 1){
+                    //Style yellow where data-date = date[0] AND data-month = date[1] AND data-year = date[2]
+                }
+            }catch{}
+        })
+    })
+}
 
 
 function DBremTag(tagName){
