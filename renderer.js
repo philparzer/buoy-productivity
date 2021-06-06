@@ -137,7 +137,7 @@ let mouseHoldValueChangeSpeed = 125; //in milliseconds
 var minutesUnit = "m";
 var hoursUnit = "h"; //search box suffix
 if (document.documentElement.lang == "ru"){hoursUnit = "ч";}
-if (document.documentElement.lang == "ru"){hoursUnit = "м";}
+if (document.documentElement.lang == "ru"){minutesUnit = "м";}
 
 let timerLogic;
 let timerRunning = false; //variable for timer state
