@@ -327,7 +327,7 @@ function DBReadandDisplayTags(){
 }
 
 function DBSearch(searchArg){
-
+    
     tags.length = 0;
     similar.length = 0;
     
@@ -339,26 +339,28 @@ function DBSearch(searchArg){
         similar.push(sim);
 
     });
-        highestValue = Math.max.apply(null, similar)    
+        highestValue = Math.max.apply(null, similar);
         
-        
-
         //5 most similar results
     
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
-        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)]);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
+        highestValue = Math.max.apply(null, similar);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
+        highestValue = Math.max.apply(null, similar);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
+        highestValue = Math.max.apply(null, similar);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
+        highestValue = Math.max.apply(null, similar);
+        tags = addSearchResults(tags, tags[similar.indexOf(highestValue)], similar);
 
         // console.log("Math Max Index: " + similar.indexOf(highestValue));
         // console.log("Most similar tag: " + tags[similar.indexOf(highestValue)]);
         // console.log(similar);
         // console.log("all tags = " + tags);
         // console.log("Highest value: " + highestValue);
+
+        updateSearchBox();
     })
-
-
 }
 
 function similarity(s1, s2) {
@@ -404,8 +406,8 @@ function similarity(s1, s2) {
 
 
 
-  function addSearchResults(allTags, mostSimilarTag)
-  {
+  function addSearchResults(allTags, mostSimilarTag, similarArray)
+  { 
     try 
     {
         searchResultTags.push(mostSimilarTag);
@@ -414,6 +416,7 @@ function similarity(s1, s2) {
         {
             if (allTags[i] === mostSimilarTag) {
                 allTags.splice(i, 1);
+                similarArray.splice(i, 1);
             }
         }
     }
@@ -446,32 +449,48 @@ function getSearchResults()
 
     //database search
     DBSearch(searchInput);
+    
+}
 
-    //TODO: use searchResultTags, split into 5 results
+function updateSearchBox()
+{
+    var tagMostSimilar = searchResultTags[0];
+    var tagSecondSimilar = searchResultTags[1]; 
+    var tagThirdSimilar = searchResultTags[2];
+    var tagFourthSimilar = searchResultTags[3]; 
+    var tagFifthSimilar = searchResultTags[4];
+
     //TODO: use results to search DB and calculate cumulative time
     //TODO: pass into text content
 
+    db.all('SELECT tag, SUM([duration]) AS cumulativeDuration FROM focus WHERE status = 1 GROUP BY tag;', (error, row) => {
+        
+        
+        
+        //instantiate search results   
+        tagTop1Result.textContent = tagMostSimilar;
+        tagTop2Result.textContent = tagSecondSimilar;
+        tagTop3Result.textContent = tagThirdSimilar;
+        tagTop4Result.textContent = tagFourthSimilar;
+        tagTop5Result.textContent = tagFifthSimilar;
 
-    //instantiate search results   
-    tagTop1Result.textContent = "test1";
-    tagTop2Result.textContent = "test2";
-    tagTop3Result.textContent = "test3";
-    tagTop4Result.textContent = "test4";
-    tagTop5Result.textContent = "test5";
+        console.log("Search tag results" + searchResultTags);
+        searchResultTags.length = 0;
 
+        durationTop1Result.textContent = "10" + hoursUnit;
+        durationTop2Result.textContent = "100" + hoursUnit;
+        durationTop3Result.textContent = "1000" + hoursUnit;
+        durationTop4Result.textContent = "10000"+ hoursUnit;
+        durationTop5Result.textContent = "100000"+ hoursUnit;
 
-    durationTop1Result.textContent = "10" + hoursUnit;
-    durationTop2Result.textContent = "100" + hoursUnit;
-    durationTop3Result.textContent = "1000" + hoursUnit;
-    durationTop4Result.textContent = "10000"+ hoursUnit;
-    durationTop5Result.textContent = "100000"+ hoursUnit;
-
-    let allDurationResults = document.querySelectorAll(".search-tag-duration");
-    allDurationResults.forEach((element) => {
-        element.style.borderLeft = "2px solid #707070";
+        let allDurationResults = document.querySelectorAll(".search-tag-duration");
+        allDurationResults.forEach((element) => {
+            element.style.borderLeft = "2px solid #707070";
+        })
     })
-}
 
+    
+}
 
 function clearSearchResults()
 {
