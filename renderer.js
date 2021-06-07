@@ -1,6 +1,7 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
+//FIXME: calendar cells not styled if month changed
 //TODO: calendar coloration if more than one entry on given date
 //TODO: APPLICATIONFRAMEHOST windows apps?
 //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
@@ -16,6 +17,7 @@
 //TODO: maybe implement restart button in settings menu (when clicking on restart required?)
 //TODO: localize overlays (french)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
+//FIXME: electron freezes when timer ends / when tabbed out
 //FIXME: polish overlay positions, anims, text, etc.
 //FIXME: fix / change -1 output in similarity check when no matching letters in search input
 //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
