@@ -1,28 +1,39 @@
 //-------------
 //HIGH PRIORITY:
 //-------------
-//FIXME: calendar cells not styled if month changed
-//TODO: calendar coloration if more than one entry on given date
-//TODO: APPLICATIONFRAMEHOST windows apps?
-//TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
+
+//CALENDAR
+    //FIXME: calendar cells not styled if month changed
+    //TODO: calendar coloration if more than one entry on given date
+
+    //idea:
+    /*
+        0) 2 arrays: yellowDays[] redDays[] (maybe more (e.g. gradientDays[]) if more than one task entry for given day?)
+    
+        1) function getCalendarColor() {db get date-status at startup + after timer ends;
+        2)                              process DB output (string formatting, check if more than one entry for day);
+        3)                              push dates to respective array;}
+
+        4) in calendar creation for loop -> check if date .included in any array -> color accordingly on instantiation
+    */
+
+//MAIN PROCESS WRAP-UP
+    //TODO: APPLICATIONFRAMEHOST windows apps?
+    //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
+    //FIXME: electron freezes when timer ends / when tabbed out
+    //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
 //-------------
 //LOW PRIORITY:
 //-------------
 
-//TODO: MACOS filepath
-//TODO: handle SQL injection
 //TODO: implement / create remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
+//TODO: MAC support (v2.0?)
+//TODO: handle SQL injection
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
 //TODO: maybe implement restart button in settings menu (when clicking on restart required?)
-//TODO: localize overlays (french)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
-//FIXME: electron freezes when timer ends / when tabbed out
-//FIXME: polish overlay positions, anims, text, etc.
-//FIXME: fix / change -1 output in similarity check when no matching letters in search input
-//FIXME: audio start delayed if user switches to out of focus program too soon after timer started
-//FIXME: fix / implement additional media queries for animations (ultrawide etc)
-
+//FIXME: finalize overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
