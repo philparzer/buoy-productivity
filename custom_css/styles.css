@@ -692,6 +692,7 @@ button{
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
+  overflow: hidden; /*TODO: FIXME: adjust width of all tooltips*/
  
   /* Position the tooltip text - see examples below! */
   position: absolute;
@@ -912,7 +913,7 @@ button{
   background-color: var(--yellow);
   color: var(--darkerGrey);
   text-align: center;
-
+  overflow: hidden;
   padding-top: 8px;
   padding-bottom: 6px;
   border-radius: 25px;

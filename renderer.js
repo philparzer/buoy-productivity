@@ -37,6 +37,7 @@
 //TODO: maybe implement restart button in settings menu (when clicking on restart required?)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //FIXME: finalize overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
+//FIXME: adjust width of all tag tooltips (e.g. ЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖ) -> maybe text scrolling animation
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -516,14 +517,25 @@ function updateSearchBox()
             if (row.tag == tagMostSimilar)
             {   
 
-                if (row.cumulativeDuration < 60)
+                if (row.cumulativeDuration <= 60)
                 {
-                    tagMostSimilarDuration = row.cumulativeDuration + minutesUnit;
+                    
+                    tagMostSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
                 }
 
                 else
                 {
-                    tagMostSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                    console.log("cumulative time" + row.cumulativeDuration)
+                    tagMostSimilarDuration = Math.round(row.cumulativeDuration / 60 * 10) / 10 + '\xa0' + hoursUnit;
+                    console.log("cumulative time rounded" + tagMostSimilarDuration)
+
+                    if (document.documentElement.lang != 'en')
+                    {
+                        tagMostSimilarDuration = tagMostSimilarDuration.replace('.', ',')
+                    }
+                    
+
+
                 }
                 
             }
@@ -531,56 +543,79 @@ function updateSearchBox()
             if (row.tag == tagSecondSimilar)
             {   
 
-                if (row.cumulativeDuration < 60)
+                if (row.cumulativeDuration <= 60)
                 {
-                    tagSecondSimilarDuration = row.cumulativeDuration + minutesUnit;
+                    tagSecondSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
                 }
 
                 else
                 {
-                    tagSecondSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                    tagSecondSimilarDuration = Math.round(row.cumulativeDuration / 60 * 10) / 10 + '\xa0' + hoursUnit;
+
+                    if (document.documentElement.lang != 'en')
+                    {
+                        tagSecondSimilarDuration = tagSecondSimilarDuration.replace('.', ',')
+                    }
+
                 }
             }
 
             if (row.tag == tagThirdSimilar)
             {
 
-                if (row.cumulativeDuration < 60)
+                if (row.cumulativeDuration <= 60)
                 {
-                    tagThirdSimilarDuration = row.cumulativeDuration + minutesUnit;
+                    tagThirdSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
                 }
 
                 else
                 {
-                    tagThirdSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                    tagThirdSimilarDuration = Math.round(row.cumulativeDuration / 60 * 10) / 10 + '\xa0' + hoursUnit;
+
+                    if (document.documentElement.lang != 'en')
+                    {
+                        tagThirdSimilarDuration = tagThirdSimilarDuration.replace('.', ',')
+                    }
+
+
                 }
             }
 
             if (row.tag == tagFourthSimilar)
             {   
 
-                if (row.cumulativeDuration < 60)
+                if (row.cumulativeDuration <= 60)
                 {
-                    tagFourthSimilarDuration = row.cumulativeDuration + minutesUnit;
+                    tagFourthSimilarDuration = row.cumulativeDuration +'\xa0' + minutesUnit;
                 }
 
                 else
                 {
-                    tagFourthSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                    tagFourthSimilarDuration = Math.round(row.cumulativeDuration / 60 * 10) / 10 +'\xa0' + hoursUnit;
+
+                    if (document.documentElement.lang != 'en')
+                    {
+                        tagFourthSimilarDuration = tagFourthSimilarDuration.replace('.', ',')
+                    }
                 }
             }
 
             if (row.tag == tagFifthSimilar)
             {
 
-                if (row.cumulativeDuration < 60)
+                if (row.cumulativeDuration <= 60)
                 {
-                    tagFifthSimilarDuration = row.cumulativeDuration + minutesUnit;
+                    tagFifthSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
                 }
 
                 else
                 {
-                    tagFifthSimilarDuration = Math.round(row.cumulativeDuration / 60) + hoursUnit;
+                    tagFifthSimilarDuration = Math.round(row.cumulativeDuration / 60 * 10) / 10 +'\xa0' + hoursUnit;
+
+                    if (document.documentElement.lang != 'en')
+                    {
+                        tagFifthSimilarDuration = tagFifthSimilarDuration.replace('.', ',')
+                    }
                 }
             }
         })
