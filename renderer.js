@@ -17,6 +17,9 @@
         4) in calendar creation for loop -> check if date .included in any array -> color accordingly on instantiation
     */
 
+//SEARCH
+    //FIXME: fix round
+
 //MAIN PROCESS WRAP-UP
     //TODO: APPLICATIONFRAMEHOST windows apps?
     //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
@@ -976,6 +979,13 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         {   
             document.getElementById("add-tag-input").style.borderColor = lighterGrey;
             createTagButton.style.visibility = "unset";
+
+            //checks if input is just spaces
+            if (!/\S/.test(createTagElement.value)) {
+                createTagButton.style.backgroundColor = red;
+            }
+
+            else {createTagButton.style.backgroundColor = yellow;}
         }
 
         else
@@ -1004,6 +1014,12 @@ createTagElement.addEventListener("keyup", function(event) {
 
 function tagAddingPreprocessor(createTagElement)
 {
+    //checks if input is just spaces
+    if (!/\S/.test(createTagElement.value)) {
+        document.getElementById("add-tag-input").style.borderColor = red; return;
+    }
+
+
     if (frontEndTags.includes(createTagElement.value)){document.getElementById("add-tag-input").style.borderColor = red; return;}; //stops duplicate tags
         DBaddTag(createTagElement.value);
         addNewTag();
