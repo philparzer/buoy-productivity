@@ -36,6 +36,7 @@
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
 //TODO: maybe implement restart button in settings menu (when clicking on restart required?)
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
+//TODO: custom scrollbars
 //FIXME: finalize overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
 //FIXME: adjust width of all tag tooltips (e.g. ЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖ) -> maybe text scrolling animation
 
@@ -517,10 +518,15 @@ function updateSearchBox()
             if (row.tag == tagMostSimilar)
             {   
 
-                if (row.cumulativeDuration <= 60)
+                if (row.cumulativeDuration < 60)
                 {
                     
                     tagMostSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
+                }
+
+                else if (row.cumulativeDuration % 60 == 0)
+                {
+                    tagMostSimilarDuration = row.cumulativeDuration / 60 +'\xa0'+ hoursUnit;
                 }
 
                 else
@@ -543,9 +549,14 @@ function updateSearchBox()
             if (row.tag == tagSecondSimilar)
             {   
 
-                if (row.cumulativeDuration <= 60)
+                if (row.cumulativeDuration < 60)
                 {
                     tagSecondSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
+                }
+
+                else if (row.cumulativeDuration % 60 == 0)
+                {
+                    tagSecondSimilarDuration = row.cumulativeDuration / 60 +'\xa0'+ hoursUnit;
                 }
 
                 else
@@ -563,9 +574,14 @@ function updateSearchBox()
             if (row.tag == tagThirdSimilar)
             {
 
-                if (row.cumulativeDuration <= 60)
+                if (row.cumulativeDuration < 60)
                 {
                     tagThirdSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
+                }
+
+                else if (row.cumulativeDuration % 60 == 0)
+                {
+                    tagThirdSimilarDuration = row.cumulativeDuration / 60 +'\xa0'+ hoursUnit;
                 }
 
                 else
@@ -584,9 +600,14 @@ function updateSearchBox()
             if (row.tag == tagFourthSimilar)
             {   
 
-                if (row.cumulativeDuration <= 60)
+                if (row.cumulativeDuration < 60)
                 {
                     tagFourthSimilarDuration = row.cumulativeDuration +'\xa0' + minutesUnit;
+                }
+
+                else if (row.cumulativeDuration % 60 == 0)
+                {
+                    tagFourthSimilarDuration = row.cumulativeDuration / 60 +'\xa0'+ hoursUnit;
                 }
 
                 else
@@ -603,9 +624,14 @@ function updateSearchBox()
             if (row.tag == tagFifthSimilar)
             {
 
-                if (row.cumulativeDuration <= 60)
+                if (row.cumulativeDuration < 60)
                 {
                     tagFifthSimilarDuration = row.cumulativeDuration + '\xa0' + minutesUnit;
+                }
+
+                else if (row.cumulativeDuration % 60 == 0)
+                {
+                    tagFifthSimilarDuration = row.cumulativeDuration / 60 +'\xa0'+ hoursUnit;
                 }
 
                 else
