@@ -13,6 +13,7 @@ label{
     --primaryGrey: #474747;
     --darkerGrey: #3F3F3F;
     --lighterGrey:  #707070;
+    --mixedColor: #DBC493
 }
 
 *{
@@ -1063,16 +1064,18 @@ button{
 }
 
 .date-picker{
+
   color: var(--white);
 }
 
 
 .date-picker.selected {
   font-weight: bold;
-  outline: 5px solid var(--white);
+  outline: 3px solid var(--white);
 }
 
 .date-picker.selected span {
+  
   border-bottom: 2px solid currentColor;
 }
 
