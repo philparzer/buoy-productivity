@@ -1,9 +1,10 @@
-//-------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //HIGH PRIORITY:
-//-------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //CALENDAR
     //TODO: testing
+    //FIXME: dont't call calendar on startup (on stats button click?) -> first cell too slow (not colorized)
 
 //MAIN PROCESS WRAP-UP
     //TODO: APPLICATIONFRAMEHOST windows apps?
@@ -11,19 +12,33 @@
     //FIXME: electron freezes when timer ends / when tabbed out
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
-//-------------
-//LOW PRIORITY:
-//-------------
+//MAC SUPPORT
+    // - icon throws error (maybe .ico -> .png)
+    // - BAHNSCHRIFT isn't included out of the box in macos
+    // - main focus check strings
+    // - buoy focus dropdown menu item strings
+    // - new HTML docs with mac title bar?
+    // - different closing functionality -> main.js
+    // - overlay transparency doesn't work
 
-//TODO: reposition all start-up functions
-//TODO: implement / create remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
-//TODO: MAC support (v2.0?)
-//TODO: handle SQL injection
+//FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//LOW PRIORITY:
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//TODO: create and implement remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
+//TODO: implement SFX toggle functionality
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
-//TODO: custom scrollbars
-//FIXME: finalize overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
-//FIXME: adjust width of all tag tooltips (e.g. ЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖЖ) -> maybe text scrolling animation
+//TODO: before building -> disable ctrl to ensure users not reloading page w ctrl+r (consider disabling tab and other keys)
+//TODO: custom scrollbars for windows -> mac scrollbars are fine as is
+//TODO: handle SQL injection
+//TODO: reposition all start-up functions to increase code readability
+//TODO: add space after comma / decimal point in search results
+//FIXME: maybe implement text scrolling animation for tag tooltips w large text content
+//FIXME: search should be case insensitive
+//FIXME: position polish (margins, etc.)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +62,7 @@ const darkerGrey =  "#3F3F3F";
 const lighterGrey =  "#707070";
     //calendar colors
 const halfYellowColor = "#DBC293";
-const quarterYellowColor = "#DBB293";
+const quarterYellowColor = "#DBB793";
 const threeQuarterYellowColor = "#DBCD93";
 
 //audio  --------------------------------------------------------------------------------------------
@@ -2130,7 +2145,7 @@ function daysInMonth(iMonth, iYear) {
 // calendar coloration --------------------------------------------------------------------------------------------------------------------------------
 
 
-getNumberOfCalendarEntries() // called at startup TODO: test
+getNumberOfCalendarEntries() // called at startup FIXME:
 
 
 
@@ -2143,7 +2158,7 @@ function getNumberOfCalendarEntries()
                 let lastLoopedElement;
 
                 rows.forEach(row => {
-                    try
+                    try //reposition
                     {   
                         if (lastLoopedElement == row.date)
                         {
@@ -2166,7 +2181,7 @@ function getNumberOfCalendarEntries()
                     
                 })
 
-                multipleCalendarEntries = remove_duplicates_es6(multipleCalendarEntries)
+                multipleCalendarEntries = remove_duplicates_es6(multipleCalendarEntries);
 
                 console.log("single: " + singleCalendarEntries);
                 console.log("multiple: " + multipleCalendarEntries);
