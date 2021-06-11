@@ -2,13 +2,8 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//CALENDAR
-    //TODO: testing
-    //FIXME: dont't call calendar on startup (on stats button click?) -> first cell too slow (not colorized)
-
 //MAIN PROCESS WRAP-UP
-    //TODO: APPLICATIONFRAMEHOST windows apps?
-    //TODO: popular windows apps: snipping tool, search bar, etc should probably always be exceptions for check
+    //TODO: add more windows system "tools" to preExceptionArray: snippingtool 
     //FIXME: electron freezes when timer ends / when tabbed out
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
@@ -201,23 +196,35 @@ let tagTooltip;
 let chosenTag;
 var frontEndTags = [];
 
+
 //focus  --------------------------------------------------------------------------------------------
 
-let focusSet = false;
 let programArray = []; //array of all open programs (placeholder.exe, placeholder2.exe, ...)
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
+
+let focusSet = false;
+let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
 let setFocusInterval;
 
     //exceptions
 let thisApplication = "electron.exe"; //TODO: when application name is defined -> change to application name e.g. "buoy"
+var applicationFrameHostName = "Windows Store App";
 
+let preExceptionArray = //array of all exceptions -> gets concatenated w allowed programs at start btn click
+[
+
+    "SearchApp.exe", "StartMenuExperienceHost.exe", "ShellExperienceHost.exe", "SystemSettings.exe", "SystemPropertiesAdvanced.exe", "explorer.exe" //TODO: add other windows and mac functions
+
+];
+
+    //overlays
 let warningOverlay; //reference to window that is opened when user exits focus
 let focusingOverlay;
 let doneOverlay;
 let doneAlert;
 let failedAlert;
 
-let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
+
 
 
 
@@ -772,7 +779,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
         //add exceptions to allowed programs
     allowedProgramArray.push(thisApplication);
-
+    allowedProgramArray = allowedProgramArray.concat(preExceptionArray);
+    console.log(allowedProgramArray);
 
         //get current date
         dayMonthYearToday = today.getDate() + "-" + (today.getMonth()+1) + "-" + today.getFullYear();
@@ -1240,7 +1248,8 @@ function parseFilePath(path)
 function addProgramToDropdown(program) 
 {
     if (program == thisApplication){return;} //excludes buoy from dropdown
-
+    if (preExceptionArray.includes(program)){return;} //excludes other exceptions from dropdown
+    
 
     parsedProgram = parseExeForUI(program);
 
@@ -1271,7 +1280,8 @@ function addProgramToDropdown(program)
 }
 
 function parseExeForUI(program)
-{
+{   
+    if (program == "ApplicationFrameHost.exe") {return applicationFrameHostName;}
     var parsedProgram = program.slice(0, -4); //remove .exe
     parsedProgram = parsedProgram.charAt(0).toUpperCase() + parsedProgram.slice(1); //uppercase
     return parsedProgram;
@@ -2155,7 +2165,7 @@ function getNumberOfCalendarEntries()
 
     db.all('SELECT status, date FROM focus', (error,rows) => {
                 
-                let lastLoopedElement;
+                let lastLoopedElement = "";
 
                 rows.forEach(row => {
                     try //reposition
