@@ -92,7 +92,7 @@ button{
     /*font-family: Bahnschrift SemiBold;*/
     
     color: var(--yellow);
-    letter-spacing: -5px;
+    letter-spacing: -6px;
     font-size: 49px;
     line-height: 40px;
 }
@@ -380,7 +380,7 @@ button{
   border-radius: 30px;
   border: none;
   color: var(--yellow);
-  margin-left: -25px;
+  margin-left: -23px;
 }
 
 #manage-tags-btn:hover{
@@ -780,6 +780,17 @@ button{
   left: -50px !important;
   top: 2px !important;
 }
+
+.dropdown-menu-ru {
+  left: -42px !important;
+  top: 2px !important;
+}
+
+.dropdown-menu-fr {
+  left: -52px !important;
+  top: 2px !important;
+}
+
 
 #focus-dropdown-heading{
   text-align: center;
