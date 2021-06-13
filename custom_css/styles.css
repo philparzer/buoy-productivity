@@ -114,6 +114,47 @@ button{
 
 }
 
+  /*MAC minimize close*/
+
+#btns-mac-box{
+  padding-left: 13px;
+  margin-top: 1px;
+}
+
+
+#btns-mac-box:hover > #close-mac > #close-mac-svg-unhovered{
+  display: none;
+}
+
+#close-mac-svg-hovered{
+  display: none;
+}
+
+#btns-mac-box:hover > #close-mac > #close-mac-svg-hovered{
+  display: inline;
+}
+
+.seperator-mac-btns{
+  padding: 1.5px;
+  padding-top:0px;
+  padding-bottom:0px;
+  line-height: 40px;
+}
+
+#btns-mac-box:hover > #minimize-mac > #minimize-mac-svg-unhovered{
+  display: none;
+}
+
+#btns-mac-box:hover > #minimize-mac > #minimize-mac-svg-hovered{
+  display: inline;
+}
+
+#minimize-mac-svg-hovered{
+  display: none;
+}
+
+
+
 /*settings*/
 #settings-dropdown{
   height: 450px!important;

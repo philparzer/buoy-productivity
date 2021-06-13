@@ -34,13 +34,13 @@ function createWindow () {
   else
   {
     //TODO: handle iconS
-    Menu.setApplicationMenu(Menu.buildFromTemplate([])); //disables ctrl r
+    //Menu.setApplicationMenu(Menu.buildFromTemplate([])); //disables ctrl r
   }
 
   //load window
   DBGetSettingsLanguage(mainWindow)
   // Open DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 }
 
 
@@ -100,7 +100,8 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') app.quit() //TODO: just quit on mac as well?
+
 })
 
 // In this file you can include the rest of your app's specific main process

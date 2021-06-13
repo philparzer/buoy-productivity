@@ -8,19 +8,16 @@
 
 //MAIN PROCESS WRAP-UP
     //TODO: add more windows system "tools" to preExceptionArray: snippingtool 
-    //FIXME: electron freezes when timer ends / when tabbed out
+    //FIXME: electron freezes when timer ends / when tabbed out -> or change html when window is out of focus e.g. discord stream still running
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
 //MAC SUPPORT
-    // - TODO: implement menu bar menus
-    // - TODO: disable control r in mac top bar
     // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
-    // - TODO: BAHNSCHRIFT isn't included out of the box in macos
     // - TODO: main focus check strings
     // - TODO: buoy focus dropdown menu item strings
-    // - TODO: new HTML docs with mac title bar?
-    // - TODO: different closing functionality -> main.js
     // - TODO: overlay transparency doesn't work
+
+
 
 
 
@@ -736,13 +733,42 @@ restartBtn.onclick = function (){
     ipcRenderer.send( 'app:relaunch' );
 }
 
-//Minimize and Quit
-document.getElementById('close-main').onclick = function() {
-    ipcRenderer.send( 'app:quit' );
+
+
+//Windows Minimize and Quit
+
+if (process.platform !== "darwin")
+{
+    document.getElementById("btns-mac-box").style.display = "none";
+
+    document.getElementById('close-main').onclick = function() {
+        ipcRenderer.send( 'app:quit' );
+    }
+
+    document.getElementById('minimize-main').onclick = function() {
+        ipcRenderer.send( 'app:minimize' );
+    }
 }
 
-document.getElementById('minimize-main').onclick = function() {
-    ipcRenderer.send( 'app:minimize' );
+
+
+//Mac Minimize and Quit
+
+else
+{
+    document.getElementById("title-logo").style.display = "none";
+    document.getElementById('minimize-main').style.display = "none";
+    document.getElementById('close-main').style.display = "none";
+
+    document.getElementById('close-mac').onclick = function() {
+        ipcRenderer.send( 'app:quit' );
+    }
+
+    document.getElementById("minimize-mac").onclick = function() {
+        ipcRenderer.send( 'app:minimize' );
+    }
+
+
 }
 
 
