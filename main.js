@@ -22,23 +22,25 @@ function createWindow () {
     width: 1100, height: 800, resizable: false, frame: false,
     webPreferences: {nodeIntegration: true, contextIsolation: false, spellcheck: false}
   })
-  mainWindow.setIcon(path.join(__dirname, '/images/icon.ico'));
+
+  if (process.platform !== 'darwin'){mainWindow.setIcon(path.join(__dirname, '/images/icon.ico'));} //icon.ico throws error on mac
+  
 
   // and load the index.html of the app.
   //mainWindow.loadFile('index.html');
   DBGetSettingsLanguage(mainWindow)
   
 
-    // // create a new `splash`-Window  TODO: think about SPLASH SCREEN
-    // splash = new BrowserWindow({width: 810, height: 610, transparent: true, frame: false, alwaysOnTop: true});
-    // splash.loadURL(`file://${__dirname}/splash.html`);
-    // mainWindow.loadURL(`file://${__dirname}/index.html`);
-  
-    // // if main window is ready to show, then destroy the splash window and show up the main window
-    // mainWindow.once('ready-to-show', () => {
-    //   splash.destroy();
-    //   mainWindow.show();
-    // });
+//TODO: think about SPLASH SCREEN           // create a new `splash`-Window  
+                                            // splash = new BrowserWindow({width: 810, height: 610, transparent: true, frame: false, alwaysOnTop: true});
+                                            // splash.loadURL(`file://${__dirname}/splash.html`);
+                                            // mainWindow.loadURL(`file://${__dirname}/index.html`);
+                                          
+                                            // // if main window is ready to show, then destroy the splash window and show up the main window
+                                            // mainWindow.once('ready-to-show', () => {
+                                            //   splash.destroy();
+                                            //   mainWindow.show();
+                                            // });
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()

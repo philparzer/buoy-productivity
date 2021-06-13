@@ -14,7 +14,7 @@
 //MAC SUPPORT
     // - TODO: implement menu bar menus
     // - TODO: disable control r in mac top bar
-    // - TODO: icon throws error (maybe .ico -> .png)
+    // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
     // - TODO: BAHNSCHRIFT isn't included out of the box in macos
     // - TODO: main focus check strings
     // - TODO: buoy focus dropdown menu item strings
@@ -41,6 +41,7 @@
 //FIXME: maybe implement text scrolling animation for tag tooltips w large text content
 //FIXME: search should be case insensitive
 //FIXME: position polish (margins, etc.)
+//TODO: think about splash screen (need?)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
