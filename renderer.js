@@ -13,9 +13,10 @@
 
 //MAC SUPPORT
     // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
-    // - TODO: main focus check strings
-    // - TODO: buoy focus dropdown menu item strings
-    // - TODO: overlay transparency doesn't work
+    // - TODO: overlay transparency doesn't work -> fullscreen autofocuses on mac probably the problem
+    // - TODO: maybe don't even use overlays -> use mac messages
+    // - FIXME: focus check doesn't work -> new html auto focuses on mac?
+    // - TODO: FIXME: why on mac focus dropdown (getOpenWindows()?) not working if visual studio screen record is ticked
 
 
 
@@ -213,15 +214,23 @@ let recentlyOutOfFocus = false; //state that checks whether user has recently ex
 let setFocusInterval;
 
     //exceptions
-let thisApplication = "electron.exe"; //TODO: when application name is defined -> change to application name e.g. "buoy"
+let thisApplicationWin = "electron.exe"; //TODO: when application name is defined -> change to application name e.g. "buoy"
+let thisApplicationMac = 'Electron.app';
 var applicationFrameHostName = "Windows Store App";
 
-let preExceptionArray = //array of all exceptions -> gets concatenated w allowed programs at start btn click
+var preExceptionArrayWin = //array of all exceptions -> gets concatenated w allowed programs at start btn click
 [
-
-    "SearchApp.exe", "StartMenuExperienceHost.exe", "ShellExperienceHost.exe", "SystemSettings.exe", "SystemPropertiesAdvanced.exe", "explorer.exe" //TODO: add other windows and mac functions
+    //win
+    "SearchApp.exe", "StartMenuExperienceHost.exe", "ShellExperienceHost.exe", "SystemSettings.exe", "SystemPropertiesAdvanced.exe", "explorer.exe",  //TODO: add other windows and mac functions
 
 ];
+
+var preExceptionArrayMac = 
+[
+    //mac
+    "Finder.app", "System Preferences.app", "System Information.app"
+];
+
 
     //overlays
 let warningOverlay; //reference to window that is opened when user exits focus
@@ -813,8 +822,20 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     manageTagTooltip();
 
         //add exceptions to allowed programs
-    allowedProgramArray.push(thisApplication);
-    allowedProgramArray = allowedProgramArray.concat(preExceptionArray);
+    
+    if (process.platform !== 'darwin')
+    {
+        allowedProgramArray.push(thisApplicationWin);
+        allowedProgramArray = allowedProgramArray.concat(preExceptionArrayWin);
+    }
+
+    else 
+    {
+        allowedProgramArray.push(thisApplicationMac);
+        allowedProgramArray = allowedProgramArray.concat(preExceptionArrayMac);
+    }
+
+    
     console.log(allowedProgramArray);
 
         //get current date
@@ -852,9 +873,30 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         
         //Focus Check
         activeWindows().getActiveWindow().then((result)=>{
+            var windowCheckResult;
+            
+
+            if (process.platform !== 'darwin')
+            {
+                windowCheckResult = result.windowClass;
+            }
+            
+            else 
+            {
+                let unparsedWindowCheckresult = result.windowClass.split('.');
+                let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
+                windowCheckResult = splitWindowCheckResult + '.app';
+
+            }
+
+            console.log("allowedProgramArray in timer")
+            console.log(allowedProgramArray)
+
+            console.log("result.windowClass in timer")
+            console.log(windowCheckResult)
 
             //main check if active window is in allowed program
-            if (allowedProgramArray.includes(result.windowClass)) 
+            if (allowedProgramArray.includes(windowCheckResult))
             {
                 //checks if user has recently exited focus
                 if (recentlyOutOfFocus)
@@ -1265,7 +1307,7 @@ function getOpenExes(sources)
                 {
                     return;
                 }
-
+                console.log(programArray);
                 programArray.push(programExe);
                 addProgramToDropdown(programExe);
             }
@@ -1275,15 +1317,34 @@ function getOpenExes(sources)
 
 function parseFilePath(path)
 {
-    //TODO: Cross Platform "\" (windows) - "/" (Mac) - Linux (WIP) not implemented in windowManager yet -> Mac OS admin access (request accessibility)
-    directoryArray = path.split("\\") // "\\" to terminate string literal escape backslash
-    return directoryArray[directoryArray.length - 1] // return last item in array
+    if (process.platform !== 'darwin')
+    {
+        directoryArray = path.split("\\") // "\\" to terminate string literal escape backslash
+        return directoryArray[directoryArray.length - 1] // return last item in array
+    }
+
+    else
+    {
+        directoryArray = path.split("/")
+        return directoryArray[directoryArray.length - 1] // return last item in array
+    }
 }
 
 function addProgramToDropdown(program) 
 {
-    if (program == thisApplication){return;} //excludes buoy from dropdown
-    if (preExceptionArray.includes(program)){return;} //excludes other exceptions from dropdown
+    //excludes exceptions from dropdown
+    if (process.platform !== 'darwin')
+    {
+        if (program == thisApplicationWin){return;}
+        if (preExceptionArrayWin.includes(program)){return;}
+    }
+    
+    else
+    {
+        if (program == thisApplicationMac){return;}
+        if (preExceptionArrayMac.includes(program)){return;}
+    }
+    
     
 
     parsedProgram = parseExeForUI(program);
