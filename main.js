@@ -1,6 +1,7 @@
-const {app, BrowserWindow, ipcMain, remote} = require('electron')
+const {app, BrowserWindow, ipcMain, remote, Menu} = require('electron')
 const path = require('path')
-var sqlite3 = require('sqlite3').verbose(); 
+const menu = new Menu();
+var sqlite3 = require('sqlite3').verbose();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
@@ -32,7 +33,7 @@ function createWindow () {
   //MACOS
   else
   {
-    //TODO: handle icon
+    //TODO: handle iconS
     Menu.setApplicationMenu(Menu.buildFromTemplate([])); //disables ctrl r
   }
 
@@ -41,6 +42,10 @@ function createWindow () {
   // Open DevTools.
   mainWindow.webContents.openDevTools()
 }
+
+
+
+
 
 function DBGetSettingsLanguage(mainWindow){ 
 
