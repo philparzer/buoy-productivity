@@ -2,21 +2,27 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//STYLING WRAP-UP
+    //TODO: restore style, spacing, etc (font changed bahnschrift -> roboto)
+    //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
+
 //MAIN PROCESS WRAP-UP
     //TODO: add more windows system "tools" to preExceptionArray: snippingtool 
     //FIXME: electron freezes when timer ends / when tabbed out
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
 //MAC SUPPORT
-    // - icon throws error (maybe .ico -> .png)
-    // - BAHNSCHRIFT isn't included out of the box in macos
-    // - main focus check strings
-    // - buoy focus dropdown menu item strings
-    // - new HTML docs with mac title bar?
-    // - different closing functionality -> main.js
-    // - overlay transparency doesn't work
+    // - TODO: implement menu bar menus
+    // - TODO: disable control r in mac top bar
+    // - TODO: icon throws error (maybe .ico -> .png)
+    // - TODO: BAHNSCHRIFT isn't included out of the box in macos
+    // - TODO: main focus check strings
+    // - TODO: buoy focus dropdown menu item strings
+    // - TODO: new HTML docs with mac title bar?
+    // - TODO: different closing functionality -> main.js
+    // - TODO: overlay transparency doesn't work
 
-//FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc))
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //LOW PRIORITY:
@@ -24,6 +30,7 @@
 
 //TODO: create and implement remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
 //TODO: implement SFX toggle functionality
+//TODO: different tooltips / dropdowns should collapse all others if uncollapsed
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //TODO: before building -> disable ctrl to ensure users not reloading page w ctrl+r (consider disabling tab and other keys)
@@ -2155,7 +2162,7 @@ function daysInMonth(iMonth, iYear) {
 // calendar coloration --------------------------------------------------------------------------------------------------------------------------------
 
 
-getNumberOfCalendarEntries() // called at startup FIXME:
+getNumberOfCalendarEntries()
 
 
 
@@ -2165,11 +2172,13 @@ function getNumberOfCalendarEntries()
 
     db.all('SELECT status, date FROM focus', (error,rows) => {
                 
-                let lastLoopedElement = "";
+        var lastLoopedElement = ""; //TODO: check if this ="" and change from let to var fixed bug
 
                 rows.forEach(row => {
                     try //reposition
                     {   
+                        
+
                         if (lastLoopedElement == row.date)
                         {
                             singleCalendarEntries = singleCalendarEntries.filter(entry => entry != row.date)

@@ -1,11 +1,28 @@
-/* ############  Background, General and Variables  ############*/
+/* ############  font faces  ############*/
 
 
-/*placeholder*/
-label{
+@font-face {
+  font-family: 'roboto_black';
+  src: url('../fonts/Roboto-Black.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'roboto_bold';
+  src: url('../fonts/Roboto-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+
+label{ /*FIXME: useless?*/
   color:var(--white);
   text-align: center;
 }
+
+
 :root {
     --yellow: #DBDB93;
     --red: #DBA993;
@@ -17,10 +34,13 @@ label{
 }
 
 *{
-    /*standard styling for unstyled text elemts*/
-    font-family: Bahnschrift SemiBold;
+    /*old bahnschrift styling*/
+    /* font-family: Bahnschrift SemiBold; */
+
+    /*new commercial license roboto styling*/
+    font-family: roboto_bold;
     letter-spacing: -.07em;
-    /*color: var(--white);*/
+    
     /*stops user from interacting with text (copy, etc)*/
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -69,7 +89,8 @@ button{
 
 #title-logo{
     -webkit-app-region: drag;
-    font-family: Bahnschrift SemiBold;
+    /*font-family: Bahnschrift SemiBold;*/
+    
     color: var(--yellow);
     letter-spacing: -5px;
     font-size: 49px;
@@ -565,10 +586,10 @@ button{
 #hours{
     color: var(--white);
     width:10px;
-    margin-top: 12px;
+    margin-top: 5px;
     font-size: 73px;
     padding: 0;
-    margin-left:10px;
+    margin-left:7px;
     text-align: justify; 
     line-height: 73px;
 }
@@ -576,21 +597,21 @@ button{
 #semicolon{
     width:10px;
     color: var(--yellow);
-    margin-top: 12px;
+    margin-top: 7px;
     font-size: 73px;
     padding: 0;
     text-align: center;
     line-height: 60px;
-    margin-right: -15px;
+    margin-right: -18px;
 }
 
 #minutes{
     color: var(--white);
     width:10px;
-    margin-top: 12px;
+    margin-top: 5px;
     font-size: 73px;
     padding: 0px;
-    margin-right:-10px;
+    margin-right:-8px;
     text-align: justify; 
     line-height: 73px;
     padding-right: 40px;
@@ -599,14 +620,14 @@ button{
 #unit-hours{
     color: var(--white);
     margin-top: -20px;
-    margin-left: 5px;
+    margin-left: 3px;
     
 }
 
 #unit-minutes{
     color: var(--white);
     margin-top: -20px;
-    margin-left: 55px;
+    margin-left: 54px;
 }
 
 
