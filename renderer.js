@@ -17,9 +17,8 @@
     // - TODO: maybe don't even use overlays -> use mac messages
     // - FIXME: focus check doesn't work -> new html auto focuses on mac?
     // - TODO: FIXME: why on mac focus dropdown (getOpenWindows()?) not working if visual studio screen record is ticked
-
-
-
+    // - FIXME: weird minimize behavior
+    // - FIXME: microsoft word.app -> word.app splitting error when program name includes space?
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -228,7 +227,7 @@ var preExceptionArrayWin = //array of all exceptions -> gets concatenated w allo
 var preExceptionArrayMac = 
 [
     //mac
-    "Finder.app", "System Preferences.app", "System Information.app"
+    "Finder.app", "System Preferences.app", "System Information.app" //TODO:
 ];
 
 
@@ -901,24 +900,29 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 //checks if user has recently exited focus
                 if (recentlyOutOfFocus)
                 {
-                    //TODO: play focusing... sound
-                    switch(document.documentElement.lang)
+                    if (process.platform !== 'darwin')
                     {
-                        case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                            break; 
-                        case 'ru': focusingOverlay = window.open('html/focusingOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                            break;
-                        case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                            break;
-                        case 'fr': focusingOverlay = window.open('html/focusingOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                            break;
-                        default:
-                            console.log("error lang");
+                        //TODO: play focusing... sound
+                        switch(document.documentElement.lang)
+                        {
+                            case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break; 
+                            case 'ru': focusingOverlay = window.open('html/focusingOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            case 'fr': focusingOverlay = window.open('html/focusingOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            default:
+                                console.log("error lang");
+                        }
+                        setTimeout(() => {focusingOverlay.close()}, 2000)
+                        }
+                        
+                        recentlyOutOfFocus = false;
                     }
-                    setTimeout(() => {focusingOverlay.close()}, 2000)
-                    recentlyOutOfFocus = false;
-                }
-                
+                    else{/*TODO: mac message?*/ console.log("focusing")}
+
                 unfocusedTime = 0;
             }
     
@@ -932,9 +936,11 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
                     warningAudio.play();
-                    
-                    switch(document.documentElement.lang)
+
+                    if (process.platform !== 'darwin')
                     {
+                        switch(document.documentElement.lang)
+                        {
                         case 'en': warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break; 
                         case 'ru': warningOverlay = window.open('html/warningOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
@@ -945,13 +951,19 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             break;
                         default:
                             console.log("error lang")
+                        }
                     }
+
+                    else{/*TODO: mac notifications?*/ console.log("warning")}
+                    
+                    
                     
                 }
 
                 if(unfocusedTime == warningGoneAfter)
                 {
-                    warningOverlay.close();
+                    if (process.platform !== 'darwin') {warningOverlay.close();}
+                    else{/*TODO: mac notifications?        */}
                 }
 
                 unfocusedTime++;
@@ -959,8 +971,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
                     endTimer();
                     
-                    switch(document.documentElement.lang)
+                    if (process.platform !== 'darwin')
                     {
+                        switch(document.documentElement.lang)
+                        {
                         case 'en': failedAlert = window.open('html/failedAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break; 
                         case 'ru': failedAlert = window.open('html/failedAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
@@ -971,9 +985,13 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             break;
                         default:
                             console.log("error lang");
-                    }   
+                        }   
 
-                    setTimeout(() => {failedAlert.close()}, 3500);
+                        setTimeout(() => {failedAlert.close()}, 3500);
+                    }
+                    
+                    else{/*TODO: mac notifications?        */ console.log("failed")}
+                    
                     
                 }
             }
@@ -987,7 +1005,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             
             
             endTimer();
-            switch(document.documentElement.lang)
+
+            if (process.platform !== 'darwin')
+            {
+                switch(document.documentElement.lang)
                     {
                         case 'en': doneAlert = window.open('html/doneAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
                             break; 
@@ -1001,7 +1022,11 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             console.log("error lang")
                     }
             
-            setTimeout(() => {doneAlert.close()}, 3500);
+                setTimeout(() => {doneAlert.close()}, 3500);
+            }
+
+            else{/*TODO: mac notifications?        */ console.log("done")}
+            
         }
 
     }, 1000);
