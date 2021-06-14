@@ -21,6 +21,17 @@
     // - FIXME: microsoft word.app -> word.app splitting error when program name includes space?
 
 
+    //permission issue -> focus check Mac
+
+    /*
+    
+    -desktopCapturer doesnt work as accepted if permission granted -> mac other library to get all open windows 
+    -enable permission
+    -use active-win in focus check
+    
+    */
+
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,6 +64,10 @@ const { desktopCapturer } = require('electron');
 const activeWindows = require('electron-active-window');
 const { windowManager } = require("node-window-manager");
 const { shell } = require('electron');
+
+    //Mac specific
+//TODO: desktopCapturer equivalent
+//TODO: https://www.npmjs.com/package/active-win for focus check
 
 //colors  --------------------------------------------------------------------------------------------
 const red = '#DBA993';
@@ -1315,7 +1330,8 @@ function getOpenWindows()
 {
     //chrome desktop capturer gets all open windows
     asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
-    asyncOpenWindows.then(async sources => getOpenExes(sources))
+    if (process.platform !== 'darwin') {asyncOpenWindows.then(async sources => getOpenExes(sources))}
+    else{asyncOpenWindows.then(async sources => getOpenApps(sources))}
 }
 
 function getOpenExes(sources) 
@@ -1323,7 +1339,39 @@ function getOpenExes(sources)
     for (const source of sources) {
         //compares title retrieved from desktop capturer and window manager path
         windowManager.getWindows().forEach(element => {
+
             if(element.getTitle() == source.name){
+                
+                var programExe = parseFilePath(element.path);
+                
+                if (programArray.includes(programExe))
+                {
+                    return;
+                }
+                console.log(programArray);
+                programArray.push(programExe);
+                addProgramToDropdown(programExe);
+            }
+        });
+    }
+}
+
+function getOpenApps(sources) 
+{
+    for (const source of sources) {
+        //compares title retrieved from desktop capturer and window manager path
+        windowManager.getWindows().forEach(element => {
+            
+            //FIXME:
+            
+            
+            console.log("element")
+            console.log(element.getTitle())
+            console.log("source")
+            console.log(source)
+
+            if(element == source){
+                
                 var programExe = parseFilePath(element.path);
                 
                 if (programArray.includes(programExe))
