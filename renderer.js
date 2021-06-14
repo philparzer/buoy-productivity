@@ -879,7 +879,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 windowCheckResult = result.windowClass;
             }
             
-            else //FIXME: this doesnt work https://www.npmjs.com/package/mac-windows -> get owner and check seperately for mac?
+            else //FIXME: https://www.npmjs.com/package/active-win use this? windowClass doesnt work on MAC not yet supported
             {
                 let unparsedWindowCheckresult = result.windowClass.split('.');
                 let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
