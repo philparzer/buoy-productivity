@@ -873,19 +873,17 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         //Focus Check
         activeWindows().getActiveWindow().then((result)=>{
             var windowCheckResult;
-            
 
             if (process.platform !== 'darwin')
             {
                 windowCheckResult = result.windowClass;
             }
             
-            else 
+            else //FIXME: this doesnt work https://www.npmjs.com/package/mac-windows -> get owner and check seperately for mac?
             {
                 let unparsedWindowCheckresult = result.windowClass.split('.');
                 let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
-                windowCheckResult = splitWindowCheckResult + '.app';
-
+                windowCheckResult = result.windowClass;
             }
 
             console.log("allowedProgramArray in timer")
