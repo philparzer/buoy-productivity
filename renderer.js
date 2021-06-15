@@ -2,6 +2,29 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//Calendar 
+    // - FIXME: reproduce, locate and fix bug one date not colored in
+
+//MAC SUPPORT
+
+    // - FIXME: permission issue -> focus check Mac
+                    /*
+                    
+                    -desktopCapturer doesnt work as accepted if permission granted -> mac other library to get all open windows 
+                    -enable permission
+                    -use active-win in focus check
+                    
+                    */
+    // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
+    // - TODO: implement mac notifications instead of overlays
+    // - TODO: test minimize behavior
+    // - TODO: add exception owners to array
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//LOW PRIORITY:
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 //STYLING WRAP-UP
     //TODO: restore style, spacing, etc (font changed bahnschrift -> roboto)
     //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
@@ -11,30 +34,6 @@
     //FIXME: electron freezes when timer ends / when tabbed out -> or change html when window is out of focus e.g. discord stream still running
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
-//MAC SUPPORT
-    // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
-    // - TODO: overlay transparency doesn't work -> fullscreen autofocuses on mac probably the problem
-    // - TODO: maybe don't even use overlays -> use mac messages
-    // - FIXME: focus check doesn't work -> new html auto focuses on mac?
-    // - TODO: FIXME: why on mac focus dropdown (getOpenWindows()?) not working if visual studio screen record is ticked
-    // - FIXME: weird minimize behavior
-    // - FIXME: microsoft word.app -> word.app splitting error when program name includes space?
-
-
-    //permission issue -> focus check Mac
-
-    /*
-    
-    -desktopCapturer doesnt work as accepted if permission granted -> mac other library to get all open windows 
-    -enable permission
-    -use active-win in focus check
-    
-    */
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//LOW PRIORITY:
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //TODO: create and implement remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
 //TODO: implement SFX toggle functionality
@@ -895,7 +894,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             }
             
             else //FIXME: https://www.npmjs.com/package/active-win use this? windowClass doesnt work on MAC not yet supported
-            {
+            {   
+                //deprecated
                 let unparsedWindowCheckresult = result.windowClass.split('.');
                 let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
                 windowCheckResult = result.windowClass;
@@ -1328,10 +1328,18 @@ focusBtn.onclick = function()
 
 function getOpenWindows()
 {
-    //chrome desktop capturer gets all open windows
+    //chrome desktop capturer gets all open windows on Windows
     asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
     if (process.platform !== 'darwin') {asyncOpenWindows.then(async sources => getOpenExes(sources))}
-    else{asyncOpenWindows.then(async sources => getOpenApps(sources))}
+    
+    //another library gets all open windows on Mac
+    else
+    {
+        //FIXME: desktop capturer on mac doesnt work
+        
+        //deprecated
+        asyncOpenWindows.then(async sources => getOpenApps(sources))
+    }
 }
 
 function getOpenExes(sources) 
@@ -1361,9 +1369,6 @@ function getOpenApps(sources)
     for (const source of sources) {
         //compares title retrieved from desktop capturer and window manager path
         windowManager.getWindows().forEach(element => {
-            
-            //FIXME:
-            
             
             console.log("element")
             console.log(element.getTitle())
@@ -2362,8 +2367,8 @@ function getNumberOfCalendarEntries()
 
                 multipleCalendarEntries = remove_duplicates_es6(multipleCalendarEntries);
 
-                console.log("single: " + singleCalendarEntries);
-                console.log("multiple: " + multipleCalendarEntries);
+                // console.log("single: " + singleCalendarEntries);
+                // console.log("multiple: " + multipleCalendarEntries);
 
 
                 sortEntryColoration();
@@ -2385,8 +2390,8 @@ function sortEntryColoration()
 
         multipleCalendarEntries.forEach(entry => {
             db.all('SELECT status FROM focus where date = "' + entry + '";', (error,rows) => {
-                console.log("entry: " + entry)
-                console.log(rows)
+                        // console.log("entry: " + entry)
+                        // console.log(rows)
 
                 let entryStatusArray = [];
                 rows.forEach(row => {entryStatusArray.push(row.status)});
@@ -2404,11 +2409,11 @@ function sortEntryColoration()
                 else if (statusQuotient == 0.5) {halfYellowDays.push(entry)}
                 else if (statusQuotient > 0.5) {threeQuarterYellowDays.push(entry)}
 
-                console.log("Solid Red Days: " + solidRedDays);
-                console.log("Solid Yellow Days: " + solidYellowDays);
-                console.log("1/4 yellow: " + quarterYellowDays);
-                console.log("1/2 yellow: " + halfYellowDays);
-                console.log("3/4 yellow" + threeQuarterYellowDays);
+                        // console.log("Solid Red Days: " + solidRedDays);
+                        // console.log("Solid Yellow Days: " + solidYellowDays);
+                        // console.log("1/4 yellow: " + quarterYellowDays);
+                        // console.log("1/2 yellow: " + halfYellowDays);
+                        // console.log("3/4 yellow" + threeQuarterYellowDays);
 
                 //instantiate calendar when coloration is done
                 showCalendar(currentMonth, currentYear);
