@@ -57,8 +57,11 @@ const { windowManager } = require("node-window-manager");
 const { shell } = require('electron');
 
     //Mac specific
-const getWindows = require('mac-windows').getWindows // desktopCapturer equivalent
-const activeWindow = require('active-win');         //TODO: https://www.npmjs.com/package/active-win for focus check
+if (process.platform == 'darwin') {
+    const getWindows = require('mac-windows').getWindows // desktopCapturer equivalent
+    const activeWindow = require('active-win');          //TODO: https://www.npmjs.com/package/active-win for focus check
+}
+
 
 //colors  --------------------------------------------------------------------------------------------
 const red = '#DBA993';
@@ -880,106 +883,130 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                     if (process.platform !== 'darwin') {
                             //Focus Check
-                            activeWindows().getActiveWindow().then((result)=>{
+        activeWindows().getActiveWindow().then((result)=>{
+            var windowCheckResult;
 
-                                
-                                var windowCheckResult = result.windowClass;
+            if (process.platform !== 'darwin')
+            {
+                windowCheckResult = result.windowClass;
+            }
+            
+            else //FIXME: https://www.npmjs.com/package/active-win use this? windowClass doesnt work on MAC not yet supported
+            {   
+                //deprecated
+                let unparsedWindowCheckresult = result.windowClass.split('.');
+                let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
+                windowCheckResult = result.windowClass;
+            }
 
-                                console.log("allowedProgramArray in timer")
-                                console.log(allowedProgramArray)
+            console.log("allowedProgramArray in timer")
+            console.log(allowedProgramArray)
 
-                                console.log("result.windowClass in timer")
-                                console.log(windowCheckResult)
+            console.log("result.windowClass in timer")
+            console.log(windowCheckResult)
 
-                                //main check if active window is in allowed program
-                                if (allowedProgramArray.includes(windowCheckResult))
-                                {
-                                    //checks if user has recently exited focus
-                                    if (recentlyOutOfFocus)
-                                    {
-
-                                            //TODO: play focusing... sound
-                                            switch(document.documentElement.lang)
-                                            {
-                                                case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                    break; 
-                                                case 'ru': focusingOverlay = window.open('html/focusingOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                    break;
-                                                case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                    break;
-                                                case 'fr': focusingOverlay = window.open('html/focusingOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                    break;
-                                                default:
-                                                    console.log("error lang");
-                                            }
-                                            setTimeout(() => {focusingOverlay.close()}, 2000)
-                                            
-                                            
-                                            recentlyOutOfFocus = false;
-
-                                    unfocusedTime = 0;
-                                }
+            //main check if active window is in allowed program
+            if (allowedProgramArray.includes(windowCheckResult))
+            {
+                //checks if user has recently exited focus
+                if (recentlyOutOfFocus)
+                {
+                    if (process.platform !== 'darwin')
+                    {
+                        //TODO: play focusing... sound
+                        switch(document.documentElement.lang)
+                        {
+                            case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break; 
+                            case 'ru': focusingOverlay = window.open('html/focusingOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            case 'de': focusingOverlay = window.open('html/focusingOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            case 'fr': focusingOverlay = window.open('html/focusingOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                                break;
+                            default:
+                                console.log("error lang");
+                        }
+                        setTimeout(() => {focusingOverlay.close()}, 2000)
+                        }
                         
-                                else 
-                                {
+                        recentlyOutOfFocus = false;
+                    }
+                    else{/*TODO: mac message?*/ console.log("focusing")}
 
-                                    if (timerRecentlyEnded){return;}
+                unfocusedTime = 0;
+            }
+    
+            else 
+            {
 
-                                    recentlyOutOfFocus = true;
+                if (timerRecentlyEnded){return;}
 
-                                    if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
-                                    {   
-                                            warningAudio.play();
+                recentlyOutOfFocus = true;
 
-                                            switch(document.documentElement.lang)
-                                            {
-                                            case 'en': warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break; 
-                                            case 'ru': warningOverlay = window.open('html/warningOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            case 'de': warningOverlay = window.open('html/warningOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            case 'fr': warningOverlay = window.open('html/warningOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            default:
-                                                console.log("error lang")
-                                            }
-                                        
-                                        
-                                    }
+                if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
+                {   
+                    warningAudio.play();
 
-                                    if(unfocusedTime == warningGoneAfter)
-                                    {
-                                        warningOverlay.close()
-                                    }
+                    if (process.platform !== 'darwin')
+                    {
+                        switch(document.documentElement.lang)
+                        {
+                        case 'en': warningOverlay = window.open('./html/warningOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': warningOverlay = window.open('html/warningOverlay-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': warningOverlay = window.open('html/warningOverlay-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'fr': warningOverlay = window.open('html/warningOverlay-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang")
+                        }
+                    }
 
-                                    unfocusedTime++;
-                                    
-                                    if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
-                                        endTimer();
-                                        
-                                            switch(document.documentElement.lang)
-                                            {
-                                            case 'en': failedAlert = window.open('html/failedAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break; 
-                                            case 'ru': failedAlert = window.open('html/failedAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            case 'de': failedAlert = window.open('html/failedAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            case 'fr': failedAlert = window.open('html/failedAlert-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
-                                                break;
-                                            default:
-                                                console.log("error lang");
-                                            }   
+                    else{/*TODO: mac notifications?*/ console.log("warning")}
+                    
+                    
+                    
+                }
 
-                                            setTimeout(() => {failedAlert.close()}, 3500);
-                                        }
-                                        
-                                        
-                                        
-                                    }
-                                }
-                            });
+                if(unfocusedTime == warningGoneAfter)
+                {
+                    if (process.platform !== 'darwin') {warningOverlay.close();}
+                    else{/*TODO: mac notifications?        */}
+                }
+
+                unfocusedTime++;
+                
+                if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
+                    endTimer();
+                    
+                    if (process.platform !== 'darwin')
+                    {
+                        switch(document.documentElement.lang)
+                        {
+                        case 'en': failedAlert = window.open('html/failedAlert.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break; 
+                        case 'ru': failedAlert = window.open('html/failedAlert-ru.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'de': failedAlert = window.open('html/failedAlert-de.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        case 'fr': failedAlert = window.open('html/failedAlert-fr.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
+                            break;
+                        default:
+                            console.log("error lang");
+                        }   
+
+                        setTimeout(() => {failedAlert.close()}, 3500);
+                    }
+                    
+                    else{/*TODO: mac notifications?        */ console.log("failed")}
+                    
+                    
+                }
+            }
+        });
                     }
 
 //MAC FOCOUS CHECK #############################################################################################################################################
