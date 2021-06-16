@@ -56,11 +56,20 @@ const activeWindows = require('electron-active-window');
 const { windowManager } = require("node-window-manager");
 const { shell } = require('electron');
 
-    //Mac specific
-if (process.platform == 'darwin') {
-    const getWindows = require('mac-windows').getWindows // desktopCapturer equivalent
-    const activeWindow = require('active-win');          //TODO: https://www.npmjs.com/package/active-win for focus check
+    //Mac specific imports
+var getWindows;
+var activeWindow;
+
+try //mac-windows is not supported in win64
+{
+     getWindows = require('mac-windows').getWindows // desktopCapturer equivalent
+     activeWindow = require('active-win');          //TODO: https://www.npmjs.com/package/active-win for focus check
 }
+catch {}
+
+
+
+
 
 
 //colors  --------------------------------------------------------------------------------------------
@@ -246,9 +255,6 @@ let focusingOverlay;
 let doneOverlay;
 let doneAlert;
 let failedAlert;
-
-
-
 
 
 
