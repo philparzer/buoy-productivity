@@ -8,10 +8,9 @@
     // - FIXME: reproduce, locate and fix bug one date not colored in
 
 //MAC SUPPORT
-    // - TODO: test
     // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
-    // - TODO: implement mac notifications instead of overlays
-    // - TODO: add exception owners to array
+    // - TODO: add additional exception owners to array
+    // - TODO: color functiokey (close minimize ´) grey when window out of focus on mac
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -63,13 +62,9 @@ var activeWindow;
 try //mac-windows is not supported in win64
 {
      getWindows = require('mac-windows').getWindows // desktopCapturer equivalent
-     activeWindow = require('active-win');          //TODO: https://www.npmjs.com/package/active-win for focus check
+     activeWindow = require('active-win');          
 }
 catch {}
-
-
-
-
 
 
 //colors  --------------------------------------------------------------------------------------------
@@ -245,17 +240,23 @@ var preExceptionArrayWin = //array of all exceptions -> gets concatenated w allo
 var preExceptionArrayMac = 
 [
     //mac
-    "Finder", "System Preferences", "System Information", "Dock", "Screenshot" //TODO:
+    "Finder", "System Preferences", "System Information", "Dock", "Screenshot" //TODO: add additional apps
 ];
 
 
     //overlays
-let warningOverlay; //reference to window that is opened when user exits focus
+let warningOverlay;
 let focusingOverlay;
-let doneOverlay;
 let doneAlert;
 let failedAlert;
 
+    //mac notifications
+const warningTitleEN = "Focus lost"; const warningTitleRU = "Вы рассеяны"; const warningTitleDE = "fokus verloren"; const warningTitleFR = "distraction";
+const warningBodyEN = "10 secs left"; const warningBodyRU = "ещё 10 секунд"; const warningBodyDE = "noch 10 sekunden"; const warningBodyFR = "il reste 10 secondes";
+const focusingTitleEN = "focusing..."; const focusingTitleRU = "Вы сосредоточены..."; const focusingTitleDE = "wieder fokussiert..."; const focusingTitleFR = "concentration...";
+const focusingBodyEN = "good job!"; const focusingBodyRU = "молодец!"; const focusingBodyDE = "super!"; const focusingBodyFR = "bien joué!";
+const doneTitleEN = "time's up!"; const doneTitleRU = "ура!"; const doneTitleDE = "geschafft"; const doneTitleFR = "ça est!";
+const failedTitleEN = "focus failed"; const failedTitleRU = "провал"; const failedTitleDE = "gescheitert"; const failedTitleFR = "échec!";
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -741,12 +742,12 @@ function clearSearchResults()
     
 }
 
-
 //about
 
 aboutBtn.onclick = function()
 {
     shell.openExternal('https://buoy-productivity.com/'); //TODO: link to respective page as soon as website is done
+
 }
 
 
@@ -860,7 +861,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         
     
     
-    //timer functionality  --------------------------------------------------------------------------------------------
+//timer starts  ##############################################################################################################
     timerLogic =  setInterval(function() {
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
         
@@ -938,7 +939,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                         
                         recentlyOutOfFocus = false;
                     }
-                    else{/*TODO: mac message?*/ console.log("focusing")}
 
                 unfocusedTime = 0;
             }
@@ -970,8 +970,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             console.log("error lang")
                         }
                     }
-
-                    else{/*TODO: mac notifications?*/ console.log("warning")}
                     
                     
                     
@@ -980,7 +978,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 if(unfocusedTime == warningGoneAfter)
                 {
                     if (process.platform !== 'darwin') {warningOverlay.close();}
-                    else{/*TODO: mac notifications?        */}
                 }
 
                 unfocusedTime++;
@@ -1007,8 +1004,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                         setTimeout(() => {failedAlert.close()}, 3500);
                     }
                     
-                    else{/*TODO: mac notifications?        */ console.log("failed")}
-                    
                     
                 }
             }
@@ -1030,9 +1025,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             catch {windowCheckResult = thisApplicationMac}  //owner was undefined probs desktop or sth
                             
 
-                            console.log("allowedProgramArray in timer")
                             console.log(allowedProgramArray)
-
                             console.log("result.windowClass in timer " + windowCheckResult)
 
                             //main check if active window is in allowed program
@@ -1042,7 +1035,23 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 if (recentlyOutOfFocus)
                                 {
                                     recentlyOutOfFocus = false;
-                                    /*TODO: mac message?*/ console.log("focusing")
+                                    //TODO: play focusing sound
+                                    
+                                    switch(document.documentElement.lang)
+                                    {
+                                        case 'en': new Notification(focusingTitleEN, {body: focusingBodyEN});
+                                            break; 
+                                        case 'ru': new Notification(focusingTitleRU, {body: focusingBodyRU});
+                                            break;
+                                        case 'de': new Notification(focusingTitleDE, {body: focusingBodyDE});
+                                            break;
+                                        case 'fr': new Notification(focusingTitleFR, {body: focusingBodyFR});
+                                            break;
+                                        default:
+                                            console.log("error lang")
+                                    }
+
+
 
                                 unfocusedTime = 0;
                             } 
@@ -1058,12 +1067,20 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                                 {   
                                     warningAudio.play();
-                                    /*TODO: mac notifications?*/ console.log("warning")                
-                                }
-
-                                if(unfocusedTime == warningGoneAfter)
-                                {
-                                    /*TODO: mac notifications?        */
+                                    
+                                    switch(document.documentElement.lang)
+                                    {
+                                        case 'en': new Notification(warningTitleEN, { body: warningBodyEN});
+                                            break; 
+                                        case 'ru': new Notification(warningTitleRU, { body: warningBodyRU});
+                                            break;
+                                        case 'de': new Notification(warningTitleDE, { body: warningBodyDE});
+                                            break;
+                                        case 'fr': new Notification(warningTitleFR, { body: warningBodyFR});
+                                            break;
+                                        default:
+                                            console.log("error lang")
+                                    }
                                 }
 
                                 unfocusedTime++;
@@ -1071,24 +1088,37 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
                                     endTimer();
                                     
-                                    
-                                    /*TODO: mac notifications?        */ console.log("failed")
-                                    
+                                    //TODO: play failed sound
+
+                                    switch(document.documentElement.lang)
+                                    {
+                                        case 'en': new Notification(failedTitleEN);
+                                            break; 
+                                        case 'ru': new Notification(failedTitleRU);
+                                            break;
+                                        case 'de': new Notification(failedTitleDE);
+                                            break;
+                                        case 'fr': new Notification(failedTitleFR);
+                                            break;
+                                        default:
+                                            console.log("error lang")
+                                    }
                                     
                                 }
                             }
                         })();
                     }
 
-        //timer finished succesfully
+//timer finished succesfully #####################################################################################################
         if(delta >= timerInput)
         {
-            timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS - maybe debug once more?
+            timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS
             db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
             
             
             endTimer();
 
+            //TODO: play finished sound
             if (process.platform !== 'darwin')
             {
                 switch(document.documentElement.lang)
@@ -1108,7 +1138,23 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 setTimeout(() => {doneAlert.close()}, 3500);
             }
 
-            else{/*TODO: mac notifications?        */ console.log("done")}
+            else
+            {
+                switch(document.documentElement.lang)
+                    {
+                        case 'en': new Notification(doneTitleEN);
+                            break; 
+                        case 'ru': new Notification(doneTitleRU);
+                            break;
+                        case 'de': new Notification(doneTitleDE);
+                            break;
+                        case 'fr': new Notification(doneTitleFR);
+                            break;
+                        default:
+                            console.log("error lang")
+                    }
+                
+            }
             
         }
 
