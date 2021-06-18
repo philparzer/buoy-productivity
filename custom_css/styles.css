@@ -660,14 +660,14 @@ button{
 
 #unit-hours{
     color: var(--white);
-    margin-top: -20px;
+    margin-top: -15px;
     margin-left: 3px;
     
 }
 
 #unit-minutes{
     color: var(--white);
-    margin-top: -20px;
+    margin-top: -15px;
     margin-left: 54px;
 }
 
