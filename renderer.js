@@ -816,7 +816,13 @@ else
 
 
 
+//Mac Settings
 
+if (process.platform !== 'darwin'){}
+else 
+{
+    //TODO: hide sound buttons on mac
+}
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //MAIN  ########################################################################################################################
@@ -1061,8 +1067,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 {
                                     recentlyOutOfFocus = false;
                                     
-                                    if (focusingAudioToggle) {focusingAudio.play();}
-                                    
                                     switch(document.documentElement.lang)
                                     {
                                         case 'en': new Notification(focusingTitleEN, {body: focusingBodyEN});
@@ -1092,7 +1096,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                                 {   
-                                    if (warningAudioToggle) {warningAudio.play();}
                                     
                                     switch(document.documentElement.lang)
                                     {
@@ -1113,7 +1116,6 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 
                                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
                                     
-                                    if (failedAudioToggle) {failedAudio.play();}
                                     
                                     endTimer();
 
@@ -1142,7 +1144,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS
             db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
             
-            if (doneAudioToggle) {doneAudio.play();}
+            if (doneAudioToggle && process.platform !== 'darwin') {doneAudio.play();}
             
             endTimer();
 
