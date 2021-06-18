@@ -5,11 +5,13 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //MAC SUPPORT
+    // - FIXME: TODO: test temporary fix 10secs instead of 15 in window check on mac
+    
     // - TODO: icon throws error -> app needs to be built first
     // - TODO: add additional exception owners to array
     // - TODO: close minimize greyed out when window out of focus on mac
 
-
+var loopIterator = 0;
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -202,6 +204,7 @@ const minutesElement = document.getElementById('minutes');
 
     //focus time Variables
 let maxTimeUnfocused = 15; //in seconds
+var maxTimeUnfocusedMac = 10;
 let unfocusedTime = 0;
 let warningGoneAfter = 4; //in seconds (time it takes for warning to disappear)
 
@@ -837,6 +840,7 @@ hideFocusBtn();
 
 startBtn.onclick = function(){ //starts the main process, timer, focus retrieval and focus check
 
+
     //preparations
     clearInterval(setFocusInterval);
     retrieveFocusAndExceptions();
@@ -888,6 +892,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     
 //timer starts  ##############################################################################################################
     timerLogic =  setInterval(function() {
+        
+        
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
         
         //counter
@@ -1055,9 +1061,14 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                             catch {windowCheckResult = thisApplicationMac}  //owner was undefined probs desktop or sth
                             
-
+                            
                             console.log(allowedProgramArray)
                             console.log("result.windowClass in timer " + windowCheckResult)
+                            console.log("program is included = " + allowedProgramArray.includes(windowCheckResult))
+                            loopIterator++
+                            console.log("loop iterator  = " + loopIterator)
+                            console.log("time: " + Date.now()/1000)
+                            console.log("unfocusedTime = " + unfocusedTime)
 
                             //main check if active window is in allowed program
                             if (allowedProgramArray.includes(windowCheckResult))
@@ -1084,7 +1095,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
 
                                 unfocusedTime = 0;
-                            } 
+                                } 
                             }
 
                             else 
@@ -1110,15 +1121,13 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                         default:
                                             console.log("error lang")
                                     }
+                                    
                                 }
 
                                 unfocusedTime++;
                                 
-                                if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
+                                if (unfocusedTime >= maxTimeUnfocusedMac){ //timer finished unsuccesfully
                                     
-                                    
-                                    endTimer();
-
                                     switch(document.documentElement.lang)
                                     {
                                         case 'en': new Notification(failedTitleEN);
@@ -1132,6 +1141,9 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                         default:
                                             console.log("error lang")
                                     }
+                                    endTimer();
+
+                                    
                                     
                                 }
                             }
