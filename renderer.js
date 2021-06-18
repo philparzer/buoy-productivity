@@ -6,7 +6,7 @@
 
 //MAC SUPPORT
     // - FIXME: TODO: test temporary fix 10secs instead of 15 in window check on mac
-    
+
     // - TODO: icon throws error -> app needs to be built first
     // - TODO: add additional exception owners to array
     // - TODO: close minimize greyed out when window out of focus on mac
@@ -826,6 +826,26 @@ else
 {
     //TODO: hide sound buttons on mac
 }
+
+
+//Mac blur events
+
+ipcRenderer.on('focused', () =>{
+    document.getElementById('close-circle').style.fill = "#f96160";
+    document.getElementById("min-circle").style.fill = "#f4bd4f";
+    document.getElementById('close-circle').style.stroke = "#dd4f50";
+    document.getElementById("min-circle").style.stroke = "#f0b048";
+    
+})
+
+ipcRenderer.on('blurred', () =>{
+    document.getElementById('close-circle').style.fill = lighterGrey;
+    document.getElementById("min-circle").style.fill = lighterGrey;
+    document.getElementById('close-circle').style.stroke = lighterGrey;
+    document.getElementById("min-circle").style.stroke = lighterGrey;
+})
+
+
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //MAIN  ########################################################################################################################
