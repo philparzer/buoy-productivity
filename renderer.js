@@ -4,13 +4,10 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//Calendar 
-    // - FIXME: reproduce, locate and fix bug one date not colored in
-
 //MAC SUPPORT
-    // - TODO: icon throws error (maybe .ico -> .png) -> app needs to be built first
+    // - TODO: icon throws error -> app needs to be built first
     // - TODO: add additional exception owners to array
-    // - TODO: color functiokey (close minimize ´) grey when window out of focus on mac
+    // - TODO: close minimize greyed out when window out of focus on mac
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -18,7 +15,6 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //STYLING WRAP-UP
-    //TODO: restore style, spacing, etc (font changed bahnschrift -> roboto)
     //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
 
 //MAIN PROCESS WRAP-UP
@@ -26,8 +22,6 @@
     //FIXME: electron freezes when timer ends / when tabbed out -> or change html when window is out of focus e.g. discord stream still running
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
-
-//TODO: create and implement remaining SFX (focus sound: calm wave, distraction sound: foghorn / buoy whistle, completed: buoy bell, failed: buoy whistle / foghorn)
 //TODO: implement SFX toggle functionality
 //TODO: different tooltips / dropdowns should collapse all others if uncollapsed
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
@@ -42,6 +36,7 @@
 //FIXME: position polish (margins, etc.)
 //TODO: think about splash screen (need?)
 //FIXME: ? npm audit 1 high severity vulnerability
+//FIXME: reproduce, locate and fix bug one date not colored in
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -81,12 +76,15 @@ const threeQuarterYellowColor = "#DBCD93";
 
 //audio  --------------------------------------------------------------------------------------------
 
-const warningAudio = new Audio("./audio/warningSound.mp3");
-/* TODO:
-const focusAudio = new Audio("./audio/focusSound.mp3");
-const failAudio = new Audio("./audio/failSound.mp3");
-const completionAudio = new Audio("./audio/completionSound.mp3");
-*/
+const warningAudio = new Audio("./audio/warningSound-18.mp3");
+const focusingAudio = new Audio("./audio/focusingSound-30.mp3");
+const failedAudio = new Audio("./audio/failedSound-18.mp3");
+const doneAudio = new Audio("./audio/doneSound-18.mp3");
+
+var warningAudioToggle = false;
+var focusingAudioToggle = false;
+var failedAudioToggle = false;
+var doneAudioToggle = false;
 
 
 //buttons and input fields --------------------------------------------------------------------------------------------
@@ -100,7 +98,6 @@ const restartBtn = document.getElementById('restart-info');
 const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
 const createTagButton = document.getElementById("add-tag-input-button");
-let inputElementCheckInterval;
 
     //search box fields
 
@@ -342,11 +339,13 @@ function DBSettingsChange(param){
     {
         if (document.getElementById("focus-lost-sound-switch").checked == true)
         {
+            warningAudioToggle = true;
             db.run('UPDATE settings SET focus_lost = 1  WHERE ROWID = 1;')
         }
 
         else 
-        {
+        {   
+            warningAudioToggle = false;
             db.run('UPDATE settings SET focus_lost = 0  WHERE ROWID = 1;')
         }
     }
@@ -355,11 +354,13 @@ function DBSettingsChange(param){
     {
         if (document.getElementById("focus-gained-sound-switch").checked == true)
         {
+            focusingAudioToggle = true;
             db.run('UPDATE settings SET focus_gained = 1  WHERE ROWID = 1;')
         }
 
         else 
         {
+            focusingAudioToggle = false;
             db.run('UPDATE settings SET focus_gained = 0  WHERE ROWID = 1;')
         }
     }
@@ -367,10 +368,12 @@ function DBSettingsChange(param){
     if(param == 'completion'){
         if(document.getElementById("focus-completion-sound-switch").checked == true)
         {
+            doneAudioToggle = true;
             db.run('UPDATE settings SET completion = 1 WHERE ROWID = 1')
         }
         else
         {
+            doneAudioToggle = false;
             db.run('UPDATE settings SET completion = 0 WHERE ROWID = 1')
         } 
     }
@@ -378,10 +381,12 @@ function DBSettingsChange(param){
     if(param == 'fail'){
         if(document.getElementById("focus-fail-sound-switch").checked == true)
         {
+            failedAudioToggle = true;
             db.run('UPDATE settings SET fail = 1 WHERE ROWID = 1')
         }
         else
         {
+            failedAudioToggle = false;
             db.run('UPDATE settings SET fail = 0 WHERE ROWID = 1')
         }
     } 
@@ -392,9 +397,20 @@ function DBGetSettingsDropdown(){
         try
         {
         document.getElementById("focus-gained-sound-switch").checked = (row.focus_gained == 1);
+        if (document.getElementById("focus-gained-sound-switch").checked) {focusingAudioToggle = true}
+        else {focusingAudioToggle = false}
+
         document.getElementById("focus-lost-sound-switch").checked = (row.focus_lost == 1);
+        if (document.getElementById("focus-lost-sound-switch").checked) {warningAudioToggle = true}
+        else {warningAudioToggle = false}
+
         document.getElementById("focus-fail-sound-switch").checked = (row.fail == 1);
+        if (document.getElementById("focus-fail-sound-switch").checked) {failedAudioToggle = true}
+        else {failedAudioToggle = false}
+
         document.getElementById("focus-completion-sound-switch").checked = (row.completion == 1);
+        if (document.getElementById("focus-completion-sound-switch").checked) {doneAudioToggle = true}
+        else {doneAudioToggle = false}
         }
         
         catch{}
@@ -924,6 +940,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                     if (process.platform !== 'darwin')
                     {
                         //TODO: play focusing... sound
+                        if (focusingAudioToggle) {focusingAudio.play();}
+
                         switch(document.documentElement.lang)
                         {
                             case 'en': focusingOverlay = window.open('html/focusingOverlay.html', '_blank', 'transparent=true,fullscreen=true,frame=false,nodeIntegration=yes, alwaysOnTop=true, focusable=false, skipTaskbar = true');
@@ -955,7 +973,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                 {   
-                    warningAudio.play();
+                    if (warningAudioToggle) {warningAudio.play();}
 
                     if (process.platform !== 'darwin')
                     {
@@ -986,7 +1004,11 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                 unfocusedTime++;
                 
                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
+                    
+                    if (failedAudioToggle) {failedAudio.play();}
+
                     endTimer();
+
                     
                     if (process.platform !== 'darwin')
                     {
@@ -1038,7 +1060,8 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 if (recentlyOutOfFocus)
                                 {
                                     recentlyOutOfFocus = false;
-                                    //TODO: play focusing sound
+                                    
+                                    if (focusingAudioToggle) {focusingAudio.play();}
                                     
                                     switch(document.documentElement.lang)
                                     {
@@ -1069,7 +1092,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
                                 if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
                                 {   
-                                    warningAudio.play();
+                                    if (warningAudioToggle) {warningAudio.play();}
                                     
                                     switch(document.documentElement.lang)
                                     {
@@ -1089,9 +1112,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                                 unfocusedTime++;
                                 
                                 if (unfocusedTime >= maxTimeUnfocused){ //timer finished unsuccesfully
-                                    endTimer();
                                     
-                                    //TODO: play failed sound
+                                    if (failedAudioToggle) {failedAudio.play();}
+                                    
+                                    endTimer();
 
                                     switch(document.documentElement.lang)
                                     {
@@ -1118,10 +1142,11 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
             timerRecentlyEnded = true; //FIXED BUG THAT DISPLAYED WARNING OVERLAY AFTER TIMER ENDS
             db.run('UPDATE focus SET status = 1 WHERE ROWID = (SELECT MAX(ROWID) FROM focus);')
             
+            if (doneAudioToggle) {doneAudio.play();}
             
             endTimer();
 
-            //TODO: play finished sound
+            
             if (process.platform !== 'darwin')
             {
                 switch(document.documentElement.lang)
