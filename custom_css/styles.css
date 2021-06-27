@@ -157,7 +157,7 @@ button{
 
 /*settings*/
 #settings-dropdown{
-  height: 450px!important;
+  height: 450px;
   width: 180px!important;
   border: 1px solid var(--darkerGrey);
   border-radius: 0px;

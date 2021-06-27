@@ -35,7 +35,7 @@ function createWindow () {
   else
   {
     //TODO: handle iconS
-    //Menu.setApplicationMenu(Menu.buildFromTemplate([])); //disables ctrl r
+    Menu.setApplicationMenu(Menu.buildFromTemplate([])); //disables ctrl r
   }
 
   //load window

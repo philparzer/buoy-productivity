@@ -4,14 +4,16 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//improve UX
+    // - TODO: add dropdown entry if focus dropdown empty -> "open a program or sth"
+    // - TODO: flash tag manager button if tag dropdown is empty
+
 //MAC SUPPORT
-    // - FIXME: TODO: test temporary fix 10secs instead of 15 in window check on mac
+    // - FIXME: TODO: test temporary fix 10secs instead of 15 in window check on mac (+ permissions still weird why sometimes still Visual Studio Code instead of CODE?)
 
-    // - TODO: icon throws error -> app needs to be built first
+    // - TODO: add icon when building app
     // - TODO: add additional exception owners to array
-    // - TODO: close minimize greyed out when window out of focus on mac
 
-var loopIterator = 0;
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -24,7 +26,6 @@ var loopIterator = 0;
     //FIXME: electron freezes when timer ends / when tabbed out -> or change html when window is out of focus e.g. discord stream still running
     //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
 
-//TODO: implement SFX toggle functionality
 //TODO: different tooltips / dropdowns should collapse all others if uncollapsed
 //TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
@@ -39,6 +40,8 @@ var loopIterator = 0;
 //TODO: think about splash screen (need?)
 //FIXME: ? npm audit 1 high severity vulnerability
 //FIXME: reproduce, locate and fix bug one date not colored in
+//FIXME: codecleanup (let -> var, == -> ===, etc.)
+//FIXME: add docs for every function
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -218,6 +221,8 @@ var frontEndTags = [];
 
 //focus  --------------------------------------------------------------------------------------------
 
+var windowCheckResult;
+
 let programArray = []; //array of all open programs (placeholder.exe, placeholder2.exe, ...)
 let allowedProgramArray = []; //array of all focus and exception programs chosen by user
 
@@ -257,13 +262,19 @@ const focusingTitleEN = "focusing..."; const focusingTitleRU = "Вы сосре�
 const focusingBodyEN = "good job!"; const focusingBodyRU = "молодец!"; const focusingBodyDE = "super!"; const focusingBodyFR = "bien joué!";
 const doneTitleEN = "time's up!"; const doneTitleRU = "ура!"; const doneTitleDE = "geschafft"; const doneTitleFR = "ça est!";
 const failedTitleEN = "focus failed"; const failedTitleRU = "провал"; const failedTitleDE = "gescheitert"; const failedTitleFR = "échec!";
-
+const errorTitleEN = "ERROR"; const errorTitleRU = "ОШИБКА"; const errorTitleDE = "ERROR"; const errorTitleFR = "ERREUR:";
+const errorBodyEN = "please use MISSION CONTROL to switch between apps (swipe up using three fingers)"; const errorBodyRU = "используйте функцию «MISSION CONTROL», чтобы перемещаться между приложениями (смахните вверх тремя пальцами)"; const errorBodyDE = "bitte verwenden Sie MISSION CONTROL für Appwechsel (mit drei Fingern nach oben wischen)"; const errorBodyFR = "Utilisez la fonction Mission Control pour changer d'application (effectuez un balayage à trois doigts):";
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+//TEMPORARY MAC v0.1 debugging
+    var iterator = 0;
+    var lastIterCount;
+    var lastIterDelta = 0;
+    var lastMacFocusCheckInTime = true;
+//-----------------------------------------
 
 
 
@@ -824,25 +835,38 @@ else
 if (process.platform !== 'darwin'){}
 else 
 {
-    //TODO: hide sound buttons on mac
+    document.getElementById("win-sounds-box").style.display = "none";
+    document.getElementById("settings-dropdown").style.height = "262px";
 }
 
 
 //Mac blur events
 
 ipcRenderer.on('focused', () =>{
-    document.getElementById('close-circle').style.fill = "#f96160";
-    document.getElementById("min-circle").style.fill = "#f4bd4f";
-    document.getElementById('close-circle').style.stroke = "#dd4f50";
-    document.getElementById("min-circle").style.stroke = "#f0b048";
+    try 
+    {
+        document.getElementById('close-circle').style.fill = "#f96160";
+        document.getElementById("min-circle").style.fill = "#f4bd4f";
+        document.getElementById('close-circle').style.stroke = "#dd4f50";
+        document.getElementById("min-circle").style.stroke = "#f0b048";
+    }
+    
+    
+    catch {console.log("exited fullscreen app")}
     
 })
 
 ipcRenderer.on('blurred', () =>{
-    document.getElementById('close-circle').style.fill = lighterGrey;
-    document.getElementById("min-circle").style.fill = lighterGrey;
-    document.getElementById('close-circle').style.stroke = lighterGrey;
-    document.getElementById("min-circle").style.stroke = lighterGrey;
+    try 
+    {
+        document.getElementById('close-circle').style.fill = lighterGrey;
+        document.getElementById("min-circle").style.fill = lighterGrey;
+        document.getElementById('close-circle').style.stroke = lighterGrey;
+        document.getElementById("min-circle").style.stroke = lighterGrey;
+    }
+    
+
+    catch {console.log("styling of buttons went wrong")}
 })
 
 
@@ -913,11 +937,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 //timer starts  ##############################################################################################################
     timerLogic =  setInterval(function() {
         
-        
         var delta = Date.now() - startingTime; //delta is time difference from start in ms
-        
+
         //counter
-        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in minutes
+        var count = ((hrsInput*60) + minsInput) - (delta / 1000 / 60); //count takes initial user input values and calculates time passed in minutes 
         if(count < (hours*60 + mins) -1)
         {
             //minutes html update 
@@ -939,29 +962,15 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
         
 // WINDOWS FOCUS CHECK ########################################################################################################################################
 
-                    if (process.platform !== 'darwin') {
+    if (process.platform !== 'darwin') {
                             //Focus Check
         activeWindows().getActiveWindow().then((result)=>{
-            var windowCheckResult;
 
             if (process.platform !== 'darwin')
             {
                 windowCheckResult = result.windowClass;
             }
             
-            else //FIXME: https://www.npmjs.com/package/active-win use this? windowClass doesnt work on MAC not yet supported
-            {   
-                //deprecated
-                let unparsedWindowCheckresult = result.windowClass.split('.');
-                let splitWindowCheckResult = unparsedWindowCheckresult[unparsedWindowCheckresult.length - 1];
-                windowCheckResult = result.windowClass;
-            }
-
-            console.log("allowedProgramArray in timer")
-            console.log(allowedProgramArray)
-
-            console.log("result.windowClass in timer")
-            console.log(windowCheckResult)
 
             //main check if active window is in allowed program
             if (allowedProgramArray.includes(windowCheckResult))
@@ -1068,107 +1077,149 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                     }
 
 //MAC FOCOUS CHECK #############################################################################################################################################
+else
+{
+
+    unfocusedTime++
+
+    /// CHECKS IF FAILED
+    if (unfocusedTime >= 10){ //timer finished unsuccesfully
+    
+            switch(document.documentElement.lang)
+            {
+                case 'en': new Notification(failedTitleEN);
+                    break; 
+                case 'ru': new Notification(failedTitleRU);
+                    break;
+                case 'de': new Notification(failedTitleDE);
+                    break;
+                case 'fr': new Notification(failedTitleFR);
+                    break;
+                default:
+                    console.log("error lang")
+            }
+    
+        
+    
+            console.log("################failed################")
+            endTimer();
+        
+    }
+
+    //checks if last focus check await finished in time
+    if (lastMacFocusCheckInTime) {
+
+        //starts window check
+        (async () => { 
+
+            
+            //gets active window and sets owner of active window
+            windowCheckResult = await activeWindow();
+            
+            try
+            {
+                windowCheckResult = windowCheckResult.owner.name;
+                console.log("windowCheckResult: " + windowCheckResult);
+            }
+
+            catch {console.log("caught"); windowCheckResult = thisApplicationMac}  //owner was undefined probs desktop or sth
+
+            
+            
+            
+                    //main check if active window owner is in allowed program owner list
+                    if (allowedProgramArray.includes(windowCheckResult))
+                    {
+                        //checks if user has recently exited focus
+                        if (recentlyOutOfFocus)
+                        {
+                            recentlyOutOfFocus = false;
+                            
+                            switch(document.documentElement.lang)
+                            {
+                                case 'en': new Notification(focusingTitleEN, {body: focusingBodyEN});
+                                    break; 
+                                case 'ru': new Notification(focusingTitleRU, {body: focusingBodyRU});
+                                    break;
+                                case 'de': new Notification(focusingTitleDE, {body: focusingBodyDE});
+                                    break;
+                                case 'fr': new Notification(focusingTitleFR, {body: focusingBodyFR});
+                                    break;
+                                default:
+                                    console.log("error lang")
+                            }
+
+                            console.log("################focusing################")
+
+
+                        
+                        } 
+                        unfocusedTime = 0;
+                    }
+
                     else 
                     {
-                        (async () => {
 
-                                
-                            var windowCheckResult = await activeWindow();
-                            try 
-                            {
-                                windowCheckResult = windowCheckResult.owner.name;
-                            }
+                        recentlyOutOfFocus = true;
 
-                            catch {windowCheckResult = thisApplicationMac}  //owner was undefined probs desktop or sth
+                        if(unfocusedTime == 1) //triggers message once when user exits focus program, prevents message from being spammed out every second
+                        {   
                             
+                            switch(document.documentElement.lang)
+                            {
+                                case 'en': new Notification(warningTitleEN, { body: warningBodyEN});
+                                    break; 
+                                case 'ru': new Notification(warningTitleRU, { body: warningBodyRU});
+                                    break;
+                                case 'de': new Notification(warningTitleDE, { body: warningBodyDE});
+                                    break;
+                                case 'fr': new Notification(warningTitleFR, { body: warningBodyFR});
+                                    break;
+                                default:
+                                    console.log("error lang")
+                            }
+
+                            console.log("################warning################")
                             
-                            console.log(allowedProgramArray)
-                            console.log("result.windowClass in timer " + windowCheckResult)
-                            console.log("program is included = " + allowedProgramArray.includes(windowCheckResult))
-                            loopIterator++
-                            console.log("loop iterator  = " + loopIterator)
-                            console.log("time: " + Date.now()/1000)
-                            console.log("unfocusedTime = " + unfocusedTime)
+                        }
 
-                            //main check if active window is in allowed program
-                            if (allowedProgramArray.includes(windowCheckResult))
-                            {
-                                //checks if user has recently exited focus
-                                if (recentlyOutOfFocus)
-                                {
-                                    recentlyOutOfFocus = false;
-                                    
-                                    switch(document.documentElement.lang)
-                                    {
-                                        case 'en': new Notification(focusingTitleEN, {body: focusingBodyEN});
-                                            break; 
-                                        case 'ru': new Notification(focusingTitleRU, {body: focusingBodyRU});
-                                            break;
-                                        case 'de': new Notification(focusingTitleDE, {body: focusingBodyDE});
-                                            break;
-                                        case 'fr': new Notification(focusingTitleFR, {body: focusingBodyFR});
-                                            break;
-                                        default:
-                                            console.log("error lang")
-                                    }
-
-
-
-                                unfocusedTime = 0;
-                                } 
-                            }
-
-                            else 
-                            {
-
-                                if (timerRecentlyEnded){return;}
-
-                                recentlyOutOfFocus = true;
-
-                                if(unfocusedTime == 0) //triggers message once when user exits focus program, prevents message from being spammed out every second
-                                {   
-                                    
-                                    switch(document.documentElement.lang)
-                                    {
-                                        case 'en': new Notification(warningTitleEN, { body: warningBodyEN});
-                                            break; 
-                                        case 'ru': new Notification(warningTitleRU, { body: warningBodyRU});
-                                            break;
-                                        case 'de': new Notification(warningTitleDE, { body: warningBodyDE});
-                                            break;
-                                        case 'fr': new Notification(warningTitleFR, { body: warningBodyFR});
-                                            break;
-                                        default:
-                                            console.log("error lang")
-                                    }
-                                    
-                                }
-
-                                unfocusedTime++;
-                                
-                                if (unfocusedTime >= maxTimeUnfocusedMac){ //timer finished unsuccesfully
-                                    
-                                    switch(document.documentElement.lang)
-                                    {
-                                        case 'en': new Notification(failedTitleEN);
-                                            break; 
-                                        case 'ru': new Notification(failedTitleRU);
-                                            break;
-                                        case 'de': new Notification(failedTitleDE);
-                                            break;
-                                        case 'fr': new Notification(failedTitleFR);
-                                            break;
-                                        default:
-                                            console.log("error lang")
-                                    }
-                                    endTimer();
-
-                                    
-                                    
-                                }
-                            }
-                        })();
                     }
+
+        })();
+
+    }
+
+    //TODO: mac swiping issue -> try to fix in v2
+    lastIterDelta = lastIterCount - count;
+
+    console.log("iterator = " + iterator + ", " + "delta: " + ((lastIterCount - count)) + "s", " unfocused time = " + unfocusedTime )
+    iterator++
+    
+    lastIterCount = count;
+
+    
+    if (lastIterDelta >= 0.09 && timerRunning)
+    {
+        switch(document.documentElement.lang)
+                        {
+                            case 'en': new Notification(errorTitleEN, {body: errorBodyEN});
+                                break; 
+                            case 'ru': new Notification(errorTitleRU, {body: errorBodyRU}); //TODO: translation
+                                break;
+                            case 'de': new Notification(errorTitleDE, {body: errorBodyDE});
+                                break;
+                            case 'fr': new Notification(errorTitleFR, {body: errorBodyFR});
+                                break;
+                            default:
+                                console.log("error lang")
+                        }
+        
+        lastMacFocusCheckInTime = false;
+    
+    }
+
+    else {lastMacFocusCheckInTime = true;}
+}
 
 //timer finished succesfully #####################################################################################################
         if(delta >= timerInput)
@@ -1496,10 +1547,20 @@ function resetTagChoice(){
 
 focusBtn.onclick = function()
 {
+
     //check every second if new program has been opened, enable disable start button on focus picked status
     setFocusInterval = setInterval(function(){
         getOpenWindows();
         enableDisableStartBtn();
+
+        //clears interval if user collapses dropdown
+        let focusDropdownCollapsed = document.getElementById("focus-btn").getAttribute("aria-expanded");
+        if (focusDropdownCollapsed == "false") 
+        {
+            console.log("dropdown collapsed -> clearing interval")
+            clearInterval(setFocusInterval);
+        }
+
     }, 1000)
 }
 
@@ -1507,14 +1568,15 @@ focusBtn.onclick = function()
 function getOpenWindows()
 {
     //chrome desktop capturer gets all open windows on Windows
-    asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
-    if (process.platform !== 'darwin') {asyncOpenWindows.then(async sources => getOpenExes(sources))}
+    
+    if (process.platform !== 'darwin') {
+        asyncOpenWindows = desktopCapturer.getSources({ types: ['window'] });
+        asyncOpenWindows.then(async sources => getOpenExes(sources))
+    }
     
     //another library gets all open windows on Mac
     else
-    {
-        //FIXME: desktop capturer on mac doesnt work
-        
+    {   
         getWindows().then(windows => {
             windows.forEach(element => {
                 addOpenApps(element.ownerName)
@@ -1523,6 +1585,7 @@ function getOpenWindows()
     }
 }
 
+//win add to dropdown
 function getOpenExes(sources) 
 {
     for (const source of sources) {
@@ -1545,6 +1608,7 @@ function getOpenExes(sources)
     }
 }
 
+//mac add to dropdown
 function addOpenApps(app) 
 {
     if (programArray.includes(app)){return;}
@@ -1824,10 +1888,6 @@ function styleBuoy(){
     document.getElementById('hrs-btn-down').style.display = 'none';
     document.getElementById('min-btn-down').style.display = 'none';
 
-    //focus button DEPRECATED
-    //document.getElementById('Ellipse_8').style.fill = red;
-    //document.getElementById('focus').style.fill = darkerGrey;
-
     //tag button
     tagBtn.disabled = true;
     document.getElementById('Rectangle_15').style.fill = red;
@@ -1840,10 +1900,8 @@ function styleBuoy(){
 
     //start button
     document.getElementById('start-box').style.display = 'none';
-    document.getElementById('loadingButton').style.display = 'unset';
-    //DEPRECATED document.getElementById('focus-btn').style.marginBottom ='-70px';
-
-    
+    document.getElementById('loadingButton').style.display = 'unset'; //TODO: maybe disable on mac
+ 
 }
 
 function unstyleBuoy(){
