@@ -19,7 +19,7 @@ body{
     color: #3F3F3F;
     position: relative;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 4.5s;
     animation-iteration-count: 2;
     animation-direction: alternate; 
 }
@@ -29,7 +29,7 @@ body{
     color:#FAFAFA;
     position: relative;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 4.5s;
     animation-iteration-count: 2;
     animation-direction: alternate; 
 }
@@ -37,7 +37,7 @@ body{
 
 @keyframes example {
     0%   { left:0px; top:-800px;}
-    15%  { left:0ps; top:0px;}
+    15%  { left:0px; top:0px;}
     85%  { left:0px; top:0px;}
     100% { left:0px; top:-800px;}
 }
