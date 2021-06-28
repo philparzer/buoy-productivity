@@ -22,6 +22,7 @@
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//FIXME: check if overlays triggering stuck on screen for short amount of time after animation over doesnt happen anymore
 //TODO: maybe change text in focus dropdown to reflect somehow that programs need to be visible on desktop
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //TODO: before building -> disable ctrl to ensure users not reloading page w ctrl+r (consider disabling tab and other keys)
