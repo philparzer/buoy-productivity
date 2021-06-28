@@ -1295,15 +1295,35 @@ button{
   }
 
 
-
-
-/* ############ DYNAMIC CLASSES, assigned to HTML eles via JS  #######################################################*/
-
-/*
-TODO: completed Dot class
-TODO: failed Dot class
-TODO: success calendar date class
-TODO: failed calendar date class
-
-
-*/
+  .animated-bounce {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+  }
+  
+  @keyframes bounce {
+    0%{
+      transform: translateY(0);
+  }
+  30%{
+      transform: translateY(-8px);
+  }
+  50%{
+      transform: translateY(5px);
+  }
+  70%{
+      transform: translateY(-2px);
+  }
+  80%{
+      transform: translateY(2px);
+  }
+  90%{
+      transform: translateY(2px);
+  }
+  100%{
+      transform: translateY(0);
+  }
+  }
+  .bounce {
+    animation-name: bounce;
+  }

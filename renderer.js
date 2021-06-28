@@ -4,50 +4,40 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//improve UX
-    // - TODO: add dropdown entry if focus dropdown empty -> "open a program or sth"
-    // - TODO: flash tag manager button if tag dropdown is empty
+//STYLING WRAP-UP
+    //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
 
-//MAC SUPPORT
-    // - FIXME: TODO: test temporary fix 10secs instead of 15 in window check on mac (+ permissions still weird why sometimes still Visual Studio Code instead of CODE?)
+//performance
+    // - TODO: FIXME: inputElementCheckInterval probs should be cleared
 
+//MAC WRAP-UP
     // - TODO: add icon when building app
     // - TODO: add additional exception owners to array
+
+//Windows  WRAP-UP
+    //TODO: add more windows system "tools" to preExceptionArray: snippingtool
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//STYLING WRAP-UP
-    //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
-
-//MAIN PROCESS WRAP-UP
-    //TODO: add more windows system "tools" to preExceptionArray: snippingtool 
-    //FIXME: electron freezes when timer ends / when tabbed out -> or change html when window is out of focus e.g. discord stream still running
-    //FIXME: audio start delayed if user switches to out of focus program too soon after timer started
-
-//TODO: different tooltips / dropdowns should collapse all others if uncollapsed
-//TODO: think about closing overlays and alerts when click somewhere specific / anywhere on overlay window
+//TODO: maybe change text in focus dropdown to reflect somehow that programs need to be visible on desktop
 //TODO: electron icon in taskbar to "alerted icon" when timer has ended
 //TODO: before building -> disable ctrl to ensure users not reloading page w ctrl+r (consider disabling tab and other keys)
 //TODO: custom scrollbars for windows -> mac scrollbars are fine as is
-//TODO: handle SQL injection
 //TODO: reposition all start-up functions to increase code readability
-//TODO: add space after comma / decimal point in search results
-//FIXME: maybe implement text scrolling animation for tag tooltips w large text content
-//FIXME: search should be case insensitive
-//FIXME: position polish (margins, etc.)
-//TODO: think about splash screen (need?)
-//FIXME: ? npm audit 1 high severity vulnerability
-//FIXME: reproduce, locate and fix bug one date not colored in
-//FIXME: codecleanup (let -> var, == -> ===, etc.)
-//FIXME: add docs for every function
+//TODO: implement text scrolling animation for tag tooltips w large text content
+//TODO: codecleanup (let -> var, == -> ===, etc.)
+//TODO: add docs for every function
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//imports --------------------------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//GLOBALS AND IMPORTS ###################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
 const { ipcRenderer } = require('electron');
 var sqlite3 = require('sqlite3').verbose();
 const { desktopCapturer } = require('electron');
@@ -103,6 +93,7 @@ const restartBtn = document.getElementById('restart-info');
 const createTagElement = document.getElementById("add-tag-input");
 const searchElement = document.getElementById('search');
 const createTagButton = document.getElementById("add-tag-input-button");
+const addTagToBuoyBtn = document.getElementById("tag-buoy-btn");
 
     //search box fields
 
@@ -230,6 +221,12 @@ let focusSet = false;
 let recentlyOutOfFocus = false; //state that checks whether user has recently exited focus app
 let setFocusInterval;
 
+//MAC specific focus check vars
+var iterator = 0;
+var lastIterCount;
+var lastIterDelta = 0;
+var lastMacFocusCheckInTime = true;
+
     //exceptions
 let thisApplicationWin = "electron.exe"; //TODO: when application name is defined -> change to application name e.g. "buoy"
 let thisApplicationMac = 'Electron';
@@ -269,12 +266,8 @@ const errorBodyEN = "please use MISSION CONTROL to switch between apps (swipe up
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//TEMPORARY MAC v0.1 debugging
-    var iterator = 0;
-    var lastIterCount;
-    var lastIterDelta = 0;
-    var lastMacFocusCheckInTime = true;
-//-----------------------------------------
+
+
 
 
 
@@ -824,8 +817,6 @@ else
     document.getElementById("minimize-mac").onclick = function() {
         ipcRenderer.send( 'app:minimize' );
     }
-
-
 }
 
 
@@ -1367,12 +1358,11 @@ function timeoutClear() {
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------
-//TAGS  ########################################################################################################################
+//INPUT ELEMENT CHECK INTERVAL  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
 inputElementCheckInterval = setInterval(function() //checks input in input elements each second TODO: change this to input event as well? more performant?
     {  
-        
 
         if (searchElement.value == "")
         {
@@ -1409,6 +1399,22 @@ inputElementCheckInterval = setInterval(function() //checks input in input eleme
         
 
     }, 1000)
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------
+//TAGS  ########################################################################################################################
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+addTagToBuoyBtn.onclick = function()
+{
+    if (document.getElementsByClassName("dropdown-item-tag").length === 0)
+    {
+        document.getElementById("manage-tags-btn").className += " animated-bounce bounce";
+
+        setTimeout(function(){document.getElementById("manage-tags-btn").className = "btn btn-secondary" }, 1000)
+    }
+}
 
 //creates new tag in both dropdowns new tag when create tag button is pressed
 createTagButton.onclick = function()
@@ -1463,6 +1469,7 @@ function addNewTag(createdTagName = createTagElement.value)
     buoyTagItemBox.onclick = function()
     {
         var allDropDownItemTags = document.getElementsByClassName("dropdown-item dropdown-item-tag");
+
         for(var i = 0; i < allDropDownItemTags.length; i++)
         {
             allDropDownItemTags[i].value = "false";
@@ -2591,10 +2598,6 @@ function getNumberOfCalendarEntries()
 
                 multipleCalendarEntries = remove_duplicates_es6(multipleCalendarEntries);
 
-                // console.log("single: " + singleCalendarEntries);
-                // console.log("multiple: " + multipleCalendarEntries);
-
-
                 sortEntryColoration();
             })
 }
@@ -2632,12 +2635,6 @@ function sortEntryColoration()
                 else if (statusQuotient < 0.5) {quarterYellowDays.push(entry)}
                 else if (statusQuotient == 0.5) {halfYellowDays.push(entry)}
                 else if (statusQuotient > 0.5) {threeQuarterYellowDays.push(entry)}
-
-                        // console.log("Solid Red Days: " + solidRedDays);
-                        // console.log("Solid Yellow Days: " + solidYellowDays);
-                        // console.log("1/4 yellow: " + quarterYellowDays);
-                        // console.log("1/2 yellow: " + halfYellowDays);
-                        // console.log("3/4 yellow" + threeQuarterYellowDays);
 
                 //instantiate calendar when coloration is done
                 showCalendar(currentMonth, currentYear);
