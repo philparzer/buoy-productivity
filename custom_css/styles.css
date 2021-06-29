@@ -61,6 +61,9 @@ html, body {
 }
 
 
+
+
+
 #main-background{
     width: 100%;
     height: 100%;
@@ -1339,3 +1342,12 @@ button{
   .bounce {
     animation-name: bounce;
   }
+
+
+::-webkit-scrollbar { width: 6px; height: 0px;}
+::-webkit-scrollbar-button {  background-color: var(--darkerGrey); }
+::-webkit-scrollbar-track {  background-color: var(--darkerGrey);}
+::-webkit-scrollbar-track-piece { background-color: var(--darkerGrey);}
+::-webkit-scrollbar-thumb {background-color: var(--lighterGrey); border-radius: 10px;}
+::-webkit-scrollbar-corner { background-color: var(--darkerGrey);}
+::-webkit-resizer { background-color: var(--darkerGrey);}
