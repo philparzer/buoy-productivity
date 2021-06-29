@@ -402,6 +402,10 @@ button{
         background-color: var(--yellow);
     }
 
+    #minimize-main:hover > #min-btn > #min-svg > #min-svg-line{
+        stroke: var(--darkerGrey)!important;
+    }
+
     #close-main{
         -webkit-app-region: no-drag;
         padding-top: 10px;
@@ -410,6 +414,14 @@ button{
 
     #close-main:hover{
         background-color: var(--red);
+    }
+
+    #close-main:hover > #close-btn > #close-svg > #close-g > #Line_11  {
+      stroke: var(--darkerGrey)!important;
+    }
+
+    #close-main:hover > #close-btn > #close-svg > #close-g > #Line_12 {
+      stroke: var(--darkerGrey)!important;
     }
 
 /*MANAGE TAGS*/
