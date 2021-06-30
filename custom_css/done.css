@@ -14,7 +14,7 @@ body{
     
     position: relative;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 3s;
     animation-iteration-count: 1;
     animation-direction: alternate;
 }
@@ -41,16 +41,17 @@ body{
 
 @keyframes example {
     0%   { right:-300%; top:0px;}
-    30%  { right: -65%; top:0px;}
-    80% { right: -65%; top:0px;}
+    30%  { right: -50%; top:0px;}
+    80% { right: -50%; top:0px;}
     100%   { right:-300%; top:0px;}
 }
 
 
 }
 
-
-@media screen and (min-width: 1921px){
+/*1440p*/
+@media screen and (min-width: 1921px) and (max-width: 2560px){
+    
     #message-box{
         margin-top: 90%;
     }
@@ -59,7 +60,52 @@ body{
     
         position: relative;
         animation-name: example;
-        animation-duration: 4s;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-direction: alternate;
+    }
+    
+    #image-buoy{
+        z-index: 20!important;
+        position: absolute;
+        margin-top: -12px;
+    }
+    
+    #message-text{
+        z-index: -1;
+        background-color: #DBDB93;
+        font-size: 50px;
+        padding: 20px;
+        padding-top: 25px;
+        padding-left: 80px;
+        padding-right: 60px;
+        border-radius: 20px;
+        color: #3F3F3F;
+        margin-left: 90px;
+        position: absolute;
+    }
+    
+    
+    @keyframes example {
+        0%   { right:-300%; top:0px;}
+        30%  { right: -120%; top:0px;}
+        80% { right: -120%; top:0px;}
+        100%   { right:-300%; top:0px;}
+    }
+}
+
+
+/*4K TODO: TV*/
+@media screen and (min-width: 3440px){
+    #message-box{
+        margin-top: 90%;
+    }
+
+    #message{
+    
+        position: relative;
+        animation-name: example;
+        animation-duration: 3s;
         animation-iteration-count: 1;
         animation-direction: alternate;
     }
@@ -85,9 +131,9 @@ body{
     }
 
     @keyframes example {
-        0%   { right:-300%; top:0px;}
-        30%  { right: -120%; top:0px;}
-        80% { right: -120%; top:0px;}
-        100%   { right:-300%; top:0px;}
+        0%   { right:-450%; top:0px;}
+        30%  { right: -220%; top:0px;}
+        80% { right: -220%; top:0px;}
+        100%   { right:-450%; top:0px;}
     }
 }

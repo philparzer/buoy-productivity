@@ -4,9 +4,6 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//STYLING WRAP-UP
-    //FIXME: overlay positions, anims, text, etc. (e.g.fix / implement additional media queries for animations (ultrawide etc)) -> use vw or other relative css measurements
-
 //performance
     // - TODO: FIXME: inputElementCheckInterval probs should be cleared
 
@@ -1240,7 +1237,7 @@ else
                             console.log("error lang")
                     }
             
-                setTimeout(() => {doneAlert.close()}, 3500);
+                setTimeout(() => {doneAlert.close()}, 2800);
             }
 
             else
