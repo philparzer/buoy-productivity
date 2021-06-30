@@ -1059,7 +1059,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
                             console.log("error lang");
                         }   
 
-                        setTimeout(() => {failedAlert.close()}, 3500);
+                        setTimeout(() => {failedAlert.close()}, 2800);
                     }
                     
                     
