@@ -4,12 +4,10 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//performance
-    // - TODO: FIXME: inputElementCheckInterval probs should be cleared
-
 //MAC WRAP-UP
+    // - TODO: add additional exception owners to array
     // - TODO: add icon when building app
-    // - TODO: add additional exception owners to array0
+    // - TODO: create and add .dmg png background and icon(s)
     
 
 //Windows  WRAP-UP
@@ -19,13 +17,7 @@
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//FIXME: check if overlays triggering stuck on screen for short amount of time after animation over doesnt happen anymore
-//TODO: maybe change text in focus dropdown to reflect somehow that programs need to be visible on desktop
-//TODO: electron icon in taskbar to "alerted icon" when timer has ended
-//TODO: before building -> disable ctrl to ensure users not reloading page w ctrl+r (consider disabling tab and other keys)
-//TODO: custom scrollbars for windows -> mac scrollbars are fine as is
 //TODO: reposition all start-up functions to increase code readability
-//TODO: implement text scrolling animation for tag tooltips w large text content
 //TODO: add docs for every function
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -94,6 +86,8 @@ const createTagButton = document.getElementById("add-tag-input-button");
 const addTagToBuoyBtn = document.getElementById("tag-buoy-btn");
 
     //search box fields
+
+var inputElementCheckInterval;
 
 const searchBox = document.getElementById("tooltip-search-box");
 
@@ -875,6 +869,7 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
 
 
     //preparations
+    clearInterval(inputElementCheckInterval);
     clearInterval(setFocusInterval);
     retrieveFocusAndExceptions();
     searchElement.value = ""; //collapses search if search window still open when start is hit
@@ -1265,6 +1260,7 @@ else
 
 
 function endTimer (){
+    inputElementCheckInterval = setInterval(inputChecker, 1000)
     showStatsWindowButton.style.visibility = 'unset'; //relevant for 1st entry
     instantiateDotTooltips();
     updateDots();
@@ -1294,7 +1290,11 @@ function endTimer (){
     quarterYellowDays = [];
     halfYellowDays = [];
     threeQuarterYellowDays = [];
-    getNumberOfCalendarEntries(); 
+    getNumberOfCalendarEntries();
+
+
+    //flash frame / mac doc bounce
+    ipcRenderer.send( 'app:icon-flash-bounce' );
  }
 
 
@@ -1359,45 +1359,44 @@ function timeoutClear() {
 //INPUT ELEMENT CHECK INTERVAL  ########################################################################################################################
 //---------------------------------------------------------------------------------------------------------------------------------------
 
-inputElementCheckInterval = setInterval(function() //checks input in input elements each second TODO: change this to input event as well? more performant?
-    {  
+inputElementCheckInterval = setInterval(inputChecker, 1000) //checks input in input elements each second TODO: change this to input event as well? more performant?
 
-        if (searchElement.value === "")
-        {
-            
-            searchBox.style.visibility = "hidden";
-            clearSearchResults();
-        } 
+function inputChecker(){
 
-        else
-        {
-            
-            searchBox.style.visibility = "visible";
-        }
-
-        if (createTagElement.value != "")
-        {   
-            document.getElementById("add-tag-input").style.borderColor = lighterGrey;
-            createTagButton.style.visibility = "unset";
-
-            //checks if input is just spaces
-            if (!/\S/.test(createTagElement.value)) {
-                createTagButton.style.backgroundColor = red;
-            }
-
-            else {createTagButton.style.backgroundColor = yellow;}
-        }
-
-        else
-        {   
-            document.getElementById("add-tag-input").style.borderColor = darkerGrey;
-            createTagButton.style.visibility = "hidden";
-        }
-
+    if (searchElement.value === "")
+    {
         
+        searchBox.style.visibility = "hidden";
+        clearSearchResults();
+    } 
 
-    }, 1000)
+    else
+    {
+        
+        searchBox.style.visibility = "visible";
+    }
 
+    if (createTagElement.value != "")
+    {   
+        document.getElementById("add-tag-input").style.borderColor = lighterGrey;
+        createTagButton.style.visibility = "unset";
+
+        //checks if input is just spaces
+        if (!/\S/.test(createTagElement.value)) {
+            createTagButton.style.backgroundColor = red;
+        }
+
+        else {createTagButton.style.backgroundColor = yellow;}
+    }
+
+    else
+    {   
+        document.getElementById("add-tag-input").style.borderColor = darkerGrey;
+        createTagButton.style.visibility = "hidden";
+    }
+
+    
+}
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------

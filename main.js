@@ -141,4 +141,7 @@ ipcMain.on( 'app:minimize', () => {
   BrowserWindow.getFocusedWindow().minimize();
 } )
 
-
+ipcMain.on('app:icon-flash-bounce', () => {
+  if(process.platform !== 'darwin') {mainWindow.flashFrame(true)}
+  else {app.dock.bounce(critical)}
+} )
