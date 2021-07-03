@@ -4,6 +4,12 @@
 //HIGH PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//FIXME: BUGS RELATED TO EMPTY DB
+    //empty tag in tag list when DB is cleared
+    //weird calendar when DB empty till button press
+//FIXME: animation times (completion, maybe others too)
+
+
 //MAC WRAP-UP
     // - TODO: add additional exception owners to array
     // - TODO: add icon when building app

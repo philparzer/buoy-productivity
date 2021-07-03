@@ -49,7 +49,7 @@ function createWindow () {
 
 
 function DBGetSettingsLanguage(mainWindow){ 
-
+  
   db.get('SELECT language FROM settings WHERE ROWID = 1', (error, row) => {
     
     switch(row.language){
@@ -75,7 +75,8 @@ function DBGetSettingsLanguage(mainWindow){
 
       default:
         console.log("language not specified");
-
+        mainWindow.loadFile('index.html');
+        break;
     }
     
   });
