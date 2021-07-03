@@ -144,5 +144,5 @@ ipcMain.on( 'app:minimize', () => {
 
 ipcMain.on('app:icon-flash-bounce', () => {
   if(process.platform !== 'darwin') {mainWindow.flashFrame(true)}
-  else {app.dock.bounce(critical)}
+  else {app.dock.bounce("critical")}
 } )
