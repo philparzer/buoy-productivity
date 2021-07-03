@@ -5,8 +5,8 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //FIXME: BUGS RELATED TO EMPTY DB
-    //empty tag in tag list when DB is cleared
-    //weird calendar when DB empty till button press
+    //bug empty tag in tag list when DB is cleared
+    // bug weird calendar when DB empty till button press
 //FIXME: animation times (completion, maybe others too)
 
 
