@@ -6,7 +6,6 @@
 
 //FIXME: BUGS RELATED TO EMPTY DB
     //bug empty tag in tag list when DB is cleared
-    // bug weird calendar when DB empty till button press
 //FIXME: animation times (completion, maybe others too)
 
 
@@ -23,8 +22,7 @@
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//TODO: reposition all start-up functions to increase code readability
-//TODO: add docs for every function
+//TODO: add function documentation/
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2002,6 +2000,10 @@ showStatsWindowButton.onclick = function()
 {   
     updateSuccessRate();
     setMostUsedTag();
+    
+    //updates calendar
+    previous();
+    next();
 }
 
 //Success Rate
@@ -2171,11 +2173,11 @@ function instantiateDotTooltips()
                         
                     }
                     
-                    catch{console.log("didnt work")}
+                    catch{console.log("dot 1 not set")}
                 })
             }
             
-            catch{console.log("didnt work")}
+            catch{console.log("dot 1 not set")}
 
             
 
@@ -2215,13 +2217,13 @@ function instantiateDotTooltips()
                         
                     }
                     
-                    catch{console.log("didnt work")}
+                    catch{console.log("dot 2 not set")}
                 })
 
 
             }
 
-            catch{console.log("didnt work")}
+            catch{console.log("dot 2 not set")}
         dotBox2.className = " tooltip-dot"
         dotBox2.appendChild(dotTooltip2);
     
@@ -2256,11 +2258,11 @@ function instantiateDotTooltips()
                         
                     }
                     
-                    catch{console.log("didnt work")}
+                    catch{console.log("dot 3 not set")}
                 })
             }
             
-            catch {console.log("didnt work")}
+            catch {console.log("dot 3 not set")}
 
 
         dotBox3.className = " tooltip-dot"
@@ -2297,11 +2299,11 @@ function instantiateDotTooltips()
                         
                     }
                     
-                    catch{console.log("didnt work")}
+                    catch{console.log("dot 4 not set")}
                 })
             }
             
-            catch{console.log("didnt work")}
+            catch{console.log("dot 4 not set")}
 
         dotBox4.className = " tooltip-dot"
         dotBox4.appendChild(dotTooltip4);
@@ -2336,11 +2338,11 @@ function instantiateDotTooltips()
                         
                     }
                     
-                    catch{console.log("didnt work")}
+                    catch{console.log("dot 5 not set")}
                 })
             }
             
-            catch{console.log("didnt work")}
+            catch{console.log("dot 5 not set")}
         dotBox5.className = " tooltip-dot"
         dotBox5.appendChild(dotTooltip5);
     
@@ -2561,8 +2563,8 @@ function daysInMonth(iMonth, iYear) {
 // calendar coloration --------------------------------------------------------------------------------------------------------------------------------
 
 
-getNumberOfCalendarEntries()
 
+getNumberOfCalendarEntries()
 
 
 function getNumberOfCalendarEntries()
@@ -2645,5 +2647,5 @@ function sortEntryColoration()
             })
         })
     }
-    catch{}
+    catch{"caught coloration"}
 }
