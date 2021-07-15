@@ -8,6 +8,9 @@
     //bug empty tag in tag list when DB is cleared
 //FIXME: animation times (completion, maybe others too)
 
+//TODO: save last timer input and retrieve on startup
+//TODO: test progress bar on mac (and win)
+
 
 //MAC WRAP-UP
     // - TODO: add additional exception owners to array
@@ -22,7 +25,8 @@
 //LOW PRIORITY:
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//TODO: add function documentation/
+//TODO: add function documentation
+//TODO: icon progress bar
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -893,6 +897,10 @@ startBtn.onclick = function(){ //starts the main process, timer, focus retrieval
     let startingTime = Date.now(); //let starting time = current system clock local time
     let timerRecentlyEnded = false; //used as a bugfix -> warning is displayed when timer ended succesfully
     
+        //start progress bar
+    let parsedForProgBarTime = timerInput / 1000;
+    ipcRenderer.send('app:progBarStart', parsedForProgBarTime);
+
         //set tag tooltip while timer running
     timerRunning = true;
     manageTagTooltip();
@@ -1264,6 +1272,7 @@ else
 
 
 function endTimer (){
+    ipcRenderer.send('app:progBarStop'); //stops progress bar
     inputElementCheckInterval = setInterval(inputChecker, 1000)
     showStatsWindowButton.style.visibility = 'unset'; //relevant for 1st entry
     instantiateDotTooltips();
@@ -2649,3 +2658,8 @@ function sortEntryColoration()
     }
     catch{"caught coloration"}
 }
+
+
+
+
+
