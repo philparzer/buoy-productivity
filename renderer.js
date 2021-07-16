@@ -8,8 +8,8 @@
     //bug empty tag in tag list when DB is cleared
 //FIXME: animation times (completion, maybe others too)
 
-//TODO: save last timer input and retrieve on startup
 //TODO: test progress bar on mac (and win)
+//TODO: test inputTime save
 
 
 //MAC WRAP-UP
@@ -26,7 +26,6 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //TODO: add function documentation
-//TODO: icon progress bar
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -300,8 +299,6 @@ function DBaddTag(tagName){
 }
 
 function DBSettingsChange(param){
-
-
     //onclick event calls this function w parameter signalling which element was clicked
 
     //languages
@@ -341,7 +338,6 @@ function DBSettingsChange(param){
         }
     }
 
-    //sounds TODO: set global boolean
     if(param === 'lost')
     {
         if (document.getElementById("focus-lost-sound-switch").checked === true)
@@ -399,7 +395,8 @@ function DBSettingsChange(param){
     } 
 }
 
-function DBGetSettingsDropdown(){ 
+function DBGetSettingsDropdown()
+{ 
     db.get('SELECT focus_gained, focus_lost, completion, fail FROM settings WHERE ROWID = 1', (error, row) => {
         try
         {
@@ -424,13 +421,46 @@ function DBGetSettingsDropdown(){
     });
 }
 
-DBGetSettingsDropdown() //call at startup
+function DBGetLastInputTime()
+{
+    db.get('SELECT duration FROM focus WHERE ROWID = (SELECT MAX(ROWID) FROM focus)', (error, row) => {
+        try
+        {
+            console.log("last used duration " + row.duration);
 
-function DBremTag(tagName){
+            let remainder = row.duration % 60;
+
+            if (remainder === 0) 
+            {
+                hours = row.duration / 60;
+                mins = 0;
+                minutesElement.textContent = numberFormatter(mins);
+                hoursElement.textContent = numberFormatter(hours);
+            }
+
+            else 
+            {
+                mins = remainder;
+                hours = (row.duration - remainder) / 60;
+
+                minutesElement.textContent = numberFormatter(mins);
+                hoursElement.textContent = numberFormatter(hours);
+            }
+
+        }
+        
+        catch {console.log("no last input time set");}
+    });
+}
+
+
+function DBremTag(tagName)
+{
     db.run('DELETE FROM tags WHERE name = "' + tagName + '";')
 }
 
-function DBReadandDisplayTags(){
+function DBReadandDisplayTags()
+{
     db.all('SELECT name FROM tags;', (error, rows) => {
         
         rows.forEach( row => {
@@ -440,7 +470,9 @@ function DBReadandDisplayTags(){
     })
 }
 
-function DBSearch(searchArg){
+
+function DBSearch(searchArg)
+{
     
     tags.length = 0;
     similar.length = 0;
@@ -464,7 +496,8 @@ function DBSearch(searchArg){
     })
 }
 
-function similarity(s1, s2) {
+function similarity(s1, s2) 
+{
     var longer = s1;
     var shorter = s2;
     if (s1.length < s2.length) {
@@ -533,6 +566,10 @@ function similarity(s1, s2) {
   {
     db.run('INSERT INTO focus (status, tag, programs, date, duration) VALUES ("' + status + '","' + tag + '","' + programs + '","' + date + '","' + duration + '");"');
   }
+
+  //call at startup
+  DBGetSettingsDropdown();
+  DBGetLastInputTime();
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 //TITLEBAR  ########################################################################################################################
@@ -1284,8 +1321,7 @@ function endTimer (){
     //cleanup
     recentlyOutOfFocus = false;
     clearInterval(timerLogic);
-    minutesElement.textContent = numberFormatter(30);
-    hoursElement.textContent = numberFormatter(0);
+    DBGetLastInputTime();
     hideFocusBtn();
     focusSet = false;
     timerRunning = false;
