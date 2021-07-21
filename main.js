@@ -154,7 +154,6 @@ ipcMain.on('app:progBarStart', (event, timerSeconds) => {
     if (deltaTime !== timerInputSeconds)
     { 
       progIncrement = 1 - (deltaTime / timerInputSeconds);
-      console.log(progIncrement);
       mainWindow.setProgressBar(progIncrement);
     }
     
