@@ -2100,8 +2100,11 @@ function updateAvgFocusDuration(){
     db.all('SELECT duration FROM focus WHERE status = 1;', (error, val) => {
         db.get('SELECT Count(*) AS "count" FROM focus WHERE status = 1', (error, row) => {
 
+            if (row.count == 0) {document.getElementById("avg-duration-value").textContent = "0"}
 
-            val.forEach(element => 
+            else 
+            {
+                val.forEach(element => 
                 {   
                     
                     averageDuration += element.duration;
@@ -2111,6 +2114,9 @@ function updateAvgFocusDuration(){
             
             averageDuration = averageDuration / row.count;
             document.getElementById("avg-duration-value").textContent = Math.round(averageDuration);
+            }
+            
+            
         })
     })
 }
