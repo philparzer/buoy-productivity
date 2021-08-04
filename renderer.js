@@ -5,6 +5,7 @@
 
 //////////////////////////////// 0.2 feature complete //////////////////////////////////////////////////
 // TODO: build
+// TODO: animation times need adjustments
 
 //////////////////////////////// 0.3 post-launch ///////////////////////////////////////////////////////
 // FIXME: MINOR: tag manager uncollapsible after repeatedly opening closing tag manager menu
@@ -2047,6 +2048,8 @@ function updateSuccessRate()
     {
         db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => {
             success = row.succeeded
+            error = showStatsWindowButton.style.visibility ="hidden";
+
             db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
                 total = row.totalrows
                 successRate = (success / total) * 100;
