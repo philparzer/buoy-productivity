@@ -2051,7 +2051,7 @@ function updateSuccessRate()
     {
         db.get('SELECT Count(*) AS "succeeded" FROM focus WHERE status = 1;', (error, row) => {
             success = row.succeeded
-            error = showStatsWindowButton.style.visibility ="hidden";
+            //error = showStatsWindowButton.style.visibility ="hidden" TODO: this might have introduced a bug at some point
 
             db.get('SELECT Count(*) AS "totalrows" FROM focus;', (error, row) => {
                 total = row.totalrows
