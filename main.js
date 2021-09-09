@@ -47,7 +47,7 @@ function createWindow () {
 function DBGetSettingsLanguage(mainWindow){ 
   
   db.get('SELECT language FROM settings WHERE ROWID = 1', (error, row) => {
-    
+
     switch(row.language){
       case "en":
         console.log("en selected")

@@ -1,5 +1,5 @@
 {
-  "name": "buoy-productivity",
+  "name": "buoy",
   "version": "0.2.0",
   "description": "A cross-platform productivity app",
   "main": "main.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/philparzer/buoy-productivity"
   },
   "keywords": [
     "buoy",
@@ -19,15 +19,12 @@
   "devDependencies": {
     "electron": "^12.0.7"
   },
-  "bugs": {
-    "url": "TODO:"
-  },
   "homepage": "buoy-productivity.com",
   "dependencies": {
     "active-win": "^7.5.0",
+    "mac-windows": "^1.0.0",
     "electron-active-window": "0.0.5",
     "fs": "0.0.1-security",
-    "mac-windows": "^1.0.0",
     "node-addon-api": "^3.1.0",
     "node-gyp-build": "^4.2.3",
     "node-window-manager": "^2.2.4",
