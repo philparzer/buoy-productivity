@@ -41,7 +41,7 @@ function createWindow () {
   //load window
   DBGetSettingsLanguage(mainWindow)
   // Open DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 }
 
 function DBGetSettingsLanguage(mainWindow){ 
