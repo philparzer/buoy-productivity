@@ -25,7 +25,7 @@
     "mac-windows": "^1.0.0",
     "electron-active-window": "0.0.5",
     "fs": "0.0.1-security",
-    "node-addon-api": "^3.1.0",
+    "node-addon-api": "^4.2.0",
     "node-gyp-build": "^4.2.3",
     "node-window-manager": "^2.2.4",
     "popper.js": "^1.16.1",
