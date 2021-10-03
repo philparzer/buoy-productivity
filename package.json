@@ -21,7 +21,7 @@
   },
   "homepage": "buoy-productivity.com",
   "dependencies": {
-    "active-win": "^7.5.0",
+    "active-win": "^7.6.1",
     "mac-windows": "^1.0.0",
     "electron-active-window": "0.0.5",
     "fs": "0.0.1-security",
