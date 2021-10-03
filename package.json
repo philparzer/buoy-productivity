@@ -23,7 +23,7 @@
   "dependencies": {
     "active-win": "^7.5.0",
     "mac-windows": "^1.0.0",
-    "electron-active-window": "0.0.5",
+    "electron-active-window": "0.0.6",
     "fs": "0.0.1-security",
     "node-addon-api": "^3.1.0",
     "node-gyp-build": "^4.2.3",
